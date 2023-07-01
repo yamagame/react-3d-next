@@ -41,7 +41,7 @@ export default function Home() {
         <pointLight position={[0, 10, 10]} />
         {Object.keys(boxes).map((key: string) => {
           const box = boxes[key]
-          return <Box key={key} position={[box.x, 0, box.y]} />
+          return <Box key={key} position={[box.x, 0, box.y]} rotation={[0, box.angle, 0]}/>
         })}
       </Canvas>
     </div>
