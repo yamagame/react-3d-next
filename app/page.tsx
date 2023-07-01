@@ -9,7 +9,9 @@ export default function Home() {
   React.useEffect(() => {
     socketRef.current = new WebSocket("ws://localhost:9001/socket")
     socketRef.current.onmessage = function (msg) {
-      console.log(JSON.parse(msg.data))
+      const payload = JSON.parse(msg.data)
+      const { id, x, y, angle } = payload
+      console.log(payload, id, x, y, angle)
     }
     socketRef.current.onopen = function () {
       console.log("Connected")

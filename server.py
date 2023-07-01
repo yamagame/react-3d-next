@@ -29,7 +29,7 @@ manager = ConnectionManager()
 
 @app.get("/")
 async def get():
-    await manager.broadcast({"msg": "Hello World"})
+    await manager.broadcast({"id": 1, "x": 0, "y": 0, "angle": 0})
     return {"msg": "Hello World"}
 
 
