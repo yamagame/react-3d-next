@@ -8,14 +8,14 @@ type BoxT = { x: number; y: number; angle: number }
 
 export default function Home() {
   const socketRef = React.useRef<WebSocket>()
-  const [boxes, setBoxes] = React.useState<BoxT[]>([])
+  const [boxes, setBoxes] = React.useState<{ [index: string]: BoxT }>({})
   React.useEffect(() => {
     socketRef.current = new WebSocket("ws://localhost:9001/socket")
     socketRef.current.onmessage = function (msg) {
       const payload = JSON.parse(msg.data)
       const { id, x, y, angle } = payload
       setBoxes((boxes) => {
-        const b = [...boxes]
+        const b = { ...boxes }
         b[id] = { x, y, angle }
         return b
       })
@@ -39,8 +39,9 @@ export default function Home() {
       <Canvas camera={{ fov: 35, near: 0.1, far: 1000, position: [10, 10, 10] }}>
         <ambientLight />
         <pointLight position={[0, 10, 10]} />
-        {boxes.map((box: BoxT, id: number) => {
-          return <Box key={id} position={[box.x, 0, box.y]} />
+        {Object.keys(boxes).map((key: string) => {
+          const box = boxes[key]
+          return <Box key={key} position={[box.x, 0, box.y]} />
         })}
       </Canvas>
     </div>
