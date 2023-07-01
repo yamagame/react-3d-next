@@ -1,6 +1,7 @@
 from typing import List
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -26,11 +27,22 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
+class Body(BaseModel):#define request body
+    id:int
+    x:float
+    y:float
+    angle:float
 
 @app.get("/")
 async def get():
     await manager.broadcast({"id": 1, "x": 0, "y": 0, "angle": 0})
     return {"msg": "Hello World"}
+
+@app.post("/api") 
+async def post(body:Body): #recieve data
+    await manager.broadcast(body.dict()) #broadcast data
+    return body.dict()
+
 
 
 @app.websocket("/socket")
