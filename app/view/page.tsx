@@ -45,7 +45,7 @@ export default function Home() {
     <div className="main-canvas">
       <Canvas>
         <Camera
-          lookAt={{ x: 0, y: 0, z: -1 } as THREE.Vector3}
+          lookAt={{ x: camera.x, y: camera.y, z: camera.z - 1 } as THREE.Vector3}
           position={{ x: camera.x, y: camera.y, z: camera.z } as THREE.Vector3}
         />
         <Scene boxes={boxes} />
