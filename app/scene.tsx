@@ -15,7 +15,7 @@ export function Scene(props: { boxes: { [index: string]: BoxT } }) {
         return <Box key={key} position={[box.x, 0, box.y]} rotation={[0, box.angle, 0]} />
       })}
       <Box size={[2, 5, 3]} position={[4, 2.5, 0]} rotation={[0, 0, 0]} />
-      <Box position={[0, 0, 0]} rotation={[0, 0, 0]} />
+      <Box position={[0, 0.5, 0]} rotation={[0, 0, 0]} />
     </>
   )
 }
