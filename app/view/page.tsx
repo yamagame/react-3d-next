@@ -7,11 +7,16 @@ import Camera from "./camera"
 import { CameraControls, PerspectiveCamera } from "@react-three/drei"
 
 type BoxT = { x: number; y: number; angle: number }
+type Vector3 = { x: number; y: number; z: number }
+type CameraT = { position: Vector3; lookAt: Vector3 }
 
 export default function Home() {
   const socketRef = React.useRef<WebSocket>()
   const [boxes, setBoxes] = React.useState<{ [index: string]: BoxT }>({})
-  const [camera, setCamera] = React.useState({ x: 0, y: 0, z: 0 } as THREE.Vector3)
+  const [camera, setCamera] = React.useState<CameraT>({
+    position: { x: 0, y: 0, z: 0 },
+    lookAt: { x: 0, y: 0, z: 0 },
+  })
 
   React.useEffect(() => {
     socketRef.current = new WebSocket("ws://localhost:9001/socket")
@@ -24,7 +29,10 @@ export default function Home() {
         return b
       })
       if (id == 10) {
-        setCamera({ x, y: 0, z: y } as THREE.Vector3)
+        setCamera({
+          position: { x: x, y: 0, z: y },
+          lookAt: { x: x, y: 0, z: y - 1 },
+        })
       }
       console.log(payload, id, x, y, angle)
     }
@@ -45,8 +53,8 @@ export default function Home() {
     <div className="main-canvas">
       <Canvas>
         <Camera
-          lookAt={{ x: camera.x, y: camera.y, z: camera.z - 1 } as THREE.Vector3}
-          position={{ x: camera.x, y: camera.y, z: camera.z } as THREE.Vector3}
+          lookAt={camera.lookAt as THREE.Vector3}
+          position={camera.position as THREE.Vector3}
         />
         <Scene boxes={boxes} />
         {/* <CameraControls /> */}
