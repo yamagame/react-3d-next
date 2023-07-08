@@ -3,7 +3,8 @@
 import React from "react"
 import { Canvas } from "@react-three/fiber"
 import { Scene } from "../scene"
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei"
+import Camera from "./camera"
+import { CameraControls, PerspectiveCamera } from "@react-three/drei"
 
 type BoxT = { x: number; y: number; angle: number }
 
@@ -38,8 +39,9 @@ export default function Home() {
   return (
     <div className="main-canvas">
       <Canvas>
+        <Camera />
         <Scene boxes={boxes} />
-        <OrbitControls />
+        <CameraControls />
         <PerspectiveCamera makeDefault position={[20, 0, 20]} />
       </Canvas>
     </div>
