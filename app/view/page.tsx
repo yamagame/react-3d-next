@@ -45,12 +45,12 @@ export default function Home() {
     <div className="main-canvas">
       <Canvas>
         <Camera
-          lookAt={{ x: 10, y: 10, z: 10 } as THREE.Vector3}
+          lookAt={{ x: 0, y: 0, z: -1 } as THREE.Vector3}
           position={{ x: camera.x, y: camera.y, z: camera.z } as THREE.Vector3}
         />
         <Scene boxes={boxes} />
-        <CameraControls />
-        <PerspectiveCamera makeDefault position={[10, 10, 10]} />
+        {/* <CameraControls /> */}
+        <PerspectiveCamera makeDefault />
       </Canvas>
     </div>
   )
