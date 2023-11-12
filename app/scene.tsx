@@ -76,11 +76,8 @@ export function Scene(props: { boxes: { [index: string]: BoxT } }) {
               )
               if (center) {
                 const values = center.toArray()
-                console.log(values)
                 cameraControlsRef.current?.moveTo(...values, true)
-
                 const direction = cameraDirection()
-                console.log(direction.length())
                 if (direction.length() < 3) {
                   const direction = cameraDirection().normalize().multiplyScalar(-3)
                   const cameraPosition = new THREE.Vector3()
