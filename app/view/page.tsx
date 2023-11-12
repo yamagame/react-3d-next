@@ -31,7 +31,11 @@ export default function Home() {
       if (id == 10) {
         setCamera({
           position: { x: x, y: 0, z: y },
-          lookAt: { x: x, y: 0, z: y - 1 },
+          lookAt: {
+            x: x + Math.sin((angle * Math.PI * 2) / 360),
+            y: 0,
+            z: y + Math.cos((angle * Math.PI * 2) / 360),
+          },
         })
       }
       console.log(payload, id, x, y, angle)
