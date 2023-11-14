@@ -20,9 +20,11 @@ export function Mesh(
       ref={ref}
       onPointerOver={(e) => {
         hover(true)
+        e.stopPropagation()
       }}
       onPointerOut={(e) => {
         hover(false)
+        e.stopPropagation()
       }}
     >
       {!props.geometry && <boxGeometry args={props.size || [1, 1, 1]} />}
