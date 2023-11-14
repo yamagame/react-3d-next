@@ -34,7 +34,9 @@ export function Scene(props: SceneProps) {
   useEffect(() => {
     cameraControlsRef.current?.moveTo(0, 0, 0, false)
     cameraControlsRef.current?.setPosition(40, 90, 40, false)
-  }, [])
+    cameraControlsRef.current?.colliderMeshes.splice(0)
+    cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+  }, [nodes])
 
   const color = useMemo(() => new THREE.Color(), [])
   const fontProps = {
@@ -69,7 +71,19 @@ export function Scene(props: SceneProps) {
       <ambientLight intensity={0.1} />
       <pointLight position={[-2, 10, 10]} />
       <directionalLight position={[2, 5, -5]} intensity={0.5} />
-      <CameraControls ref={cameraControlsRef} enabled={true} />
+      <CameraControls
+        ref={cameraControlsRef}
+        // onStart={() => {}}
+        // onEnd={() => {}}
+        // onChange={(e) => {
+        //   const pos = cameraControlsRef.current?.getPosition(new THREE.Vector3())
+        //   if (pos && pos.y < 1) {
+        //     pos.setY(1)
+        //     cameraControlsRef.current?.setPosition(...pos.toArray(), false)
+        //   }
+        // }}
+        enabled={true}
+      />
       {props.geometories
         .filter((geo) => pointCamera != geo.name)
         .map((geo) => {
@@ -113,7 +127,6 @@ export function Scene(props: SceneProps) {
                   position={[0, 0, 0]}
                   rotation={[0, 0, 0]}
                   onClick={(e: ThreeEvent<MouseEvent>) => {
-                    console.log(name)
                     if (center) {
                       let cameraPosition = new THREE.Vector3()
                       cameraControlsRef.current?.getPosition(cameraPosition)
