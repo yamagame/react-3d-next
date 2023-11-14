@@ -26,13 +26,13 @@ export function Scene(props: SceneProps) {
   const cameraControlsRef = useRef<CameraControls>(null)
 
   useMemo(() => {
-    props.geometories.forEach((geo) => {
-      textRef.current[geo.name] = createRef<THREE.Mesh>()
+    Object.keys(nodes).forEach((name) => {
+      textRef.current[name] = createRef<THREE.Mesh>()
     })
-  }, [props.geometories])
+  }, [nodes])
 
   useEffect(() => {
-    cameraControlsRef.current?.moveTo(0, 0, 0, false)
+    cameraControlsRef.current?.moveTo(0, 1, 0, false)
     cameraControlsRef.current?.setPosition(40, 90, 40, false)
     cameraControlsRef.current?.colliderMeshes.splice(0)
     cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
@@ -84,12 +84,10 @@ export function Scene(props: SceneProps) {
         // }}
         enabled={true}
       />
-      {props.geometories
-        .filter((geo) => pointCamera != geo.name)
-        .map((geo) => {
-          const name = geo.name
-          const label = geo.label
-          const geometory = nodes[name].geometry
+      {Object.keys(nodes)
+        .filter((name) => name != "Scene")
+        .filter((name) => name != pointCamera)
+        .map((name) => {
           if (name.indexOf("camera-point") == 0) {
             // ポイントカメラ
             return (
@@ -117,6 +115,8 @@ export function Scene(props: SceneProps) {
             )
           } else if (name.indexOf("building") == 0) {
             // 建物
+            const label = props.geometories.find((v) => v.name === name)?.label || name
+            const geometory = nodes[name].geometry
             const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
             const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
             return (

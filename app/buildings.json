@@ -4,36 +4,6 @@
     { "name": "building1", "label": "建物1" },
     { "name": "building1001", "label": "建物1-1" },
     { "name": "building2", "label": "建物2" },
-    { "name": "building2001", "label": "建物2-1" },
-    { "name": "building1002" },
-    { "name": "building1003" },
-    { "name": "building2002" },
-    { "name": "building2003" },
-    { "name": "building1004" },
-    { "name": "building1005" },
-    { "name": "building2004" },
-    { "name": "building2005" },
-    { "name": "building1006" },
-    { "name": "building1007" },
-    { "name": "building2006" },
-    { "name": "building2007" },
-    { "name": "building1008" },
-    { "name": "building1009" },
-    { "name": "building2008" },
-    { "name": "building2009" },
-
-    { "name": "camera-point" },
-    { "name": "camera-point001" },
-    { "name": "camera-point002" },
-    { "name": "camera-point003" },
-    { "name": "camera-point004" },
-    { "name": "camera-point005" },
-    { "name": "camera-point006" },
-    { "name": "camera-point007" },
-    { "name": "camera-point008" },
-    { "name": "camera-point009" },
-    { "name": "camera-point010" },
-
-    { "name": "Plane" }
+    { "name": "building2001", "label": "建物2-1" }
   ]
 }

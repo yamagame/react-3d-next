@@ -37,7 +37,21 @@ export default function Home() {
   }, [])
   return (
     <div className="main-canvas">
-      <Canvas camera={{ fov: 55, near: 0.1, far: 1000, position: [10, 10, 10] }}>
+      <div className="nav">
+        <h1 className="label" />
+        <div />
+        <div />
+        <a onClick={() => {}}>
+          <div className="button">aa</div>
+        </a>
+        <a onClick={() => {}}>
+          <div className="button">aa</div>
+        </a>
+        <a onClick={() => {}}>
+          <div className="button">aa</div>
+        </a>
+      </div>
+      <Canvas camera={{ fov: 55, near: 0.1, far: 1000 }} style={{ borderRadius: 20 }}>
         <Scene {...buildings} />
       </Canvas>
     </div>
