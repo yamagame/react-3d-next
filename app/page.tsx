@@ -3,6 +3,7 @@
 import React from "react"
 import { Canvas } from "@react-three/fiber"
 import { Scene } from "./scene"
+import buildings from "./buildings.json"
 
 type BoxT = { x: number; y: number; angle: number }
 
@@ -36,8 +37,8 @@ export default function Home() {
   }, [])
   return (
     <div className="main-canvas">
-      <Canvas camera={{ fov: 35, near: 0.1, far: 1000, position: [10, 10, 10] }}>
-        <Scene boxes={boxes} />
+      <Canvas camera={{ fov: 55, near: 0.1, far: 1000, position: [10, 10, 10] }}>
+        <Scene {...buildings} />
       </Canvas>
     </div>
   )

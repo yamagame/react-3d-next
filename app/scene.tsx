@@ -1,51 +1,58 @@
 "use client"
 
-import React, { useRef, useMemo, useState, useEffect } from "react"
+import React, { useRef, useMemo, useState, useEffect, RefObject, createRef } from "react"
 import * as THREE from "three"
-import { Box } from "./box"
-import { Canvas, useFrame } from "@react-three/fiber"
+import { Mesh } from "./mesh"
+import { Canvas, useFrame, ThreeEvent } from "@react-three/fiber"
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader"
 import { Sky, Text, CameraControls, useGLTF } from "@react-three/drei"
 
-type BoxT = { x: number; y: number; angle: number }
-
 type GLTFResult = GLTF & {
-  nodes: {
-    cuboid1: THREE.Mesh
-    cuboid2: THREE.Mesh
-    cuboid3: THREE.Mesh
-    cuboid4: THREE.Mesh
-    ["camera-point"]: THREE.Mesh
-  }
+  nodes: { [index: string]: THREE.Mesh }
   materials: {}
 }
 
-type NAMES = "cuboid1" | "cuboid2" | "cuboid3" | "cuboid4" | "camera-point"
+type SceneProps = {
+  gltf: string
+  geometories: { name: string; label?: string }[]
+}
 
-export function Scene(props: { boxes: { [index: string]: BoxT } }) {
-  // const gltfModel = useGLTF("/cube.glb") as GLTF
-  const { nodes } = useGLTF("/cuboids-transformed.glb") as GLTFResult
+export function Scene(props: SceneProps) {
+  const { nodes } = useGLTF(props.gltf) as GLTFResult
   const [pointCamera, setPointCamera] = useState("")
-  // const gltfModel = useGLTF("/sample-building.glb") as GLTF
 
-  const ref = useRef<THREE.Mesh>(null)
+  const textRef = useRef<{ [index: string]: RefObject<THREE.Mesh> }>({})
+
   const cameraControlsRef = useRef<CameraControls>(null)
+
+  useMemo(() => {
+    props.geometories.forEach((geo) => {
+      textRef.current[geo.name] = createRef<THREE.Mesh>()
+    })
+  }, [props.geometories])
+
+  useEffect(() => {
+    cameraControlsRef.current?.moveTo(0, 0, 0, false)
+    cameraControlsRef.current?.setPosition(40, 90, 40, false)
+  }, [])
+
   const color = useMemo(() => new THREE.Color(), [])
   const fontProps = {
-    // font: "https://fonts.googleapis.com/css2?family=Crimson+Pro",
     font: "/NotoSansJP-Bold.ttf",
-    fontSize: 0.5,
+    fontSize: 2.5,
     letterSpacing: -0.05,
     lineHeight: 1,
     "material-toneMapped": false,
   }
+
   useFrame(({ camera }) => {
-    // Make text face the camera
-    ref.current?.quaternion.copy(camera.quaternion)
-    // Change font color
-    if (ref.current?.material instanceof THREE.MeshBasicMaterial) {
-      ref.current.material.color.lerp(color.set("#fa2720"), 0.1)
-    }
+    Object.keys(textRef.current).forEach((key) => {
+      const text = textRef.current[key]
+      text.current?.quaternion.copy(camera.quaternion)
+      if (text.current?.material instanceof THREE.MeshBasicMaterial) {
+        text.current.material.color.lerp(color.set("#2027fa"), 0.1)
+      }
+    })
   })
 
   const cameraDirection = () => {
@@ -63,66 +70,100 @@ export function Scene(props: { boxes: { [index: string]: BoxT } }) {
       <pointLight position={[-2, 10, 10]} />
       <directionalLight position={[2, 5, -5]} intensity={0.5} />
       <CameraControls ref={cameraControlsRef} enabled={true} />
-      {(["cuboid1", "cuboid2", "cuboid3", "cuboid4"] as NAMES[]).map((geometory_name) => {
-        return (
-          <Box
-            key={geometory_name}
-            // scale={0.1}
-            position={[0, 0, 0]}
-            rotation={[0, 0, 0]}
-            onClick={() => {
-              const center = nodes[geometory_name].geometry.boundingBox?.getCenter(
-                new THREE.Vector3()
-              )
-              if (center) {
-                const values = center.toArray()
-                cameraControlsRef.current?.moveTo(...values, true)
-                const direction = cameraDirection()
-                if (direction.length() < 3) {
-                  const direction = cameraDirection().normalize().multiplyScalar(-3)
-                  const cameraPosition = new THREE.Vector3()
-                  cameraControlsRef.current?.getPosition(cameraPosition)
-                  cameraControlsRef.current?.setPosition(
-                    ...cameraPosition.add(direction).toArray(),
-                    true
-                  )
-                }
-                setPointCamera("")
-              }
-            }}
-            geometry={nodes[geometory_name].geometry}
-          />
-        )
-      })}
-      {(["camera-point"] as NAMES[])
-        .filter((name) => pointCamera !== name)
-        .map((geometory_name) => {
-          return (
-            <Box
-              key={geometory_name}
-              // scale={0.1}
-              position={[0, 0, 0]}
-              rotation={[0, 0, 0]}
-              onClick={() => {
-                const center = nodes[geometory_name].geometry.boundingBox?.getCenter(
-                  new THREE.Vector3()
-                )
-                if (center) {
-                  const direction = cameraDirection().normalize().multiplyScalar(-0.01)
-                  const target = direction.add(center)
-                  cameraControlsRef.current?.moveTo(...center.toArray(), true)
-                  cameraControlsRef.current?.setPosition(...target.toArray(), true)
-                  setPointCamera(geometory_name)
-                }
-              }}
-              geometry={nodes[geometory_name].geometry}
-            />
-          )
+      {props.geometories
+        .filter((geo) => pointCamera != geo.name)
+        .map((geo) => {
+          const name = geo.name
+          const label = geo.label
+          const geometory = nodes[name].geometry
+          if (name.indexOf("camera-point") == 0) {
+            // ポイントカメラ
+            return (
+              <Mesh
+                key={name}
+                // scale={0.1}
+                position={[0, 0, 0]}
+                rotation={[0, 0, 0]}
+                onClick={(e: ThreeEvent<MouseEvent>) => {
+                  const center = nodes[name].geometry.boundingBox?.getCenter(new THREE.Vector3())
+                  if (center) {
+                    const direction = cameraDirection()
+                      .multiply(new THREE.Vector3(1, 0, 1))
+                      .normalize()
+                      .multiplyScalar(0.01)
+                    const target = direction.add(center)
+                    cameraControlsRef.current?.moveTo(...target.toArray(), true)
+                    cameraControlsRef.current?.setPosition(...center.toArray(), true)
+                    setPointCamera(name)
+                  }
+                  e.stopPropagation()
+                }}
+                geometry={nodes[name].geometry}
+              />
+            )
+          } else if (name.indexOf("building") == 0) {
+            // 建物
+            const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
+            const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
+            return (
+              <group key={`${name}-container`}>
+                <Mesh
+                  key={name}
+                  // scale={0.1}
+                  position={[0, 0, 0]}
+                  rotation={[0, 0, 0]}
+                  onClick={(e: ThreeEvent<MouseEvent>) => {
+                    console.log(name)
+                    if (center) {
+                      let cameraPosition = new THREE.Vector3()
+                      cameraControlsRef.current?.getPosition(cameraPosition)
+                      const values = center.toArray()
+                      let apply = false
+
+                      cameraControlsRef.current?.moveTo(...values, true)
+                      const direction = cameraDirection()
+                      if (direction.length() < 20) {
+                        const direction = cameraDirection().normalize().multiplyScalar(-20)
+                        cameraPosition = cameraPosition.add(direction)
+                        apply = true
+                      }
+
+                      if (cameraPosition.y < 0) {
+                        cameraPosition.setY(20)
+                        apply = true
+                      }
+
+                      if (apply) {
+                        cameraControlsRef.current?.setPosition(...cameraPosition.toArray(), true)
+                      }
+                      setPointCamera("")
+                    }
+                    e.stopPropagation()
+                  }}
+                  geometry={nodes[name].geometry}
+                />
+                <Text
+                  key={`${name}-text`}
+                  ref={textRef.current[name]}
+                  position={center?.clone().add(size.multiply(new THREE.Vector3(0, 0.8, 0)))}
+                  {...fontProps}
+                >
+                  {label || name}
+                </Text>
+              </group>
+            )
+          } else {
+            return (
+              <Mesh
+                key={name}
+                // scale={0.1}
+                position={[0, 0, 0]}
+                rotation={[0, 0, 0]}
+                geometry={nodes[name].geometry}
+              />
+            )
+          }
         })}
-      <Text ref={ref} position={[0, 0, 2]} {...fontProps}>
-        {/* 日本語のテスト */}
-        Hello
-      </Text>
     </>
   )
 }
