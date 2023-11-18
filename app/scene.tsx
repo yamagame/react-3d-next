@@ -31,9 +31,46 @@ export type SceneHandler = {
   resetCamera: () => void
 }
 
+function box3ToVert(box3: THREE.Box3) {
+  return new Float32Array([
+    box3.min.x,
+    box3.min.y,
+    box3.min.z,
+
+    box3.min.x,
+    box3.max.y,
+    box3.min.z,
+
+    box3.max.x,
+    box3.max.y,
+    box3.min.z,
+
+    box3.max.x,
+    box3.min.y,
+    box3.min.z,
+
+    box3.min.x,
+    box3.min.y,
+    box3.max.z,
+
+    box3.min.x,
+    box3.max.y,
+    box3.max.z,
+
+    box3.max.x,
+    box3.max.y,
+    box3.max.z,
+
+    box3.max.x,
+    box3.min.y,
+    box3.max.z,
+  ])
+}
+
 export const Scene = React.forwardRef((props: SceneProps, ref) => {
   const { nodes } = useGLTF(props.gltf) as GLTFResult
   const [pointCamera, setPointCamera] = useState("")
+  const [bbox, setBbox] = useState<{ [index: string]: THREE.Mesh }>({})
 
   const textRef = useRef<{ [index: string]: RefObject<THREE.Mesh> }>({})
 
@@ -59,6 +96,25 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     cameraControlsRef.current?.setPosition(90, 40, 90, false)
     cameraControlsRef.current?.colliderMeshes.splice(0)
     cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+
+    const boxes: { [index: string]: THREE.Mesh } = {}
+    Object.keys(nodes)
+      .filter((key) => key.indexOf("building") == 0)
+      .forEach((key) => {
+        const box3 = nodes[key].geometry.boundingBox
+        if (box3) {
+          const vertices = box3ToVert(box3)
+          const geometry = new THREE.BufferGeometry()
+          geometry.setIndex([
+            0, 1, 2, 0, 2, 3, 4, 6, 5, 4, 7, 6, 0, 4, 1, 1, 4, 5, 2, 7, 3, 2, 6, 7,
+          ])
+          geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3))
+          const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+          const mesh = new THREE.Mesh(geometry, material)
+          boxes[key] = mesh
+        }
+      })
+    setBbox(boxes)
   }, [nodes])
 
   const color = useMemo(() => new THREE.Color(), [])
@@ -119,7 +175,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         shadow-bias={-directionalCtl.bias / 100000.0}
         shadow-mapSize={[1024, 1024]}
       />
-      <CameraControls ref={cameraControlsRef} enabled={true} />
+      <CameraControls ref={cameraControlsRef} enabled={true} maxDistance={300} />
       {Object.keys(nodes)
         .filter((name) => name != "Scene")
         .filter((name) => name != pointCamera)
@@ -145,6 +201,9 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                     cameraControlsRef.current?.moveTo(...target.toArray(), true)
                     cameraControlsRef.current?.setPosition(...center.toArray(), true)
                     setPointCamera(name)
+
+                    cameraControlsRef.current?.colliderMeshes.splice(0)
+                    cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
                   }
                   e.stopPropagation()
                 }}
@@ -180,6 +239,12 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                         const direction = cameraDirection().normalize().multiplyScalar(-20)
                         cameraPosition = cameraPosition.add(direction)
                         apply = true
+                      } else if (direction.length() > 60) {
+                        const cameraTarget = new THREE.Vector3()
+                        cameraControlsRef.current?.getTarget(cameraTarget)
+                        const direction = cameraDirection().normalize().multiplyScalar(-40)
+                        cameraPosition = cameraTarget.add(direction)
+                        apply = true
                       }
 
                       if (cameraPosition.y < 0) {
@@ -191,6 +256,15 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                         cameraControlsRef.current?.setPosition(...cameraPosition.toArray(), true)
                       }
                       setPointCamera("")
+
+                      cameraControlsRef.current?.colliderMeshes.splice(0)
+                      cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+
+                      Object.keys(bbox)
+                        .filter((key) => key != name)
+                        .forEach((key) => {
+                          cameraControlsRef.current?.colliderMeshes.push(bbox[key])
+                        })
                     }
                     e.stopPropagation()
                   }}
@@ -222,6 +296,18 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
             )
           }
         })}
+      {/* {bbox} */}
+      {/* {bbox.map((box, i) => {
+        return (
+          <Mesh
+            key={`bbox-${i}`}
+            position={[0, 0, 0]}
+            rotation={[0, 0, 0]}
+            geometry={box.geometry}
+            // material={nodes[name].material}
+          />
+        )
+      })} */}
       {/* <AccumulativeShadows
         temporal
         frames={10}
