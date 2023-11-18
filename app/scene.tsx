@@ -41,7 +41,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     return {
       resetCamera() {
         cameraControlsRef.current?.moveTo(0, 1, 0, true)
-        cameraControlsRef.current?.setPosition(40, 90, 40, true)
+        cameraControlsRef.current?.setPosition(90, 40, 90, true)
       },
     }
   })
@@ -56,7 +56,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
 
   useEffect(() => {
     cameraControlsRef.current?.moveTo(0, 1, 0, false)
-    cameraControlsRef.current?.setPosition(40, 90, 40, false)
+    cameraControlsRef.current?.setPosition(90, 40, 90, false)
     cameraControlsRef.current?.colliderMeshes.splice(0)
     cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
   }, [nodes])
@@ -114,6 +114,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         shadow-camera-right={200}
         shadow-camera-top={200}
         shadow-camera-bottom={-200}
+        shadow-camera-near={0.5}
+        shadow-camera-far={5000}
         shadow-bias={-directionalCtl.bias / 100000.0}
         shadow-mapSize={[1024, 1024]}
       />
