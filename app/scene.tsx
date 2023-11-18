@@ -119,7 +119,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
 
   const color = useMemo(() => new THREE.Color(), [])
   const fontProps = {
-    font: "/NotoSansJP-Bold.ttf",
+    font: "NotoSansJP-Bold.ttf",
     fontSize: 2.5,
     letterSpacing: -0.05,
     lineHeight: 1,
