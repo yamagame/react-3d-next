@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const urlPrefix = process.env.URL_PREFIX ? '/' + process.env.URL_PREFIX : ''
+const urlPrefix = process.env.BRANCH_NAME ? '/' + process.env.BRANCH_NAME : ''
 
 const nextConfig = {
   output: 'export',
