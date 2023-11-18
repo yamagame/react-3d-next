@@ -260,11 +260,11 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                       cameraControlsRef.current?.colliderMeshes.splice(0)
                       cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
 
-                      Object.keys(bbox)
-                        .filter((key) => key != name)
-                        .forEach((key) => {
-                          cameraControlsRef.current?.colliderMeshes.push(bbox[key])
-                        })
+                      // Object.keys(bbox)
+                      //   .filter((key) => key != name)
+                      //   .forEach((key) => {
+                      //     cameraControlsRef.current?.colliderMeshes.push(bbox[key])
+                      //   })
                     }
                     e.stopPropagation()
                   }}
@@ -296,11 +296,11 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
             )
           }
         })}
-      {/* {bbox} */}
-      {/* {bbox.map((box, i) => {
+      {/* {Object.keys(bbox).map((key) => {
+        const box = bbox[key]
         return (
           <Mesh
-            key={`bbox-${i}`}
+            key={`bbox-${key}`}
             position={[0, 0, 0]}
             rotation={[0, 0, 0]}
             geometry={box.geometry}
@@ -308,31 +308,6 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
           />
         )
       })} */}
-      {/* <AccumulativeShadows
-        temporal
-        frames={10}
-        color="purple"
-        colorBlend={0.5}
-        opacity={1}
-        scale={100}
-        alphaTest={0.85}
-      >
-        <RandomizedLight
-          amount={8}
-          radius={50}
-          ambient={0.5}
-          position={[150, 130, 20]}
-          bias={0.01}
-        />
-      </AccumulativeShadows> */}
-      {/* <OrbitControls
-        autoRotate
-        autoRotateSpeed={1}
-        enablePan={false}
-        enableZoom={false}
-        minPolarAngle={Math.PI / 2.1}
-        maxPolarAngle={Math.PI / 2.1}
-      /> */}
     </>
   )
 })
