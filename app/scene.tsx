@@ -1,11 +1,21 @@
 "use client"
 
-import React, { useRef, useMemo, useState, useEffect, RefObject, createRef } from "react"
+import React, {
+  useRef,
+  useMemo,
+  useState,
+  useEffect,
+  RefObject,
+  createRef,
+  useTransition,
+} from "react"
+import { useControls } from "leva"
 import * as THREE from "three"
-import { Mesh } from "./mesh"
-import { Canvas, useFrame, ThreeEvent } from "@react-three/fiber"
+import { HoverMesh, Mesh } from "./mesh"
+import { useFrame, ThreeEvent } from "@react-three/fiber"
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader"
 import { Sky, Text, CameraControls, useGLTF } from "@react-three/drei"
+import { Env } from "./environment"
 
 type GLTFResult = GLTF & {
   nodes: { [index: string]: THREE.Mesh }
@@ -17,11 +27,25 @@ type SceneProps = {
   geometories: { name: string; label?: string }[]
 }
 
-export function Scene(props: SceneProps) {
+export type SceneHandler = {
+  resetCamera: () => void
+}
+
+export const Scene = React.forwardRef((props: SceneProps, ref) => {
+  const [preset, setPreset] = useState("sunset")
   const { nodes } = useGLTF(props.gltf) as GLTFResult
   const [pointCamera, setPointCamera] = useState("")
 
   const textRef = useRef<{ [index: string]: RefObject<THREE.Mesh> }>({})
+
+  React.useImperativeHandle(ref, () => {
+    return {
+      resetCamera() {
+        cameraControlsRef.current?.moveTo(0, 1, 0, true)
+        cameraControlsRef.current?.setPosition(40, 90, 40, true)
+      },
+    }
+  })
 
   const cameraControlsRef = useRef<CameraControls>(null)
 
@@ -47,6 +71,7 @@ export function Scene(props: SceneProps) {
     "material-toneMapped": false,
   }
 
+  // テキストの向きをカメラに向ける
   useFrame(({ camera }) => {
     Object.keys(textRef.current).forEach((key) => {
       const text = textRef.current[key]
@@ -57,6 +82,7 @@ export function Scene(props: SceneProps) {
     })
   })
 
+  // 視線方向のベクトルを計算
   const cameraDirection = () => {
     const cameraTarget = new THREE.Vector3()
     cameraControlsRef.current?.getTarget(cameraTarget)
@@ -65,12 +91,32 @@ export function Scene(props: SceneProps) {
     return cameraTarget.sub(cameraPosition)
   }
 
+  // 並行光源の向きのコントローラ
+  const directionalCtl = useControls("Directional Light", {
+    visible: true,
+    position: {
+      x: 1000.0,
+      y: 1000.0,
+      z: -1000.0,
+    },
+    castShadow: true,
+  })
+
   return (
     <>
+      <Env />
       <Sky />
-      <ambientLight intensity={0.1} />
+      <directionalLight
+        visible={directionalCtl.visible}
+        position={[directionalCtl.position.x, directionalCtl.position.y, directionalCtl.position.z]}
+        castShadow={directionalCtl.castShadow}
+        shadow-mapSize={[1024, 1024]}
+      >
+        <orthographicCamera attach="shadow-camera" args={[-200, 200, 200, -200]} />
+      </directionalLight>
+      {/* <ambientLight intensity={Math.PI / 2} />
       <pointLight position={[-2, 10, 10]} />
-      <directionalLight position={[2, 5, -5]} intensity={0.5} />
+      <directionalLight position={[2, 5, -5]} intensity={0.5} /> */}
       <CameraControls
         ref={cameraControlsRef}
         // onStart={() => {}}
@@ -91,7 +137,7 @@ export function Scene(props: SceneProps) {
           if (name.indexOf("camera-point") == 0) {
             // ポイントカメラ
             return (
-              <Mesh
+              <HoverMesh
                 key={name}
                 // scale={0.1}
                 position={[0, 0, 0]}
@@ -111,6 +157,7 @@ export function Scene(props: SceneProps) {
                   e.stopPropagation()
                 }}
                 geometry={nodes[name].geometry}
+                material={nodes[name].material}
               />
             )
           } else if (name.indexOf("building") == 0) {
@@ -121,9 +168,11 @@ export function Scene(props: SceneProps) {
             const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
             return (
               <group key={`${name}-container`}>
-                <Mesh
+                <HoverMesh
                   key={name}
                   // scale={0.1}
+                  castShadow
+                  receiveShadow
                   position={[0, 0, 0]}
                   rotation={[0, 0, 0]}
                   onClick={(e: ThreeEvent<MouseEvent>) => {
@@ -154,6 +203,7 @@ export function Scene(props: SceneProps) {
                     e.stopPropagation()
                   }}
                   geometry={nodes[name].geometry}
+                  // material={nodes[name].material}
                 />
                 <Text
                   key={`${name}-text`}
@@ -170,13 +220,41 @@ export function Scene(props: SceneProps) {
               <Mesh
                 key={name}
                 // scale={0.1}
+                receiveShadow
                 position={[0, 0, 0]}
                 rotation={[0, 0, 0]}
                 geometry={nodes[name].geometry}
+                // material={nodes[name].material}
               />
             )
           }
         })}
+      {/* <AccumulativeShadows
+        temporal
+        frames={10}
+        color="purple"
+        colorBlend={0.5}
+        opacity={1}
+        scale={100}
+        alphaTest={0.85}
+      >
+        <RandomizedLight
+          amount={8}
+          radius={50}
+          ambient={0.5}
+          position={[150, 130, 20]}
+          bias={0.01}
+        />
+      </AccumulativeShadows> */}
+      {/* <OrbitControls
+        autoRotate
+        autoRotateSpeed={1}
+        enablePan={false}
+        enableZoom={false}
+        minPolarAngle={Math.PI / 2.1}
+        maxPolarAngle={Math.PI / 2.1}
+      /> */}
     </>
   )
-}
+})
+Scene.displayName = "Scene"

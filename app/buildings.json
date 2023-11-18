@@ -1,5 +1,5 @@
 {
-  "gltf": "/buildings-transformed.glb",
+  "gltf": "/buildings.glb",
   "geometories": [
     { "name": "building1", "label": "建物1" },
     { "name": "building1001", "label": "建物1-1" },
