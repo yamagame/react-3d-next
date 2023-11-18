@@ -233,7 +233,18 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                       const values = center.toArray()
                       let apply = false
 
-                      cameraControlsRef.current?.moveTo(...values, true)
+                      cameraControlsRef.current?.colliderMeshes.splice(0)
+                      cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+
+                      cameraControlsRef.current?.moveTo(...values, true).then(() => {
+                        cameraControlsRef.current?.colliderMeshes.splice(0)
+                        cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+                        Object.keys(bbox)
+                          .filter((key) => key != name)
+                          .forEach((key) => {
+                            cameraControlsRef.current?.colliderMeshes.push(bbox[key])
+                          })
+                      })
                       const direction = cameraDirection()
                       if (direction.length() < 20) {
                         const direction = cameraDirection().normalize().multiplyScalar(-20)
@@ -256,15 +267,6 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                         cameraControlsRef.current?.setPosition(...cameraPosition.toArray(), true)
                       }
                       setPointCamera("")
-
-                      cameraControlsRef.current?.colliderMeshes.splice(0)
-                      cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
-
-                      // Object.keys(bbox)
-                      //   .filter((key) => key != name)
-                      //   .forEach((key) => {
-                      //     cameraControlsRef.current?.colliderMeshes.push(bbox[key])
-                      //   })
                     }
                     e.stopPropagation()
                   }}
