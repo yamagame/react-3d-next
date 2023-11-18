@@ -32,7 +32,6 @@ export type SceneHandler = {
 }
 
 export const Scene = React.forwardRef((props: SceneProps, ref) => {
-  const [preset, setPreset] = useState("sunset")
   const { nodes } = useGLTF(props.gltf) as GLTFResult
   const [pointCamera, setPointCamera] = useState("")
 
@@ -95,10 +94,11 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   const directionalCtl = useControls("Directional Light", {
     visible: true,
     position: {
-      x: 1000.0,
-      y: 1000.0,
-      z: -1000.0,
+      x: 100.0,
+      y: 100.0,
+      z: -100.0,
     },
+    bias: { value: 0, min: 0, max: 200 },
     castShadow: true,
   })
 
@@ -110,26 +110,14 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         visible={directionalCtl.visible}
         position={[directionalCtl.position.x, directionalCtl.position.y, directionalCtl.position.z]}
         castShadow={directionalCtl.castShadow}
+        shadow-camera-left={-200}
+        shadow-camera-right={200}
+        shadow-camera-top={200}
+        shadow-camera-bottom={-200}
+        shadow-bias={-directionalCtl.bias / 100000.0}
         shadow-mapSize={[1024, 1024]}
-      >
-        <orthographicCamera attach="shadow-camera" args={[-200, 200, 200, -200]} />
-      </directionalLight>
-      {/* <ambientLight intensity={Math.PI / 2} />
-      <pointLight position={[-2, 10, 10]} />
-      <directionalLight position={[2, 5, -5]} intensity={0.5} /> */}
-      <CameraControls
-        ref={cameraControlsRef}
-        // onStart={() => {}}
-        // onEnd={() => {}}
-        // onChange={(e) => {
-        //   const pos = cameraControlsRef.current?.getPosition(new THREE.Vector3())
-        //   if (pos && pos.y < 1) {
-        //     pos.setY(1)
-        //     cameraControlsRef.current?.setPosition(...pos.toArray(), false)
-        //   }
-        // }}
-        enabled={true}
       />
+      <CameraControls ref={cameraControlsRef} enabled={true} />
       {Object.keys(nodes)
         .filter((name) => name != "Scene")
         .filter((name) => name != pointCamera)
@@ -140,6 +128,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
               <HoverMesh
                 key={name}
                 // scale={0.1}
+                castShadow
+                receiveShadow
                 position={[0, 0, 0]}
                 rotation={[0, 0, 0]}
                 onClick={(e: ThreeEvent<MouseEvent>) => {
@@ -220,6 +210,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
               <Mesh
                 key={name}
                 // scale={0.1}
+                castShadow
                 receiveShadow
                 position={[0, 0, 0]}
                 rotation={[0, 0, 0]}
