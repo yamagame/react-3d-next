@@ -77,8 +77,13 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   React.useImperativeHandle(ref, () => {
     return {
       resetCamera() {
+        setPointCamera("")
+
         cameraControlsRef.current?.moveTo(0, 1, 0, true)
         cameraControlsRef.current?.setPosition(90, 40, 90, true)
+
+        cameraControlsRef.current?.colliderMeshes.splice(0)
+        cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
       },
     }
   })

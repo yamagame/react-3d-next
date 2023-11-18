@@ -4,6 +4,7 @@ import React, { RefObject } from "react"
 import { Canvas } from "@react-three/fiber"
 import { Scene, SceneHandler } from "./scene"
 import buildings from "./buildings.json"
+import { Leva } from "leva"
 
 type BoxT = { x: number; y: number; angle: number }
 
@@ -53,6 +54,7 @@ export default function Home() {
           <div className="button">ALL</div>
         </a>
       </div>
+      <Leva collapsed />
       <Canvas shadows camera={{ fov: 55, near: 0.1, far: 1000 }} style={{ borderRadius: 20 }}>
         <Scene ref={sceneRef} {...buildings} />
         <axesHelper args={[50]} />
