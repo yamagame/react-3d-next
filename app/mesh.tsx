@@ -12,6 +12,8 @@ export function HoverMesh(
     size?: typeof THREE.BoxGeometry.arguments
     object?: GLTF
     geometry?: any
+    selected?: boolean
+    focused?: boolean
   }
 ) {
   const ref = useRef<THREE.Mesh>(null!)
@@ -39,8 +41,9 @@ export function HoverMesh(
       <meshStandardMaterial
         metalness={metalness}
         roughness={roughness}
-        color={hovered ? "hotpink" : "white"}
+        color={props.selected ? "hotpink" : hovered ? "pink" : "white"}
       />
+      {/* <shadowMaterial attach="material" color="#000" transparent={false} fog /> */}
     </mesh>
   )
 }

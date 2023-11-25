@@ -70,6 +70,8 @@ function box3ToVert(box3: THREE.Box3) {
 export const Scene = React.forwardRef((props: SceneProps, ref) => {
   const { nodes } = useGLTF(props.gltf) as GLTFResult
   const [pointCamera, setPointCamera] = useState("")
+  const [selectObject, setSelectObject] = useState("")
+  const [focusObject, setFocusObject] = useState("")
   const [bbox, setBbox] = useState<{ [index: string]: THREE.Mesh }>({})
 
   const textRef = useRef<{ [index: string]: RefObject<THREE.Mesh> }>({})
@@ -160,6 +162,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       z: -100.0,
     },
     bias: { value: 0, min: 0, max: 200 },
+    normalBias: { value: 200, min: 0, max: 200 },
     castShadow: true,
   })
 
@@ -169,6 +172,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       <Sky />
       <directionalLight
         visible={directionalCtl.visible}
+        // intensity={0.5}
         position={[directionalCtl.position.x, directionalCtl.position.y, directionalCtl.position.z]}
         castShadow={directionalCtl.castShadow}
         shadow-camera-left={-200}
@@ -178,7 +182,9 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         shadow-camera-near={0.5}
         shadow-camera-far={5000}
         shadow-bias={-directionalCtl.bias / 100000.0}
-        shadow-mapSize={[1024, 1024]}
+        shadow-normalBias={directionalCtl.normalBias / 200.0}
+        shadow-mapSize={[2048, 2048]}
+        // shadow-blurSamples={2}
       />
       <CameraControls ref={cameraControlsRef} enabled={true} maxDistance={300} />
       {Object.keys(nodes)
@@ -206,6 +212,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                     cameraControlsRef.current?.moveTo(...target.toArray(), true)
                     cameraControlsRef.current?.setPosition(...center.toArray(), true)
                     setPointCamera(name)
+                    setSelectObject("")
+                    setFocusObject("")
 
                     cameraControlsRef.current?.colliderMeshes.splice(0)
                     cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
@@ -231,8 +239,19 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                   receiveShadow
                   position={[0, 0, 0]}
                   rotation={[0, 0, 0]}
+                  selected={selectObject === name}
+                  focused={focusObject === name}
                   onClick={(e: ThreeEvent<MouseEvent>) => {
+                    if (e.delta > 1) {
+                      e.stopPropagation()
+                      return
+                    }
                     if (center) {
+                      if (selectObject !== name) {
+                        setSelectObject(name)
+                        e.stopPropagation()
+                        return
+                      }
                       let cameraPosition = new THREE.Vector3()
                       cameraControlsRef.current?.getPosition(cameraPosition)
                       const values = center.toArray()
@@ -272,6 +291,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                         cameraControlsRef.current?.setPosition(...cameraPosition.toArray(), true)
                       }
                       setPointCamera("")
+                      setSelectObject("")
+                      setFocusObject(name)
                     }
                     e.stopPropagation()
                   }}

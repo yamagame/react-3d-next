@@ -1,6 +1,7 @@
 "use client"
 
-import React, { RefObject } from "react"
+import React from "react"
+import * as THREE from "three"
 import { Canvas } from "@react-three/fiber"
 import { Scene, SceneHandler } from "./scene"
 import buildings from "./buildings.json"
@@ -55,7 +56,16 @@ export default function Home() {
         </a>
       </div>
       <Leva collapsed />
-      <Canvas shadows camera={{ fov: 55, near: 0.1, far: 1000 }} style={{ borderRadius: 20 }}>
+      <Canvas
+        shadows
+        camera={{ fov: 55, near: 0.1, far: 5000 }}
+        style={{ borderRadius: 10 }}
+        // onCreated={({ gl }) => {
+        //   // gl.shadowMap.enabled = true
+        //   gl.shadowMap.type = THREE.PCFSoftShadowMap
+        //   // gl.setPixelRatio(window.devicePixelRatio || 2)
+        // }}
+      >
         <Scene ref={sceneRef} {...buildings} />
         <axesHelper args={[50]} />
       </Canvas>
