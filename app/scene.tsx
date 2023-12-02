@@ -247,11 +247,11 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                       return
                     }
                     if (center) {
-                      if (selectObject !== name) {
-                        setSelectObject(name)
-                        e.stopPropagation()
-                        return
-                      }
+                      // if (selectObject !== name) {
+                      //   setSelectObject(name)
+                      //   e.stopPropagation()
+                      //   return
+                      // }
                       let cameraPosition = new THREE.Vector3()
                       cameraControlsRef.current?.getPosition(cameraPosition)
                       const values = center.toArray()
