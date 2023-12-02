@@ -30,6 +30,7 @@ type SceneProps = {
 export type SceneHandler = {
   resetCamera: () => void
   selectBuilding: (name: string) => void
+  startDetection: () => void
 }
 
 function box3ToVert(box3: THREE.Box3) {
@@ -91,6 +92,9 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       selectBuilding(name: string) {
         setFocusObject(name)
       },
+      startDetection(){
+        speechRef.current?.start()
+      }
     }
   })
 
@@ -99,6 +103,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   }, [focusObject])
 
   const cameraControlsRef = useRef<CameraControls>(null)
+  const speechRef = useRef(null)
 
   useMemo(() => {
     Object.keys(nodes).forEach((name) => {
@@ -130,6 +135,15 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         }
       })
     setBbox(boxes)
+
+    const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+    speechRef.current = new SpeechRecognition();
+    console.log(speechRef)
+    speechRef.current.onresult = (event) => {
+      const resultText = event.results[0][0].transcript//音声認識結果
+
+      console.log(resultText)
+    }
   }, [nodes])
 
   const color = useMemo(() => new THREE.Color(), [])
