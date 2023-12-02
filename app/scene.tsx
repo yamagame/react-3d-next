@@ -29,6 +29,7 @@ type SceneProps = {
 
 export type SceneHandler = {
   resetCamera: () => void
+  selectBuilding: (name: string) => void
 }
 
 function box3ToVert(box3: THREE.Box3) {
@@ -87,8 +88,15 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         cameraControlsRef.current?.colliderMeshes.splice(0)
         cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
       },
+      selectBuilding(name: string) {
+        setFocusObject(name)
+      },
     }
   })
+
+  useEffect(() => {
+    console.log(`focusObject ${focusObject}`)
+  }, [focusObject])
 
   const cameraControlsRef = useRef<CameraControls>(null)
 

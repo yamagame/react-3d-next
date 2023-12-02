@@ -39,6 +39,7 @@ function Overlay() {
 
 export default function Home() {
   const sceneRef = React.useRef<SceneHandler>()
+
   return (
     <div className="main-canvas">
       <div className="nav">
@@ -46,7 +47,13 @@ export default function Home() {
         <div />
         <div />
         <div />
-        <div />
+        <a
+          onClick={() => {
+            sceneRef.current?.selectBuilding("建物1")
+          }}
+        >
+          <div className="button">マイク</div>
+        </a>
         <a
           onClick={() => {
             sceneRef.current?.resetCamera()
