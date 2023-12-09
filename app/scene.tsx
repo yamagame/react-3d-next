@@ -25,6 +25,11 @@ type GLTFResult = GLTF & {
 type SceneProps = {
   gltf: string
   geometories: { name: string; label?: string }[]
+  camera: {
+    target: number[]
+    position: number[]
+    distance: { max: number }
+  }
 }
 
 export type SceneHandler = {
@@ -69,6 +74,11 @@ function box3ToVert(box3: THREE.Box3) {
 }
 
 export const Scene = React.forwardRef((props: SceneProps, ref) => {
+  const { camera } = props
+  const initialcamera = {
+    target: { x: camera.target[0], y: camera.target[1], z: camera.target[2] },
+    position: { x: camera.position[0], y: camera.position[1], z: camera.position[2] },
+  }
   const { nodes } = useGLTF(props.gltf) as GLTFResult
   const [pointCamera, setPointCamera] = useState("")
   const [selectObject, setSelectObject] = useState("")
@@ -82,11 +92,24 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       resetCamera() {
         setPointCamera("")
 
-        cameraControlsRef.current?.moveTo(0, 1, 0, true)
-        cameraControlsRef.current?.setPosition(90, 40, 90, true)
+        cameraControlsRef.current?.moveTo(
+          initialcamera.target.x,
+          initialcamera.target.y,
+          initialcamera.target.z,
+          true
+        )
+        cameraControlsRef.current?.setPosition(
+          initialcamera.position.x,
+          initialcamera.position.y,
+          initialcamera.position.z,
+          true
+        )
 
         cameraControlsRef.current?.colliderMeshes.splice(0)
-        cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+
+        if (nodes["Plane"]) {
+          cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+        }
       },
       selectBuilding(name: string) {
         setFocusObject(name)
@@ -107,12 +130,25 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   }, [nodes])
 
   useEffect(() => {
-    cameraControlsRef.current?.moveTo(0, 1, 0, false)
-    cameraControlsRef.current?.setPosition(90, 40, 90, false)
+    cameraControlsRef.current?.moveTo(
+      initialcamera.target.x,
+      initialcamera.target.y,
+      initialcamera.target.z,
+      false
+    )
+    cameraControlsRef.current?.setPosition(
+      initialcamera.position.x,
+      initialcamera.position.y,
+      initialcamera.position.z,
+      false
+    )
     cameraControlsRef.current?.colliderMeshes.splice(0)
-    cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+    if (nodes["Plane"]) {
+      cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+    }
 
     const boxes: { [index: string]: THREE.Mesh } = {}
+    console.log(Object.keys(nodes))
     Object.keys(nodes)
       .filter((key) => key.indexOf("building") == 0)
       .forEach((key) => {
@@ -194,7 +230,11 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         shadow-mapSize={[2048, 2048]}
         // shadow-blurSamples={2}
       />
-      <CameraControls ref={cameraControlsRef} enabled={true} maxDistance={300} />
+      <CameraControls
+        ref={cameraControlsRef}
+        enabled={true}
+        maxDistance={props.camera.distance.max}
+      />
       {Object.keys(nodes)
         .filter((name) => name != "Scene")
         .filter((name) => name != pointCamera)
@@ -266,11 +306,15 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                       let apply = false
 
                       cameraControlsRef.current?.colliderMeshes.splice(0)
-                      cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+                      if (nodes["Plane"]) {
+                        cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+                      }
 
                       cameraControlsRef.current?.moveTo(...values, true).then(() => {
                         cameraControlsRef.current?.colliderMeshes.splice(0)
-                        cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+                        if (nodes["Plane"]) {
+                          cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+                        }
                         Object.keys(bbox)
                           .filter((key) => key != name)
                           .forEach((key) => {

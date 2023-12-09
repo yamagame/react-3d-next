@@ -4,7 +4,8 @@ import React from "react"
 import * as THREE from "three"
 import { Canvas } from "@react-three/fiber"
 import { Scene, SceneHandler } from "./scene"
-import buildings from "./buildings.json"
+// import scenedata from "./building/uec-ground.json"
+import scenedata from "./building/buildings.json"
 import { Leva } from "leva"
 
 type BoxT = { x: number; y: number; angle: number }
@@ -73,7 +74,7 @@ export default function Home() {
         //   // gl.setPixelRatio(window.devicePixelRatio || 2)
         // }}
       >
-        <Scene ref={sceneRef} {...buildings} />
+        <Scene ref={sceneRef} {...scenedata} />
         <axesHelper args={[50]} />
       </Canvas>
       {/* <Overlay /> */}

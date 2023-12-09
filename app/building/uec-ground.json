@@ -1,0 +1,9 @@
+{
+  "gltf": "glb/uec-ground.glb",
+  "geometories": [],
+  "camera": {
+    "target": [-50, -1, -50],
+    "position": [-50, 600, 150],
+    "distance": { "max": 800 }
+  }
+}
