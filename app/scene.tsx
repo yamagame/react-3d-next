@@ -35,6 +35,7 @@ type SceneProps = {
 export type SceneHandler = {
   resetCamera: () => void
   selectBuilding: (name: string) => void
+  startDetection: () => void
 }
 
 function box3ToVert(box3: THREE.Box3) {
@@ -87,6 +88,68 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
 
   const textRef = useRef<{ [index: string]: RefObject<THREE.Mesh> }>({})
 
+  // nameと一致する建物にフォーカスする
+  function focusBuilding(str: string) {
+    const name = props.geometories.find((v) => v.label == str)?.name || str //
+    const label = props.geometories.find((v) => v.name === name)?.label || name
+    if (nodes[name] != null) {
+      //その名前の建物が存在する
+      const geometory = nodes[name].geometry
+      const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
+      const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
+      if (center) {
+        let cameraPosition = new THREE.Vector3()
+        cameraControlsRef.current?.getPosition(cameraPosition)
+        const values = center.toArray()
+        let apply = false
+
+        cameraControlsRef.current?.colliderMeshes.splice(0)
+        if (nodes["Plane"]) {
+          cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+        }
+
+        cameraControlsRef.current?.moveTo(...values, true).then(() => {
+          cameraControlsRef.current?.colliderMeshes.splice(0)
+          if (nodes["Plane"]) {
+            cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
+          }
+          Object.keys(bbox)
+            .filter((key) => key != name)
+            .forEach((key) => {
+              cameraControlsRef.current?.colliderMeshes.push(bbox[key])
+            })
+        })
+        const direction = cameraDirection()
+        if (direction.length() < 20) {
+          const direction = cameraDirection().normalize().multiplyScalar(-20)
+          cameraPosition = cameraPosition.add(direction)
+          apply = true
+        } else if (direction.length() > 60) {
+          const cameraTarget = new THREE.Vector3()
+          cameraControlsRef.current?.getTarget(cameraTarget)
+          const direction = cameraDirection().normalize().multiplyScalar(-40)
+          cameraPosition = cameraTarget.add(direction)
+          apply = true
+        }
+
+        if (cameraPosition.y < 0) {
+          cameraPosition.setY(20)
+          apply = true
+        }
+
+        if (apply) {
+          cameraControlsRef.current?.setPosition(...cameraPosition.toArray(), true)
+        }
+        setPointCamera("")
+        setSelectObject("")
+        setFocusObject(name)
+        console.log("focus" + name)
+      }
+    } else {
+      console.log("focusBuilding:cannot find " + name)
+    }
+  }
+
   React.useImperativeHandle(ref, () => {
     return {
       resetCamera() {
@@ -113,6 +176,11 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       },
       selectBuilding(name: string) {
         setFocusObject(name)
+        console.log("select:" + name)
+      },
+      startRecognition() {
+        //page.tsxから参照
+        speechRef.current?.start()
       },
     }
   })
@@ -122,6 +190,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   }, [focusObject])
 
   const cameraControlsRef = useRef<CameraControls>(null)
+  const speechRef = useRef(null)
 
   useMemo(() => {
     Object.keys(nodes).forEach((name) => {
@@ -166,6 +235,18 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         }
       })
     setBbox(boxes)
+
+    //音声認識
+    const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition
+    speechRef.current = new SpeechRecognition()
+    console.log(speechRef)
+    speechRef.current.onresult = (event) => {
+      const resultText = event.results[0][0].transcript //音声認識結果
+      //setFocusObject(resultText)
+      //focusBuilding("building2007")
+      focusBuilding(resultText)
+      console.log(resultText)
+    }
   }, [nodes])
 
   const color = useMemo(() => new THREE.Color(), [])
@@ -294,58 +375,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                       e.stopPropagation()
                       return
                     }
-                    if (center) {
-                      // if (selectObject !== name) {
-                      //   setSelectObject(name)
-                      //   e.stopPropagation()
-                      //   return
-                      // }
-                      let cameraPosition = new THREE.Vector3()
-                      cameraControlsRef.current?.getPosition(cameraPosition)
-                      const values = center.toArray()
-                      let apply = false
-
-                      cameraControlsRef.current?.colliderMeshes.splice(0)
-                      if (nodes["Plane"]) {
-                        cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
-                      }
-
-                      cameraControlsRef.current?.moveTo(...values, true).then(() => {
-                        cameraControlsRef.current?.colliderMeshes.splice(0)
-                        if (nodes["Plane"]) {
-                          cameraControlsRef.current?.colliderMeshes.push(nodes["Plane"])
-                        }
-                        Object.keys(bbox)
-                          .filter((key) => key != name)
-                          .forEach((key) => {
-                            cameraControlsRef.current?.colliderMeshes.push(bbox[key])
-                          })
-                      })
-                      const direction = cameraDirection()
-                      if (direction.length() < 20) {
-                        const direction = cameraDirection().normalize().multiplyScalar(-20)
-                        cameraPosition = cameraPosition.add(direction)
-                        apply = true
-                      } else if (direction.length() > 60) {
-                        const cameraTarget = new THREE.Vector3()
-                        cameraControlsRef.current?.getTarget(cameraTarget)
-                        const direction = cameraDirection().normalize().multiplyScalar(-40)
-                        cameraPosition = cameraTarget.add(direction)
-                        apply = true
-                      }
-
-                      if (cameraPosition.y < 0) {
-                        cameraPosition.setY(20)
-                        apply = true
-                      }
-
-                      if (apply) {
-                        cameraControlsRef.current?.setPosition(...cameraPosition.toArray(), true)
-                      }
-                      setPointCamera("")
-                      setSelectObject("")
-                      setFocusObject(name)
-                    }
+                    focusBuilding(name)
                     e.stopPropagation()
                   }}
                   geometry={nodes[name].geometry}
