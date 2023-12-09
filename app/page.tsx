@@ -48,7 +48,7 @@ export default function Home() {
         <div />
         <a
           onClick={() => {
-            sceneRef.current?.startDetection()
+            sceneRef.current?.startRecognition()//音声認識スタート
             //sceneRef.current?.selectBuilding("建物1")
           }}
         >
