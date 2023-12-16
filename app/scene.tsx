@@ -33,10 +33,12 @@ type SceneProps = {
 }
 
 export type SceneHandler = {
-  resetCamera: () => void
-  selectBuilding: (name: string) => void
-  startDetection: () => void
-}
+  resetCamera: () => void,
+  selectBuilding: (name: string) => void,
+  startDetection: () => void,
+  startRecognition:() => void,
+  startGeolocation:() => void,
+} 
 
 function box3ToVert(box3: THREE.Box3) {
   return new Float32Array([
@@ -73,6 +75,7 @@ function box3ToVert(box3: THREE.Box3) {
     box3.max.z,
   ])
 }
+
 
 export const Scene = React.forwardRef((props: SceneProps, ref) => {
   const { camera } = props
@@ -149,6 +152,12 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       console.log("focusBuilding:cannot find " + name)
     }
   }
+  function geo_success(position: GeolocationPosition){//位置情報が更新された際に呼び出される
+    console.log(position)
+  }
+  function geo_error(error: GeolocationPositionError){
+    console.log("位置情報の取得に失敗しました timestamp: "+error.message)
+  }
 
   React.useImperativeHandle(ref, () => {
     return {
@@ -182,6 +191,16 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         //page.tsxから参照
         speechRef.current?.start()
       },
+      startGeolocation(){
+        console.log("ここでGeolocationをスタートする!")
+            //Geolocation, GPS, 位置情報
+        let geo_options={
+          enableHighAccuracy: false,
+          timeout: 5000,
+          maximumAge: 0,
+        };
+        geolocationRef.current=navigator.geolocation.watchPosition(geo_success,geo_error,geo_options)
+      }
     }
   })
 
@@ -191,6 +210,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
 
   const cameraControlsRef = useRef<CameraControls>(null)
   const speechRef = useRef(null)
+  const geolocationRef = useRef(0)
 
   useMemo(() => {
     Object.keys(nodes).forEach((name) => {
@@ -238,15 +258,26 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
 
     //音声認識
     const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition
+    const SpeechGrammarList =window.webkitSpeechGrammarList || window.SpeechGrammarList
     speechRef.current = new SpeechRecognition()
+    //辞書登録
+    let dict="#JSGF V1.0; grammar colors; public <color> = ";
+    Object.keys(nodes).forEach((key) => {
+      dict+=key
+      dict+="|"
+    })
+    dict += ";"
+    console.log(dict)
+    const speechRecognitionList=new SpeechGrammarList()
+    speechRecognitionList.addFromString(dict, 1);
+    speechRef.current.grammars = speechRecognitionList;
     console.log(speechRef)
     speechRef.current.onresult = (event) => {
       const resultText = event.results[0][0].transcript //音声認識結果
-      //setFocusObject(resultText)
-      //focusBuilding("building2007")
       focusBuilding(resultText)
       console.log(resultText)
     }
+
   }, [nodes])
 
   const color = useMemo(() => new THREE.Color(), [])

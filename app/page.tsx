@@ -4,8 +4,8 @@ import React from "react"
 import * as THREE from "three"
 import { Canvas } from "@react-three/fiber"
 import { Scene, SceneHandler } from "./scene"
-// import scenedata from "./building/uec-ground.json"
-import scenedata from "./building/buildings.json"
+ import scenedata from "./building/uec-ground.json"
+//import scenedata from "./building/buildings.json"
 import { Leva } from "leva"
 
 type BoxT = { x: number; y: number; angle: number }
@@ -46,11 +46,16 @@ export default function Home() {
         <h1 className="label" />
         <div />
         <div />
-        <div />
+        <a
+          onClick={() => {
+            sceneRef.current?.startGeolocation() //位置情報
+          }}
+        >
+          <div className="button">位置情報</div>
+        </a>
         <a
           onClick={() => {
             sceneRef.current?.startRecognition() //音声認識スタート
-            //sceneRef.current?.selectBuilding("建物1")
           }}
         >
           <div className="button">マイク</div>
