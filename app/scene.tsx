@@ -14,7 +14,7 @@ import * as THREE from "three"
 import { HoverMesh, Mesh } from "./mesh"
 import { useFrame, ThreeEvent } from "@react-three/fiber"
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader"
-import { Sky, Text, CameraControls, useGLTF } from "@react-three/drei"
+import { Sky, Text, CameraControls, useGLTF, Sphere } from "@react-three/drei"
 import { Env } from "./environment"
 
 type GLTFResult = GLTF & {
@@ -30,6 +30,12 @@ type SceneProps = {
     position: number[]
     distance: { max: number }
   }
+}
+
+type PosAndLatLong ={
+  position: THREE.Vector3,
+  latitude: number,
+  longitude: number,
 }
 
 export type SceneHandler = {
@@ -90,7 +96,11 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   const [bbox, setBbox] = useState<{ [index: string]: THREE.Mesh }>({})
 
   const textRef = useRef<{ [index: string]: RefObject<THREE.Mesh> }>({})
-
+  const [currentPosition,setCurrentPosition] = useState<THREE.Vector3>(new THREE.Vector3())//現在位置
+  const currentPositionCtl=useControls("Geolocation", {//Levaを使う場合はこちら
+    latitude: { value: 35.656, min:35.6558838 , max: 35.6572986 },
+    longitude: { value: 139.542, min: 139.5418247, max:139.5426839 },
+  })
   // nameと一致する建物にフォーカスする
   function focusBuilding(str: string) {
     const name = props.geometories.find((v) => v.label == str)?.name || str //
@@ -147,6 +157,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         setSelectObject("")
         setFocusObject(name)
         console.log("focus" + name)
+        console.log(nodes[name])
       }
     } else {
       console.log("focusBuilding:cannot find " + name)
@@ -154,6 +165,9 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   }
   function geo_success(position: GeolocationPosition){//位置情報が更新された際に呼び出される
     console.log(position)
+    const vec=calcCurrentPosition(position.coords.altitude as number,position.coords.longitude as number)
+    setCurrentPosition(vec)
+    console.log(currentPosition)
   }
   function geo_error(error: GeolocationPositionError){
     console.log("位置情報の取得に失敗しました timestamp: "+error.message)
@@ -211,6 +225,23 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   const cameraControlsRef = useRef<CameraControls>(null)
   const speechRef = useRef(null)
   const geolocationRef = useRef(0)
+  const w11PosRef = useRef<PosAndLatLong>(null!)
+  const auditoriumPosRef = useRef<PosAndLatLong>(null!)
+  function calcCurrentPosition(latitude:number,longitude:number){
+    const latLength=auditoriumPosRef.current?.latitude-w11PosRef.current?.latitude;
+    const longLength=auditoriumPosRef.current?.longitude-w11PosRef.current?.longitude;
+    const xLength=auditoriumPosRef.current?.position.x-w11PosRef.current?.position.x;
+    const zLength=auditoriumPosRef.current?.position.z-w11PosRef.current?.position.z;
+    const w11lat=w11PosRef.current?.latitude
+    const w11long=w11PosRef.current?.longitude
+    const w11x=w11PosRef.current?.position.x;
+    const w11z=w11PosRef.current?.position.z;
+    let position=new THREE.Vector3()
+    position.y=(w11PosRef.current?.position.y+auditoriumPosRef.current?.position.y)/2
+    position.x=(latitude-w11lat)/latLength*xLength+w11x
+    position.z=(longitude-w11long)/longLength*zLength+w11z;
+    return position;
+  }
 
   useMemo(() => {
     Object.keys(nodes).forEach((name) => {
@@ -347,6 +378,20 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         enabled={true}
         maxDistance={props.camera.distance.max}
       />
+      <Sphere
+                key={"currentPosition"}
+                scale={10.1}
+                castShadow
+                receiveShadow
+                position={//currentPosition
+                            calcCurrentPosition(currentPositionCtl.latitude,currentPositionCtl.longitude)}//GPSを使うときは変更
+                rotation={[0, 0, 0]}
+                material={new THREE.MeshBasicMaterial({color:0xff0000})}
+                onClick={(e:ThreeEvent<MouseEvent>)=>{
+                  console.log(currentPosition)
+                  console.log(e.object.position)
+                }}
+              />
       {Object.keys(nodes)
         .filter((name) => name != "Scene")
         .filter((name) => name != pointCamera)
@@ -390,6 +435,20 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
             const geometory = nodes[name].geometry
             const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
             const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
+            if (name.indexOf("building_西11号館ボディ") == 0){
+              const pos=center || new THREE.Vector3()
+              w11PosRef.current={position:pos,latitude:0,longitude:0}
+              w11PosRef.current.position=center||new THREE.Vector3()
+              w11PosRef.current.latitude=35.6572986
+              w11PosRef.current.longitude=139.5418247
+              console.log( w11PosRef.current)
+            }else if (name.indexOf("building_講堂ボディ") == 0){
+              const pos=center || new THREE.Vector3()
+              auditoriumPosRef.current={position:pos,latitude:0,longitude:0}
+              auditoriumPosRef.current.latitude=35.6558838
+              auditoriumPosRef.current.longitude=139.5426839
+              console.log( auditoriumPosRef.current)
+            }
             return (
               <group key={`${name}-container`}>
                 <HoverMesh
@@ -449,6 +508,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
           />
         )
       })} */}
+     
     </>
   )
 })
