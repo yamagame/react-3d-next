@@ -392,8 +392,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                 scale={5}
                 castShadow
                 receiveShadow
-                position={//currentPosition
-                          calcCurrentPosition(currentPositionCtl.latitude,currentPositionCtl.longitude)
+                position={currentPosition
+                          //calcCurrentPosition(currentPositionCtl.latitude,currentPositionCtl.longitude)
                         }//GPSを使うときは変更
                 rotation={[0, 0, 0]}
                 material={new THREE.MeshBasicMaterial({color:0xff0000})}
