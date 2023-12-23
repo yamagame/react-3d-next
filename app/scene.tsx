@@ -165,9 +165,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   }
   function geo_success(position: GeolocationPosition){//位置情報が更新された際に呼び出される
     console.log(position)
-    const vec=calcCurrentPosition(position.coords.altitude as number,position.coords.longitude as number)
-    setCurrentPosition(vec)
-    console.log(currentPosition)
+    setCurrentPosition(calcCurrentPosition(position.coords.latitude,position.coords.longitude))
+    console.log(calcCurrentPosition(position.coords.latitude,position.coords.longitude))
   }
   function geo_error(error: GeolocationPositionError){
     console.log("位置情報の取得に失敗しました timestamp: "+error.message)
@@ -227,7 +226,12 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   const geolocationRef = useRef(0)
   const w11PosRef = useRef<PosAndLatLong>(null!)
   const auditoriumPosRef = useRef<PosAndLatLong>(null!)
-  function calcCurrentPosition(latitude:number,longitude:number){
+
+  function calcCurrentPosition(latitude:number|null,longitude:number|null){
+    if(latitude==null || longitude==null){
+      console.log("Failed to calc position:Latitude or Longitude is Null")
+      return new THREE.Vector3(-1,-1,-1)
+    }
     const latLength=auditoriumPosRef.current?.latitude-w11PosRef.current?.latitude;
     const longLength=auditoriumPosRef.current?.longitude-w11PosRef.current?.longitude;
     const xLength=auditoriumPosRef.current?.position.x-w11PosRef.current?.position.x;
@@ -380,11 +384,12 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       />
       <Sphere
                 key={"currentPosition"}
-                scale={10.1}
+                scale={30.1}
                 castShadow
                 receiveShadow
                 position={//currentPosition
-                            calcCurrentPosition(currentPositionCtl.latitude,currentPositionCtl.longitude)}//GPSを使うときは変更
+                          calcCurrentPosition(currentPositionCtl.latitude,currentPositionCtl.longitude)
+                        }//GPSを使うときは変更
                 rotation={[0, 0, 0]}
                 material={new THREE.MeshBasicMaterial({color:0xff0000})}
                 onClick={(e:ThreeEvent<MouseEvent>)=>{
@@ -441,13 +446,14 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
               w11PosRef.current.position=center||new THREE.Vector3()
               w11PosRef.current.latitude=35.6572986
               w11PosRef.current.longitude=139.5418247
-              console.log( w11PosRef.current)
+              console.log("set w11")
             }else if (name.indexOf("building_講堂ボディ") == 0){
               const pos=center || new THREE.Vector3()
               auditoriumPosRef.current={position:pos,latitude:0,longitude:0}
               auditoriumPosRef.current.latitude=35.6558838
               auditoriumPosRef.current.longitude=139.5426839
-              console.log( auditoriumPosRef.current)
+              console.log("set auditorium")
+
             }
             return (
               <group key={`${name}-container`}>
