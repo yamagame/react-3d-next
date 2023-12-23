@@ -101,8 +101,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
 
   // nameと一致する建物にフォーカスする
   function focusBuilding(str: string) {
-    const name = props.geometories.find((v) => v.label == str)?.name || str //
-    const label = props.geometories.find((v) => v.name === name)?.label || name
+    let name = props.geometories.find((v) => v.label && v.label.indexOf(str) >= 0)?.name || str
+    name = Object.keys(nodes).find((key) => key.indexOf(name) >= 0) || name
     if (nodes[name] != null) {
       //その名前の建物が存在する
       const geometory = nodes[name].geometry
