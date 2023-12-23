@@ -280,7 +280,10 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     //音声認識
     const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition
     const SpeechGrammarList = (window as any).webkitSpeechGrammarList || (window as any).SpeechGrammarList
-    speechRef.current = new SpeechRecognition() as any
+    const recognizer = new SpeechRecognition() as any
+    recognizer.lang = 'ja-JP'
+    // recognizer.interimResults = true
+    // recognizer.continuous = true
     //辞書登録
     // let dict="#JSGF V1.0; grammar colors; public <color> = ";
     // Object.keys(nodes).forEach((key) => {
@@ -292,11 +295,15 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     // const speechRecognitionList=new SpeechGrammarList()
     // speechRecognitionList.addFromString(dict, 1);
     // (speechRef.current as any).grammars = speechRecognitionList;
-    ;(speechRef.current as any).onresult = (event: any) => {
+    ;(recognizer as any).onresult = (event: any) => {
+      console.log('result', event.results)
       const resultText = event.results[0][0].transcript //音声認識結果
       focusBuilding(resultText)
-      console.log(resultText)
     }
+    ;(recognizer as any).onend = (event: any) => {
+      console.log('end', event)
+    }
+    speechRef.current = recognizer
   }, [nodes])
 
   const color = useMemo(() => new THREE.Color(), [])
