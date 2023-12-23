@@ -12,7 +12,7 @@ import { Env } from './environment'
 const w11Lat = 35.65812474191075
 const w11Long = 139.54082511503555
 const auditoriumLat = 35.65563229930534
-const auditoriumLong = 139.5443350850553
+const auditoriumLong = 139.54433508505537
 
 type GLTFResult = GLTF & {
   nodes: { [index: string]: THREE.Mesh }
@@ -369,7 +369,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         receiveShadow
         position={
           currentPosition
-          //calcCurrentPosition(currentPositionCtl.latitude,currentPositionCtl.longitude)
+          //calcCurrentPosition(currentPositionCtl.latitude, currentPositionCtl.longitude)
         } //GPSを使うときは変更
         rotation={[0, 0, 0]}
         material={new THREE.MeshBasicMaterial({ color: 0xff0000 })}
