@@ -207,7 +207,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       },
       startRecognition() {
         //page.tsxから参照
-        speechRef.current?.start()
+        (speechRef.current as any).start()
       },
       startGeolocation(){
         console.log("ここでGeolocationをスタートする!")
@@ -297,8 +297,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     setBbox(boxes)
 
     //音声認識
-    const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition
-    const SpeechGrammarList =window.webkitSpeechGrammarList || window.SpeechGrammarList
+    const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition
+    const SpeechGrammarList =(window as any).webkitSpeechGrammarList || (window as any).SpeechGrammarList
     speechRef.current = new SpeechRecognition()
     //辞書登録
     let dict="#JSGF V1.0; grammar colors; public <color> = ";
@@ -310,9 +310,9 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     console.log(dict)
     const speechRecognitionList=new SpeechGrammarList()
     speechRecognitionList.addFromString(dict, 1);
-    speechRef.current.grammars = speechRecognitionList;
-    console.log(speechRef)
-    speechRef.current.onresult = (event) => {
+    (speechRef.current as any).grammars = speechRecognitionList;
+    //console.log(speechRef)
+    (speechRef.current as any).onresult = (event:any) => {
       const resultText = event.results[0][0].transcript //音声認識結果
       focusBuilding(resultText)
       console.log(resultText)
