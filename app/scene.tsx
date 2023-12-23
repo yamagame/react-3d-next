@@ -227,7 +227,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   }, [focusObject])
 
   const cameraControlsRef = useRef<CameraControls>(null)
-  const speechRef = useRef(null)
+  const speechRef = useRef()
   const geolocationRef = useRef(0)
   const w11PosRef = useRef<PosAndLatLong>(null!)
   const auditoriumPosRef = useRef<PosAndLatLong>(null!)
@@ -299,19 +299,19 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     //音声認識
     const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition
     const SpeechGrammarList =(window as any).webkitSpeechGrammarList || (window as any).SpeechGrammarList
-    speechRef.current = new SpeechRecognition()
+    speechRef.current = new SpeechRecognition() as any
     //辞書登録
-    let dict="#JSGF V1.0; grammar colors; public <color> = ";
-    Object.keys(nodes).forEach((key) => {
-      dict+=key
-      dict+="|"
-    })
-    dict += ";"
-    console.log(dict)
-    const speechRecognitionList=new SpeechGrammarList()
-    speechRecognitionList.addFromString(dict, 1);
-    (speechRef.current as any).grammars = speechRecognitionList;
-    //console.log(speechRef)
+    // let dict="#JSGF V1.0; grammar colors; public <color> = ";
+    // Object.keys(nodes).forEach((key) => {
+    //   dict+=key
+    //   dict+="|"
+    // })
+    // dict += ";"
+    // console.log(dict)
+    // const speechRecognitionList=new SpeechGrammarList()
+    // speechRecognitionList.addFromString(dict, 1);
+    // (speechRef.current as any).grammars = speechRecognitionList;
+
     (speechRef.current as any).onresult = (event:any) => {
       const resultText = event.results[0][0].transcript //音声認識結果
       focusBuilding(resultText)
