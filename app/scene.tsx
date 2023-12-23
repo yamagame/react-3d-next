@@ -17,6 +17,11 @@ import { GLTF } from "three/examples/jsm/loaders/GLTFLoader"
 import { Sky, Text, CameraControls, useGLTF, Sphere } from "@react-three/drei"
 import { Env } from "./environment"
 
+const w11Lat=35.6575904
+const w11Long=139.540662
+const auditoriumLat=35.6557238
+const auditoriumLong=139.5432161
+
 type GLTFResult = GLTF & {
   nodes: { [index: string]: THREE.Mesh }
   materials: {}
@@ -98,8 +103,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   const textRef = useRef<{ [index: string]: RefObject<THREE.Mesh> }>({})
   const [currentPosition,setCurrentPosition] = useState<THREE.Vector3>(new THREE.Vector3())//現在位置
   const currentPositionCtl=useControls("Geolocation", {//Levaを使う場合はこちら
-    latitude: { value: 35.656, min:35.6558838 , max: 35.6572986 },
-    longitude: { value: 139.542, min: 139.5418247, max:139.5426839 },
+    latitude: { value: 35.656, min:auditoriumLat , max: w11Lat },
+    longitude: { value: 139.542, min: w11Long, max:auditoriumLong },
   })
   // nameと一致する建物にフォーカスする
   function focusBuilding(str: string) {
@@ -444,14 +449,14 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
               const pos=center || new THREE.Vector3()
               w11PosRef.current={position:pos,latitude:0,longitude:0}
               w11PosRef.current.position=center||new THREE.Vector3()
-              w11PosRef.current.latitude=35.6572986
-              w11PosRef.current.longitude=139.5418247
+              w11PosRef.current.latitude=35.6575904
+              w11PosRef.current.longitude=139.540662
               console.log("set w11")
             }else if (name.indexOf("building_講堂ボディ") == 0){
               const pos=center || new THREE.Vector3()
               auditoriumPosRef.current={position:pos,latitude:0,longitude:0}
-              auditoriumPosRef.current.latitude=35.6558838
-              auditoriumPosRef.current.longitude=139.5426839
+              auditoriumPosRef.current.latitude=35.6557238
+              auditoriumPosRef.current.longitude=139.5432161
               console.log("set auditorium")
 
             }
