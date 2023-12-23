@@ -247,8 +247,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     const w11z=w11PosRef.current?.position.z;
     let position=new THREE.Vector3()
     position.y=(w11PosRef.current?.position.y+auditoriumPosRef.current?.position.y)/2
-    position.x=(latitude-w11lat)/latLength*xLength+w11x
-    position.z=(longitude-w11long)/longLength*zLength+w11z;
+    position.z=(latitude-w11lat)/latLength*zLength+w11z
+    position.x=(longitude-w11long)/longLength*xLength+w11x;
     return position;
   }
 
@@ -389,7 +389,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       />
       <Sphere
                 key={"currentPosition"}
-                scale={30.1}
+                scale={5}
                 castShadow
                 receiveShadow
                 position={currentPosition
@@ -449,14 +449,14 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
               const pos=center || new THREE.Vector3()
               w11PosRef.current={position:pos,latitude:0,longitude:0}
               w11PosRef.current.position=center||new THREE.Vector3()
-              w11PosRef.current.latitude=35.6575904
-              w11PosRef.current.longitude=139.540662
+              w11PosRef.current.latitude=w11Lat
+              w11PosRef.current.longitude=w11Long
               console.log("set w11")
             }else if (name.indexOf("building_講堂ボディ") == 0){
               const pos=center || new THREE.Vector3()
               auditoriumPosRef.current={position:pos,latitude:0,longitude:0}
-              auditoriumPosRef.current.latitude=35.6557238
-              auditoriumPosRef.current.longitude=139.5432161
+              auditoriumPosRef.current.latitude=auditoriumLat
+              auditoriumPosRef.current.longitude=auditoriumLong
               console.log("set auditorium")
 
             }
