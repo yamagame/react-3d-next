@@ -27,6 +27,7 @@ type SceneProps = {
     position: number[]
     distance: { max: number }
   }
+  collider: string // bbox or mesh
 }
 
 type PosAndLatLong = {
@@ -79,8 +80,15 @@ function box3ToVert(box3: THREE.Box3) {
   ])
 }
 
+function groundPlane() {
+  const planeGeometry = new THREE.PlaneGeometry(1000, 1000)
+  planeGeometry.rotateX(-Math.PI / 2)
+  const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
+  return new THREE.Mesh(planeGeometry, planeMaterial)
+}
+
 export const Scene = React.forwardRef((props: SceneProps, ref) => {
-  const { camera } = props
+  const { camera, collider } = props
   const initialcamera = {
     target: { x: camera.target[0], y: camera.target[1], z: camera.target[2] },
     position: { x: camera.position[0], y: camera.position[1], z: camera.position[2] },
@@ -115,21 +123,25 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         let apply = false
 
         cameraControlsRef.current?.colliderMeshes.splice(0)
-        if (nodes['Plane']) {
-          cameraControlsRef.current?.colliderMeshes.push(nodes['Plane'])
-        }
+        cameraControlsRef.current?.colliderMeshes.push(groundPlane())
 
         cameraControlsRef.current?.moveTo(...values, true).then(() => {
           cameraControlsRef.current?.colliderMeshes.splice(0)
-          if (nodes['Plane']) {
-            cameraControlsRef.current?.colliderMeshes.push(nodes['Plane'])
-          }
+          cameraControlsRef.current?.colliderMeshes.push(groundPlane())
+
           Object.keys(bbox)
             .filter((key) => key != name)
             .forEach((key) => {
-              cameraControlsRef.current?.colliderMeshes.push(bbox[key])
+              if (nodes[key]) {
+                if (collider == 'bbox') {
+                  cameraControlsRef.current?.colliderMeshes.push(bbox[key])
+                } else {
+                  cameraControlsRef.current?.colliderMeshes.push(nodes[key])
+                }
+              }
             })
         })
+
         const direction = cameraDirection()
         if (direction.length() < 20) {
           const direction = cameraDirection().normalize().multiplyScalar(-20)
@@ -175,7 +187,6 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     return {
       resetCamera() {
         setPointCamera('')
-
         cameraControlsRef.current?.moveTo(initialcamera.target.x, initialcamera.target.y, initialcamera.target.z, true)
         cameraControlsRef.current?.setPosition(
           initialcamera.position.x,
@@ -183,12 +194,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
           initialcamera.position.z,
           true
         )
-
         cameraControlsRef.current?.colliderMeshes.splice(0)
-
-        if (nodes['Plane']) {
-          cameraControlsRef.current?.colliderMeshes.push(nodes['Plane'])
-        }
+        cameraControlsRef.current?.colliderMeshes.push(groundPlane())
       },
       selectBuilding(name: string) {
         setFocusObject(name)
@@ -255,12 +262,10 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       false
     )
     cameraControlsRef.current?.colliderMeshes.splice(0)
-    if (nodes['Plane']) {
-      cameraControlsRef.current?.colliderMeshes.push(nodes['Plane'])
-    }
+    cameraControlsRef.current?.colliderMeshes.push(groundPlane())
 
     const boxes: { [index: string]: THREE.Mesh } = {}
-    console.log(Object.keys(nodes))
+    // console.log(Object.keys(nodes))
     Object.keys(nodes)
       .filter((key) => key.indexOf('building') == 0)
       .forEach((key) => {
@@ -275,6 +280,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
           boxes[key] = mesh
         }
       })
+    // boxes['Plane'] = groundPlane()
     setBbox(boxes)
 
     //音声認識
@@ -385,6 +391,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
           console.log(e.object.position)
         }}
       />
+      {/* {bbox['Plane'] ? <HoverMesh geometry={bbox['Plane'].geometry} /> : null} */}
       {Object.keys(nodes)
         .filter((name) => name != 'Scene')
         .filter((name) => name != pointCamera)
@@ -414,7 +421,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                     setFocusObject('')
 
                     cameraControlsRef.current?.colliderMeshes.splice(0)
-                    cameraControlsRef.current?.colliderMeshes.push(nodes['Plane'])
+                    cameraControlsRef.current?.colliderMeshes.push(groundPlane())
                   }
                   e.stopPropagation()
                 }}
@@ -464,6 +471,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
                   geometry={nodes[name].geometry}
                   // material={nodes[name].material}
                 />
+                {/* {bbox[name] ? <HoverMesh geometry={bbox[name].geometry} /> : null} */}
                 <Text
                   key={`${name}-text`}
                   ref={textRef.current[name]}

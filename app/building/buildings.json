@@ -10,5 +10,6 @@
     "target": [0, 1, 0],
     "position": [90, 40, 90],
     "distance": { "max": 300 }
-  }
+  },
+  "collider": "bbox"
 }
