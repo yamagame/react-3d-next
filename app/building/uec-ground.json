@@ -1,6 +1,10 @@
 {
   "gltf": "glb/uec-ground.glb",
-  "geometories": [{ "name": "building_体育館ボディ174", "label": "体育館" }],
+  "geometories": [{ "name": "building_A棟ボディ122", "label": "A棟" },
+                  { "name": "building_B棟ボディ116", "label": "B棟" },
+                  { "name": "building_C棟ボディ124", "label": "C棟" },
+                  { "name": "building_体育館ボディ174", "label": "体育館" },
+                  { "name": "building_図書館Aボディ157", "label": "図書館" }],
   "camera": {
     "target": [-50, 1, -50],
     "position": [-50, 600, 150],
