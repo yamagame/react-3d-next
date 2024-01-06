@@ -41,6 +41,9 @@ function Overlay() {
 
 export default function Home() {
   const sceneRef = React.useRef<SceneHandler>()
+  const [onRecognizing, setOnRecognizing] = useState<boolean>(false)
+  const [onUsingGeolocation, setOnUsingGeolocation] = useState<boolean>(false)
+  const [recognizedText, setRecognizedText] = useState<string>('')
   return (
     <div className="main-canvas">
       <div className="nav">
@@ -52,14 +55,14 @@ export default function Home() {
             sceneRef.current?.startGeolocation() //位置情報
           }}
         >
-          <div className="button">位置情報</div>
+          <div className={onUsingGeolocation ? 'button red' : 'button'}>位置情報</div>
         </a>
         <a
           onClick={() => {
             sceneRef.current?.startRecognition() //音声認識スタート
           }}
         >
-          <div className="button">マイク</div>
+          <div className={onRecognizing ? 'button red' : 'button'}>マイク</div>
         </a>
         <a
           onClick={() => {
@@ -80,9 +83,16 @@ export default function Home() {
         //   // gl.setPixelRatio(window.devicePixelRatio || 2)
         // }}
       >
-        <Scene ref={sceneRef} {...scenedata} />
+        <Scene
+          ref={sceneRef}
+          {...scenedata}
+          setOnRecognizing={setOnRecognizing}
+          setRecognizedText={setRecognizedText}
+          setOnUsingGeolocation={setOnUsingGeolocation}
+        />
         <axesHelper args={[50]} />
       </Canvas>
+      <div className={onRecognizing ? 'floatingbox' : 'floatingbox dontdisplay'}>{recognizedText}</div>
       {/* <Overlay /> */}
     </div>
   )

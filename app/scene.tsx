@@ -28,6 +28,9 @@ type SceneProps = {
     distance: { max: number }
   }
   collider: string // bbox or mesh
+  setOnRecognizing: (state: boolean) => void
+  setRecognizedText: (text: string) => void
+  setOnUsingGeolocation: (state: boolean) => void
 }
 
 type PosAndLatLong = {
@@ -204,16 +207,26 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       startRecognition() {
         //page.tsxから参照
         ;(speechRef.current as any).start()
+        props.setOnRecognizing(true)
       },
       startGeolocation() {
-        console.log('ここでGeolocationをスタートする!')
+        console.log('ここでGeolocationをスタートorストップする!')
         //Geolocation, GPS, 位置情報
-        let geo_options = {
-          enableHighAccuracy: false,
-          timeout: 5000,
-          maximumAge: 0,
+        if (geolocationRef.current == null || geolocationRef.current == 0) {
+          //位置情報未起動
+          let geo_options = {
+            enableHighAccuracy: false,
+            timeout: 5000,
+            maximumAge: 0,
+          }
+          geolocationRef.current = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options)
+          props.setOnUsingGeolocation(true)
+        } else {
+          //停止
+          navigator.geolocation.clearWatch(geolocationRef.current)
+          geolocationRef.current = 0
+          props.setOnUsingGeolocation(false)
         }
-        geolocationRef.current = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options)
       },
     }
   })
@@ -223,6 +236,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
 
   const cameraControlsRef = useRef<CameraControls>(null)
   const speechRef = useRef()
+  const resultText = useRef<string>('')
   const geolocationRef = useRef(0)
   const w11PosRef = useRef<PosAndLatLong>(null!)
   const auditoriumPosRef = useRef<PosAndLatLong>(null!)
@@ -288,7 +302,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     const SpeechGrammarList = (window as any).webkitSpeechGrammarList || (window as any).SpeechGrammarList
     const recognizer = new SpeechRecognition() as any
     recognizer.lang = 'ja-JP'
-    // recognizer.interimResults = true
+    recognizer.interimResults = true // 認識途中で暫定の結果を返す
     // recognizer.continuous = true
     //辞書登録
     // let dict="#JSGF V1.0; grammar colors; public <color> = ";
@@ -303,11 +317,16 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     // (speechRef.current as any).grammars = speechRecognitionList;
     ;(recognizer as any).onresult = (event: any) => {
       console.log('result', event.results)
-      const resultText = event.results[0][0].transcript //音声認識結果
-      focusBuilding(resultText)
+      resultText.current = event.results[0][0].transcript //音声認識結果
+      props.setRecognizedText(resultText.current)
     }
     ;(recognizer as any).onend = (event: any) => {
       console.log('end', event)
+      focusBuilding(resultText.current)
+      setTimeout(() => {
+        props.setOnRecognizing(false)
+        props.setRecognizedText('')
+      }, 2000)
     }
     speechRef.current = recognizer
   }, [nodes])
@@ -390,6 +409,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
           console.log(currentPosition)
           console.log(e.object.position)
         }}
+        visible={geolocationRef.current == 0 ? false : true}
       />
       {/* {bbox['Plane'] ? <HoverMesh geometry={bbox['Plane'].geometry} /> : null} */}
       {Object.keys(nodes)
