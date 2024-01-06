@@ -1,0 +1,10 @@
+{
+  "gltf": "/uec-ground.glb",
+  "geometories": [{ "name": "building_体育館ボディ174", "label": "体育館" }],
+  "camera": {
+    "target": [-50, 1, -50],
+    "position": [-50, 600, 150],
+    "distance": { "max": 800 }
+  },
+  "collider": "model"
+}

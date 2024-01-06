@@ -1,0 +1,15 @@
+{
+  "gltf": "/buildings.glb",
+  "geometories": [
+    { "name": "building1", "label": "建物1" },
+    { "name": "building1001", "label": "建物1-1" },
+    { "name": "building2", "label": "建物2" },
+    { "name": "building2001", "label": "建物2-1" }
+  ],
+  "camera": {
+    "target": [0, 1, 0],
+    "position": [90, 40, 90],
+    "distance": { "max": 300 }
+  },
+  "collider": "bbox"
+}

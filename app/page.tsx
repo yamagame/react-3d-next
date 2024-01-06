@@ -1,11 +1,17 @@
 'use client'
 
 import React from 'react'
-import * as THREE from 'three'
 import { Canvas } from '@react-three/fiber'
+
+// import { Scene, SceneHandler } from './components/Scene'
+// import scenedata from './scenes/cubes.json'
+// import scenedata from './scenes/buildings.json'
+// import scenedata from './scenes/uec-all.json'
+
 import { Scene, SceneHandler } from './scene'
-import scenedata from './building/uec-ground.json'
-//import scenedata from "./building/buildings.json"
+import scenedata from './scenes/uec-ground.json'
+// import scenedata from './scenes/buildings.json'
+
 import { Leva } from 'leva'
 
 type BoxT = { x: number; y: number; angle: number }
