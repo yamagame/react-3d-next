@@ -322,9 +322,11 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     }
     ;(recognizer as any).onend = (event: any) => {
       console.log('end', event)
-      props.setOnRecognizing(false)
-      props.setRecognizedText('')
       focusBuilding(resultText.current)
+      setTimeout(() => {
+        props.setOnRecognizing(false)
+        props.setRecognizedText('')
+      }, 2000)
     }
     speechRef.current = recognizer
   }, [nodes])
