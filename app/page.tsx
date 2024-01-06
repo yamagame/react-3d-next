@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import React from "react"
-import * as THREE from "three"
-import { Canvas } from "@react-three/fiber"
-import { Scene, SceneHandler } from "./scene"
- import scenedata from "./building/uec-ground.json"
+import React, { useState } from 'react'
+import * as THREE from 'three'
+import { Canvas } from '@react-three/fiber'
+import { Scene, SceneHandler } from './scene'
+import scenedata from './building/uec-ground.json'
 //import scenedata from "./building/buildings.json"
-import { Leva } from "leva"
+import { Leva } from 'leva'
 
 type BoxT = { x: number; y: number; angle: number }
 
@@ -14,32 +14,29 @@ function Overlay() {
   return (
     <div
       style={{
-        position: "absolute",
+        position: 'absolute',
         top: 0,
         left: 0,
-        pointerEvents: "none",
-        width: "100%",
-        height: "100%",
+        pointerEvents: 'none',
+        width: '100%',
+        height: '100%',
       }}
     >
-      <a
-        href="https://pmnd.rs/"
-        style={{ position: "absolute", bottom: 40, left: 90, fontSize: "13px" }}
-      >
+      <a href="https://pmnd.rs/" style={{ position: 'absolute', bottom: 40, left: 90, fontSize: '13px' }}>
         pmnd.rs
         <br />
         dev collective
       </a>
-      <div style={{ position: "absolute", top: 40, left: 40, fontSize: "13px" }}>😄 —</div>
-      <div style={{ position: "absolute", bottom: 40, right: 40, fontSize: "13px" }}>
-        30/10/2022
-      </div>
+      <div style={{ position: 'absolute', top: 40, left: 40, fontSize: '13px' }}>😄 —</div>
+      <div style={{ position: 'absolute', bottom: 40, right: 40, fontSize: '13px' }}>30/10/2022</div>
     </div>
   )
 }
 
 export default function Home() {
   const sceneRef = React.useRef<SceneHandler>()
+  const [onRecognizing, setOnRecognizing] = useState<boolean>(false)
+  const [recognizedText, setRecognizedText] = useState<string>('')
   return (
     <div className="main-canvas">
       <div className="nav">
@@ -58,7 +55,7 @@ export default function Home() {
             sceneRef.current?.startRecognition() //音声認識スタート
           }}
         >
-          <div className="button">マイク</div>
+          <div className={onRecognizing ? 'button red' : 'button'}>マイク</div>
         </a>
         <a
           onClick={() => {
@@ -79,9 +76,15 @@ export default function Home() {
         //   // gl.setPixelRatio(window.devicePixelRatio || 2)
         // }}
       >
-        <Scene ref={sceneRef} {...scenedata} />
+        <Scene
+          ref={sceneRef}
+          {...scenedata}
+          setOnRecognizing={setOnRecognizing}
+          setRecognizedText={setRecognizedText}
+        />
         <axesHelper args={[50]} />
       </Canvas>
+      <div className={onRecognizing ? 'floatingbox' : 'floatingbox '}>{recognizedText}</div>
       {/* <Overlay /> */}
     </div>
   )

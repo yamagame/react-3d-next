@@ -68,7 +68,27 @@ body {
   padding: 0em 2em;
   white-space: pre;
 }
-
+.red {
+  background: red;
+}
+.floatingbox {
+  position: absolute;
+  background-color: #ffff0080;
+  border-radius: 30px;
+  color: #ee0000;
+  width: fit-content;
+  height: fit-content;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  font-size: 4em;
+}
+.dontdisplay {
+  display: none;
+}
 @media (max-width: 1200px) {
   .main-canvas {
     padding: 1em 1em 1em 1em;

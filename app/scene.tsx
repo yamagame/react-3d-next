@@ -28,6 +28,8 @@ type SceneProps = {
     distance: { max: number }
   }
   collider: string // bbox or mesh
+  setOnRecognizing: (state: boolean) => void
+  setRecognizedText: (text: string) => void
 }
 
 type PosAndLatLong = {
@@ -204,6 +206,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       startRecognition() {
         //page.tsxから参照
         ;(speechRef.current as any).start()
+        props.setOnRecognizing(true)
       },
       startGeolocation() {
         console.log('ここでGeolocationをスタートする!')
@@ -288,7 +291,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     const SpeechGrammarList = (window as any).webkitSpeechGrammarList || (window as any).SpeechGrammarList
     const recognizer = new SpeechRecognition() as any
     recognizer.lang = 'ja-JP'
-    // recognizer.interimResults = true
+    recognizer.interimResults = true // 認識途中で暫定の結果を返す
     // recognizer.continuous = true
     //辞書登録
     // let dict="#JSGF V1.0; grammar colors; public <color> = ";
@@ -304,10 +307,12 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     ;(recognizer as any).onresult = (event: any) => {
       console.log('result', event.results)
       const resultText = event.results[0][0].transcript //音声認識結果
+      props.setRecognizedText(resultText)
       focusBuilding(resultText)
     }
     ;(recognizer as any).onend = (event: any) => {
       console.log('end', event)
+      props.setOnRecognizing(false)
     }
     speechRef.current = recognizer
   }, [nodes])
