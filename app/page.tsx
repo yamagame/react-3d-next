@@ -3,12 +3,12 @@
 import React, { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 
-// import { Scene, SceneHandler } from './components/Scene'
+// import { SceneContainer, SceneHandler } from './components/SceneContainer'
 // import scenedata from './scenes/cubes.json'
 // import scenedata from './scenes/buildings.json'
 // import scenedata from './scenes/uec-all.json'
 
-import { Scene, SceneHandler } from './scene'
+import { SceneContainer, SceneHandler } from './scene'
 import scenedata from './scenes/uec-ground.json'
 // import scenedata from './scenes/buildings.json'
 
@@ -83,7 +83,7 @@ export default function Home() {
         //   // gl.setPixelRatio(window.devicePixelRatio || 2)
         // }}
       >
-        <Scene
+        <SceneContainer
           ref={sceneRef}
           {...scenedata}
           setOnRecognizing={setOnRecognizing}

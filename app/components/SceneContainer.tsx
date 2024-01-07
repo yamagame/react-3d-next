@@ -9,7 +9,6 @@ import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Sky, Text, CameraControls, useGLTF, Sphere } from '@react-three/drei'
 import { Env } from '../environment'
-import { Model } from '../models/Cubes'
 
 const w11Lat = 35.65812474191075
 const w11Long = 139.54082511503555
@@ -18,21 +17,21 @@ const auditoriumLong = 139.54433508505537
 
 const SHOW_BOUNDING_BOX = false
 
-type GLTFResult = GLTF & {
+export type GLTFResult = GLTF & {
   nodes: { [index: string]: THREE.Mesh }
   materials: { [index: string]: any }
 }
 
-type Scene = {
+export type Scene = {
   name: string
-  material: string
-  scale: number[]
-  position: number[]
-  rotation: number[]
+  material?: string
+  scale?: number[]
+  position?: number[]
+  rotation?: number[]
   children: Scene[]
 }
 
-type SceneProps = {
+export type SceneProps = {
   gltf: string
   geometories: { name: string; label?: string }[]
   camera: {
@@ -42,6 +41,9 @@ type SceneProps = {
   }
   collider: string // bbox or mesh
   scenes: Scene[]
+  setOnRecognizing: (state: boolean) => void
+  setRecognizedText: (text: string) => void
+  setOnUsingGeolocation: (state: boolean) => void
 }
 
 type PosAndLatLong = {
@@ -133,7 +135,7 @@ const RenderScene = (props: SceneProps, scenes: Scene[], gltf: GLTFResult) => {
   })
 }
 
-export const Scene = React.forwardRef((props: SceneProps, ref) => {
+export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
   const { camera, collider } = props
   const initialcamera = {
     target: { x: camera.target[0], y: camera.target[1], z: camera.target[2] },
@@ -474,4 +476,4 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     </>
   )
 })
-Scene.displayName = 'Scene'
+SceneContainer.displayName = 'SceneContainer'

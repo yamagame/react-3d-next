@@ -90,7 +90,7 @@ function groundPlane() {
   return new THREE.Mesh(planeGeometry, planeMaterial)
 }
 
-export const Scene = React.forwardRef((props: SceneProps, ref) => {
+export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
   const { camera, collider } = props
   const initialcamera = {
     target: { x: camera.target[0], y: camera.target[1], z: camera.target[2] },
@@ -532,4 +532,4 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     </>
   )
 })
-Scene.displayName = 'Scene'
+SceneContainer.displayName = 'SceneContainer'
