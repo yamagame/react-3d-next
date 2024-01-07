@@ -9,7 +9,7 @@ import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Sky, Text, CameraControls, useGLTF, Sphere } from '@react-three/drei'
 import { Env } from '../environment'
-import { Scene, SceneProps, GLTFResult } from './Scene'
+import { SceneItem, Scene, SceneProps, GLTFResult } from './Scene'
 
 const w11Lat = 35.65812474191075
 const w11Long = 139.54082511503555
@@ -75,6 +75,25 @@ function groundPlane() {
   return new THREE.Mesh(planeGeometry, planeMaterial)
 }
 
+function TransformVector(name: string, scenes: SceneItem[]): THREE.Vector3 | null {
+  for (let i = 0; i < scenes.length; i++) {
+    const scene = scenes[i]
+    if (scene.name == name) {
+      const pos = scene.position || [0, 0, 0]
+      return new THREE.Vector3(...pos)
+    }
+    const vector = TransformVector(name, scene.children)
+    if (vector) {
+      if (scene.position) {
+        const scale = scene.scale || [1, 1, 1]
+        vector.add(new THREE.Vector3(...scene.position)).multiply(new THREE.Vector3(...scale))
+      }
+      return vector
+    }
+  }
+  return null
+}
+
 export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
   const { camera, collider } = props
   const initialcamera = {
@@ -103,7 +122,8 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
     if (nodes[name] != null) {
       //その名前の建物が存在する
       const geometory = nodes[name].geometry
-      const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
+      const position = TransformVector(name, props.scenes) || new THREE.Vector3(0, 0, 0)
+      const center = geometory.boundingBox?.getCenter(new THREE.Vector3()).add(position)
       const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
       if (center) {
         let cameraPosition = new THREE.Vector3()
@@ -131,21 +151,28 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
             })
         })
 
+        const minlength = 100
+        const minscaler = -100
+        const maxlength = 300
+        const maxscaler = -200
+        const minheight = 120
+        const defheight = 120
+
         const direction = cameraDirection()
-        if (direction.length() < 20) {
-          const direction = cameraDirection().normalize().multiplyScalar(-20)
+        if (direction.length() < minlength) {
+          const direction = cameraDirection().normalize().multiplyScalar(minscaler)
           cameraPosition = cameraPosition.add(direction)
           apply = true
-        } else if (direction.length() > 60) {
+        } else if (direction.length() > maxlength) {
           const cameraTarget = new THREE.Vector3()
           cameraControlsRef.current?.getTarget(cameraTarget)
-          const direction = cameraDirection().normalize().multiplyScalar(-40)
+          const direction = cameraDirection().normalize().multiplyScalar(maxscaler)
           cameraPosition = cameraTarget.add(direction)
           apply = true
         }
 
-        if (cameraPosition.y < 0) {
-          cameraPosition.setY(20)
+        if (cameraPosition.y < minheight) {
+          cameraPosition.setY(defheight)
           apply = true
         }
 
