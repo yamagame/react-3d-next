@@ -9,7 +9,7 @@ import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Sky, Text, CameraControls, useGLTF, Sphere } from '@react-three/drei'
 import { Env } from '../environment'
-import { RenderScene, SceneProps, GLTFResult } from './Scene'
+import { Scene, SceneProps, GLTFResult } from './Scene'
 
 const w11Lat = 35.65812474191075
 const w11Long = 139.54082511503555
@@ -89,7 +89,6 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
   const [focusObject, setFocusObject] = useState('')
   const [bbox, setBbox] = useState<{ [index: string]: THREE.Mesh }>({})
 
-  const textRef = useRef<{ [index: string]: RefObject<THREE.Mesh> }>({})
   const [currentPosition, setCurrentPosition] = useState<THREE.Vector3>(new THREE.Vector3()) //現在位置
   const currentPositionCtl = useControls('Geolocation', {
     //Levaを使う場合はこちら
@@ -237,13 +236,6 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
     return position
   }
 
-  useMemo(() => {
-    Object.keys(nodes).forEach((name) => {
-      textRef.current[name] = createRef<THREE.Mesh>()
-      console.log(name)
-    })
-  }, [nodes])
-
   useEffect(() => {
     cameraControlsRef.current?.moveTo(initialcamera.target.x, initialcamera.target.y, initialcamera.target.z, false)
     cameraControlsRef.current?.setPosition(
@@ -302,26 +294,6 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
     }
     speechRef.current = recognizer
   }, [nodes])
-
-  const color = useMemo(() => new THREE.Color(), [])
-  const fontProps = {
-    font: 'NotoSansJP-Bold.ttf',
-    fontSize: 2.5,
-    letterSpacing: -0.05,
-    lineHeight: 1,
-    'material-toneMapped': false,
-  }
-
-  // テキストの向きをカメラに向ける
-  useFrame(({ camera }) => {
-    Object.keys(textRef.current).forEach((key) => {
-      const text = textRef.current[key]
-      text.current?.quaternion.copy(camera.quaternion)
-      if (text.current?.material instanceof THREE.MeshBasicMaterial) {
-        text.current.material.color.lerp(color.set('#2027fa'), 0.1)
-      }
-    })
-  })
 
   // 視線方向のベクトルを計算
   const cameraDirection = () => {
@@ -384,7 +356,7 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
         }}
       />
       {/* -------------------------- シーンの描画 -------------------------- */}
-      {RenderScene(props, props.scenes, { nodes, materials } as GLTFResult)}
+      <Scene {...props} />
       {/* -------------------------- バウンディングボックスの表示 -------------------------- */}
       {SHOW_BOUNDING_BOX
         ? Object.keys(bbox).map((key) => {
