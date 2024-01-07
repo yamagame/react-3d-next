@@ -1,10 +1,264 @@
 {
   "gltf": "/uec-all.glb",
-  "geometories": [{ "name": "building_体育館ボディ174", "label": "体育館" }],
+  "geometories": [
+    {
+      "name": "building_A棟ボディ122",
+      "label": "A棟"
+    },
+    {
+      "name": "building_B棟ボディ116",
+      "label": "B棟"
+    },
+    {
+      "name": "building_C棟ボディ124",
+      "label": "C棟"
+    },
+    {
+      "name": "building_D棟ボディ126",
+      "label": "D棟"
+    },
+    {
+      "name": "building_どんぐりボディ138",
+      "label": "どんぐり"
+    },
+    {
+      "name": "building_アライアンスセンターボディ176",
+      "label": "アライアンスセンター"
+    },
+    {
+      "name": "building_リーサジュボディ110",
+      "label": "リーサジュ"
+    },
+    {
+      "name": "building_体育館ボディ174",
+      "label": "体育館"
+    },
+    {
+      "name": "building_保健センターAボディ147",
+      "label": "保健センター"
+    },
+    {
+      "name": "building_保健センターBボディ148",
+      "label": "健センター"
+    },
+    {
+      "name": "building_図書館Aボディ157",
+      "label": "図書館"
+    },
+    {
+      "name": "building_図書館Bボディ155",
+      "label": "図書館"
+    },
+    {
+      "name": "building_国際交流会館Aボディ140",
+      "label": "国際交流会館"
+    },
+    {
+      "name": "building_国際交流会館Bボディ141",
+      "label": "国際交流会館"
+    },
+    {
+      "name": "building_学生会館ボディ154",
+      "label": "学生会館"
+    },
+    {
+      "name": "building_学生宿舎Aボディ177",
+      "label": "学生宿舎"
+    },
+    {
+      "name": "building_学生宿舎Bボディ178",
+      "label": "学生宿舎"
+    },
+    {
+      "name": "building_学生寮ボディ163",
+      "label": "学生寮"
+    },
+    {
+      "name": "building_守衛所ボディ111",
+      "label": "守衛所"
+    },
+    {
+      "name": "building_実験工場ボディ152",
+      "label": "実験工場"
+    },
+    {
+      "name": "building_弓道場ボディ190",
+      "label": "弓道場"
+    },
+    {
+      "name": "building_本館Bボディ114",
+      "label": "本館"
+    },
+    {
+      "name": "building_本館ボディ113",
+      "label": "本館"
+    },
+    {
+      "name": "building_東10号館ボディ134",
+      "label": "東10号館"
+    },
+    {
+      "name": "building_東1ボディ123",
+      "label": "東1号館"
+    },
+    {
+      "name": "building_東2号館ボディ156",
+      "label": "東2号館"
+    },
+    {
+      "name": "building_東31号館ボディ136",
+      "label": "東31号館"
+    },
+    {
+      "name": "building_東32号館ボディ135",
+      "label": "東32号館"
+    },
+    {
+      "name": "building_東33号館ボディ144",
+      "label": "東33号館"
+    },
+    {
+      "name": "building_東34号館ボディ143",
+      "label": "東34号館"
+    },
+    {
+      "name": "building_東35Aボディ145",
+      "label": "東35号館"
+    },
+    {
+      "name": "building_東35Bボディ146",
+      "label": "東35号館"
+    },
+    {
+      "name": "building_東36号館ボディ153",
+      "label": "東36号館"
+    },
+    {
+      "name": "building_東3号館ボディ149",
+      "label": "東3号館"
+    },
+    {
+      "name": "building_東4号館Aボディ128",
+      "label": "東4号館"
+    },
+    {
+      "name": "building_東4号館Bボディ127",
+      "label": "東4号館"
+    },
+    {
+      "name": "building_東4号館Cボディ129",
+      "label": "東4号館"
+    },
+    {
+      "name": "building_東6号館ボディ130",
+      "label": "東6号館"
+    },
+    {
+      "name": "building_東7号館ボディ131",
+      "label": "東7号館"
+    },
+    {
+      "name": "building_東8号館ボディ132",
+      "label": "東8号館"
+    },
+    {
+      "name": "building_東９号館ボディ139",
+      "label": "東9号館"
+    },
+    {
+      "name": "building_第2体育館ボディ162",
+      "label": "第2体育館"
+    },
+    {
+      "name": "building_職員研修所ボディ115",
+      "label": "職員研修所"
+    },
+    {
+      "name": "building_西10号館ボディ158",
+      "label": "西10号館"
+    },
+    {
+      "name": "building_西11号館ボディ173",
+      "label": "西11号館"
+    },
+    {
+      "name": "building_西1号館ボディ168",
+      "label": "西1号館"
+    },
+    {
+      "name": "building_西2号館ボディ166",
+      "label": "西2号館"
+    },
+    {
+      "name": "building_西31号館ボディ159",
+      "label": "西31号館"
+    },
+    {
+      "name": "building_西3号館ボディ169",
+      "label": "西3号館"
+    },
+    {
+      "name": "building_西4号館ボディ167",
+      "label": "西4号館"
+    },
+    {
+      "name": "building_西5号館ボディ161",
+      "label": "西5号館"
+    },
+    {
+      "name": "building_西6号館ボディ164",
+      "label": "西6号館"
+    },
+    {
+      "name": "building_西7号館ボディ165",
+      "label": "西7号館"
+    },
+    {
+      "name": "building_西8号館ボディ170",
+      "label": "西8号館"
+    },
+    {
+      "name": "building_B棟ボディ116",
+      "label": "B棟"
+    },
+    {
+      "name": "building_西9号館ボディ171",
+      "label": "西9号館"
+    },
+    {
+      "name": "building_西門守衛所ボディ172",
+      "label": "西門守衛所"
+    },
+    {
+      "name": "building_西食ボディ160",
+      "label": "西食"
+    },
+    {
+      "name": "building_課外活動施設ボディ142",
+      "label": "課外活動施設"
+    },
+    {
+      "name": "building_講堂ボディ112",
+      "label": "講堂"
+    },
+    {
+      "name": "building_講義棟ボディ125",
+      "label": "講義棟"
+    },
+    {
+      "name": "職員研修所ボディ137",
+      "label": "職員研修所"
+    },
+    {
+      "name": "職員宿舎ボディ179",
+      "label": "職員宿舎"
+    }
+  ],
   "camera": {
     "target": [-50, 1, -50],
     "position": [-50, 600, 150],
     "distance": { "max": 800 }
   },
-  "collider": "model"
+  "collider": "model",
+  "hidden": ["hi-building"]
 }

@@ -356,7 +356,7 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
         }}
       />
       {/* -------------------------- シーンの描画 -------------------------- */}
-      <Scene {...props} />
+      <Scene {...props} focusBuilding={focusBuilding} />
       {/* -------------------------- バウンディングボックスの表示 -------------------------- */}
       {SHOW_BOUNDING_BOX
         ? Object.keys(bbox).map((key) => {

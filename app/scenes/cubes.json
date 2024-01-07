@@ -2,33 +2,21 @@
   "gltf": "/cubes.glb",
   "geometories": [
     {
-      "name": "building1",
-      "label": "建物1"
+      "name": "BlueTall",
+      "label": "BlueTall"
     },
     {
-      "name": "building1001",
-      "label": "建物1-1"
+      "name": "Cube",
+      "label": "Cube"
     },
     {
-      "name": "building2",
-      "label": "建物2"
-    },
-    {
-      "name": "building2001",
-      "label": "建物2-1"
+      "name": "GreenCube",
+      "label": "GreenCube"
     }
   ],
   "camera": {
-    "target": [
-      0,
-      1,
-      0
-    ],
-    "position": [
-      90,
-      40,
-      90
-    ],
+    "target": [0, 1, 0],
+    "position": [90, 40, 90],
     "distance": {
       "max": 300
     }
@@ -37,97 +25,37 @@
   "scenes": [
     {
       "name": "Scene",
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "position": [
-        0,
-        0,
-        0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
+      "scale": [1, 1, 1],
+      "position": [0, 0, 0],
+      "rotation": [0, 0, 0],
       "children": [
         {
           "name": "Empty",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            30
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
+          "scale": [1, 1, 1],
+          "position": [0, 0, 30],
+          "rotation": [0, 0, 0],
           "children": [
             {
               "name": "BlueTall",
-              "scale": [
-                1,
-                1,
-                1
-              ],
-              "position": [
-                0,
-                0,
-                0
-              ],
-              "rotation": [
-                0,
-                0,
-                0
-              ],
+              "scale": [1, 1, 1],
+              "position": [0, 0, 0],
+              "rotation": [0, 0, 0],
               "material": "Blue",
               "children": []
             },
             {
               "name": "Cube",
-              "scale": [
-                0.5,
-                0.5,
-                0.5
-              ],
-              "position": [
-                29,
-                0,
-                -30
-              ],
-              "rotation": [
-                0,
-                0,
-                0
-              ],
+              "scale": [0.5, 0.5, 0.5],
+              "position": [29, 0, -30],
+              "rotation": [0, 0, 0],
               "material": "Red",
               "children": []
             },
             {
               "name": "GreenCube",
-              "scale": [
-                1,
-                1,
-                1
-              ],
-              "position": [
-                0,
-                0,
-                0
-              ],
-              "rotation": [
-                0,
-                0,
-                0
-              ],
+              "scale": [1, 1, 1],
+              "position": [0, 0, 0],
+              "rotation": [0, 0, 0],
               "material": "Green",
               "children": []
             }

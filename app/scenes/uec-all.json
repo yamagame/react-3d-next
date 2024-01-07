@@ -262,6 +262,7 @@
     }
   },
   "collider": "model",
+  "hidden": ["hi-building"],
   "scenes": [
     {
       "name": "Scene",

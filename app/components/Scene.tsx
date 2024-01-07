@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import { HoverMesh } from './HoverMesh'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Text, useGLTF } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, ThreeEvent } from '@react-three/fiber'
 
 export type GLTFResult = GLTF & {
   nodes: { [index: string]: THREE.Mesh }
@@ -30,7 +30,11 @@ export type SceneProps = {
     distance: { max: number }
   }
   collider: string // bbox or mesh
+  selectObject: string
+  focusObject: string
   scenes: SceneItem[]
+  hidden?: string[]
+  focusBuilding: (name: string) => void
   setOnRecognizing: (state: boolean) => void
   setRecognizedText: (text: string) => void
   setOnUsingGeolocation: (state: boolean) => void
@@ -63,7 +67,7 @@ export const RenderScene = (
     'material-toneMapped': false,
   }
   return scenes.map((scene) => {
-    if (scene.name === 'hi-building') return null
+    if (props.hidden && props.hidden.indexOf(scene.name) >= 0) return null
     if (scene.children.length > 0) {
       return (
         <group
@@ -93,6 +97,16 @@ export const RenderScene = (
               scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
               position={scene.position ? new THREE.Vector3(...scene.position) : [0, 0, 0]}
               rotation={scene.rotation ? new THREE.Euler(...scene.rotation) : [0, 0, 0]}
+              selected={props.selectObject === name}
+              focused={props.focusObject === name}
+              onClick={(e: ThreeEvent<MouseEvent>) => {
+                if (e.delta > 1) {
+                  e.stopPropagation()
+                  return
+                }
+                props.focusBuilding(name)
+                e.stopPropagation()
+              }}
               geometry={gltf.nodes[scene.name].geometry}
               // material={gltf.materials[scene.material]}
             />
