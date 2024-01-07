@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 
 // import { Scene, SceneHandler } from './components/Scene'
