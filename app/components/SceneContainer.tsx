@@ -9,6 +9,7 @@ import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Sky, Text, CameraControls, useGLTF, Sphere } from '@react-three/drei'
 import { Env } from '../environment'
+import { RenderScene, SceneProps, GLTFResult } from './Scene'
 
 const w11Lat = 35.65812474191075
 const w11Long = 139.54082511503555
@@ -16,35 +17,6 @@ const auditoriumLat = 35.65563229930534
 const auditoriumLong = 139.54433508505537
 
 const SHOW_BOUNDING_BOX = false
-
-export type GLTFResult = GLTF & {
-  nodes: { [index: string]: THREE.Mesh }
-  materials: { [index: string]: any }
-}
-
-export type Scene = {
-  name: string
-  material?: string
-  scale?: number[]
-  position?: number[]
-  rotation?: number[]
-  children: Scene[]
-}
-
-export type SceneProps = {
-  gltf: string
-  geometories: { name: string; label?: string }[]
-  camera: {
-    target: number[]
-    position: number[]
-    distance: { max: number }
-  }
-  collider: string // bbox or mesh
-  scenes: Scene[]
-  setOnRecognizing: (state: boolean) => void
-  setRecognizedText: (text: string) => void
-  setOnUsingGeolocation: (state: boolean) => void
-}
 
 type PosAndLatLong = {
   position: THREE.Vector3
@@ -101,38 +73,6 @@ function groundPlane() {
   planeGeometry.rotateX(-Math.PI / 2)
   const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
   return new THREE.Mesh(planeGeometry, planeMaterial)
-}
-
-const RenderScene = (props: SceneProps, scenes: Scene[], gltf: GLTFResult) => {
-  return scenes.map((scene) => {
-    if (scene.children.length > 0) {
-      return (
-        <group
-          key={scene.name}
-          scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
-          position={scene.position ? new THREE.Vector3(...scene.position) : [0, 0, 0]}
-          rotation={scene.rotation ? new THREE.Euler(...scene.rotation) : [0, 0, 0]}
-        >
-          {RenderScene(props, scene.children, gltf)}
-        </group>
-      )
-    }
-    if (scene.material && gltf.nodes[scene.name]) {
-      return (
-        <mesh
-          name={scene.name}
-          key={scene.name}
-          castShadow
-          receiveShadow
-          scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
-          position={scene.position ? new THREE.Vector3(...scene.position) : [0, 0, 0]}
-          rotation={scene.rotation ? new THREE.Euler(...scene.rotation) : [0, 0, 0]}
-          geometry={gltf.nodes[scene.name].geometry}
-          material={gltf.materials[scene.material]}
-        />
-      )
-    }
-  })
 }
 
 export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
@@ -404,17 +344,6 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
     normalBias: { value: 200, min: 0, max: 200 },
     castShadow: true,
   })
-
-  const find = (scenes: Scene[], name: string): Scene | null => {
-    for (let i = 0; i < scenes.length; i++) {
-      const v = scenes[i]
-      if (v.name === name) return v
-      if (v.children.length > 0) {
-        return find(v.children, name)
-      }
-    }
-    return null
-  }
 
   return (
     <>
