@@ -60,6 +60,34 @@
               "children": []
             }
           ]
+        },
+        {
+          "name": "Original",
+          "scale": [1, 1, 1],
+          "position": [0, 0, 0],
+          "rotation": [0, 0, 0],
+          "children": []
+        },
+        {
+          "name": "pos_BlueTall",
+          "scale": [1, 1, 1],
+          "position": [-10, 0, 10],
+          "rotation": [0, 0, 0],
+          "children": []
+        },
+        {
+          "name": "pos_Cube",
+          "scale": [1, 1, 1],
+          "position": [21.5, 0, 7.5],
+          "rotation": [0, 0, 0],
+          "children": []
+        },
+        {
+          "name": "pos_GreenCube",
+          "scale": [1, 1, 1],
+          "position": [-14.142135620117188, 0, 30],
+          "rotation": [0, -0.7853979340175556, 0],
+          "children": []
         }
       ]
     }

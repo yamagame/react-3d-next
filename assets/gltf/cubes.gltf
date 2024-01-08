@@ -8,7 +8,11 @@
 		{
 			"name":"Scene",
 			"nodes":[
-				3
+				3,
+				4,
+				5,
+				6,
+				7
 			]
 		}
 	],
@@ -44,6 +48,43 @@
 			"name":"Empty",
 			"translation":[
 				0,
+				0,
+				30
+			]
+		},
+		{
+			"mesh":3,
+			"name":"Original"
+		},
+		{
+			"mesh":3,
+			"name":"pos_BlueTall",
+			"translation":[
+				-10,
+				0,
+				10
+			]
+		},
+		{
+			"mesh":3,
+			"name":"pos_Cube",
+			"translation":[
+				21.5,
+				0,
+				7.5
+			]
+		},
+		{
+			"mesh":3,
+			"name":"pos_GreenCube",
+			"rotation":[
+				0,
+				-0.38268330693244934,
+				0,
+				0.9238796234130859
+			],
+			"translation":[
+				-14.142135620117188,
 				0,
 				30
 			]
@@ -134,6 +175,19 @@
 					"material":2
 				}
 			]
+		},
+		{
+			"name":"Cube.001",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":11,
+						"NORMAL":12,
+						"TEXCOORD_0":13
+					},
+					"indices":14
+				}
+			]
 		}
 	],
 	"accessors":[
@@ -143,7 +197,7 @@
 			"count":24,
 			"max":[
 				10,
-				90,
+				29,
 				-20
 			],
 			"min":[
@@ -232,6 +286,40 @@
 			"componentType":5123,
 			"count":36,
 			"type":"SCALAR"
+		},
+		{
+			"bufferView":11,
+			"componentType":5126,
+			"count":24,
+			"max":[
+				0,
+				2,
+				0
+			],
+			"min":[
+				-1,
+				0,
+				-10
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":12,
+			"componentType":5126,
+			"count":24,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":13,
+			"componentType":5126,
+			"count":24,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":14,
+			"componentType":5123,
+			"count":36,
+			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
@@ -300,11 +388,35 @@
 			"byteLength":72,
 			"byteOffset":2376,
 			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":288,
+			"byteOffset":2448,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":288,
+			"byteOffset":2736,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":192,
+			"byteOffset":3024,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":72,
+			"byteOffset":3216,
+			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":2448,
+			"byteLength":3288,
 			"uri":"cubes.bin"
 		}
 	]

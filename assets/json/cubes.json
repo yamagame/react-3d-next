@@ -1,10 +1,18 @@
 {
   "gltf": "/cubes.glb",
   "geometories": [
-    { "name": "building1", "label": "建物1" },
-    { "name": "building1001", "label": "建物1-1" },
-    { "name": "building2", "label": "建物2" },
-    { "name": "building2001", "label": "建物2-1" }
+    {
+      "name": "BlueTall",
+      "label": "BlueTall"
+    },
+    {
+      "name": "Cube",
+      "label": "Cube"
+    },
+    {
+      "name": "GreenCube",
+      "label": "GreenCube"
+    }
   ],
   "camera": {
     "target": [0, 1, 0],
