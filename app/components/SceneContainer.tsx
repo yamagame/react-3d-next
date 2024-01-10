@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useMemo, useState, useEffect, RefObject, createRef, useTransition } from 'react'
+import React, { useRef, useMemo, useState, useEffect, RefObject, createRef, useTransition, useCallback } from 'react'
 import { useControls } from 'leva'
 import * as THREE from 'three'
 import { Mesh } from './Mesh'
@@ -22,6 +22,30 @@ type PosAndLatLong = {
   position: THREE.Vector3
   latitude: number
   longitude: number
+}
+
+type Camera = {
+  target: number[]
+  position: number[]
+  distance: { max: number }
+}
+
+type BBox = { [index: string]: THREE.Mesh }
+
+export type SceneContainerProps = {
+  gltf: string
+  geometories: {
+    name: string
+    bbox?: string
+    label?: string
+  }[]
+  camera: Camera
+  collider: string // bbox or mesh
+  scenes: SceneItem[]
+  hidden?: string[]
+  setOnRecognizing: (state: boolean) => void
+  setRecognizedText: (text: string) => void
+  setOnUsingGeolocation: (state: boolean) => void
 }
 
 export type SceneHandler = {
@@ -94,19 +118,27 @@ function TransformVector(name: string, scenes: SceneItem[]): THREE.Vector3 | nul
   return null
 }
 
-export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
+export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref) => {
   const { camera, collider } = props
-  const initialcamera = {
-    target: { x: camera.target[0], y: camera.target[1], z: camera.target[2] },
-    position: { x: camera.position[0], y: camera.position[1], z: camera.position[2] },
+  const makeInitialCamera = (camera: Camera) => {
+    return {
+      target: { x: camera.target[0], y: camera.target[1], z: camera.target[2] },
+      position: { x: camera.position[0], y: camera.position[1], z: camera.position[2] },
+    }
   }
+  // const initialcamera = makeInitialCamera(camera)
+  const [initialcamera, setInitialCamera] = useState(makeInitialCamera(camera))
   const modelRef = useRef(null)
   console.log(`props.gltf`, props.gltf)
   const { nodes, materials } = useGLTF(props.gltf) as GLTFResult
   const [pointCamera, setPointCamera] = useState('')
   const [selectObject, setSelectObject] = useState('')
   const [focusObject, setFocusObject] = useState('')
-  const [bbox, setBbox] = useState<{ [index: string]: THREE.Mesh }>({})
+  const [bbox, setBbox] = useState<BBox>({})
+
+  useEffect(() => {
+    setInitialCamera(makeInitialCamera(camera))
+  }, [camera])
 
   const [currentPosition, setCurrentPosition] = useState<THREE.Vector3>(new THREE.Vector3()) //現在位置
   const currentPositionCtl = useControls('Geolocation', {
@@ -116,79 +148,83 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
   })
 
   // nameと一致する建物にフォーカスする
-  function focusBuilding(str: string) {
-    let name = props.geometories.find((v) => v.label && v.label.indexOf(str) >= 0)?.name || str
-    name = Object.keys(nodes).find((key) => key.indexOf(name) >= 0) || name
-    if (nodes[name] != null) {
-      //その名前の建物が存在する
-      const geometory = nodes[name].geometry
-      const position = TransformVector(name, props.scenes) || new THREE.Vector3(0, 0, 0)
-      const center = geometory.boundingBox?.getCenter(new THREE.Vector3()).add(position)
-      const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
-      if (center) {
-        let cameraPosition = new THREE.Vector3()
-        cameraControlsRef.current?.getPosition(cameraPosition)
-        const values = center.toArray()
-        let apply = false
+  const focusBuilding = useCallback(
+    (str: string, bbox: BBox) => {
+      let name = props.geometories.find((v) => v.label && v.label.indexOf(str) >= 0)?.name || str
+      name = Object.keys(nodes).find((key) => key.indexOf(name) >= 0) || name
+      if (nodes[name] != null) {
+        //その名前の建物が存在する
+        const geometory = nodes[name].geometry
+        const position = TransformVector(name, props.scenes) || new THREE.Vector3(0, 0, 0)
+        const center = geometory.boundingBox?.getCenter(new THREE.Vector3()).add(position)
+        const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
+        if (center) {
+          let cameraPosition = new THREE.Vector3()
+          cameraControlsRef.current?.getPosition(cameraPosition)
+          const values = center.toArray()
+          let apply = false
 
-        cameraControlsRef.current?.colliderMeshes.splice(0)
-        cameraControlsRef.current?.colliderMeshes.push(groundPlane())
-
-        cameraControlsRef.current?.moveTo(...values, true).then(() => {
           cameraControlsRef.current?.colliderMeshes.splice(0)
           cameraControlsRef.current?.colliderMeshes.push(groundPlane())
 
-          Object.keys(bbox)
-            .filter((key) => key != name)
-            .forEach((key) => {
-              if (nodes[key]) {
-                if (collider == 'bbox') {
-                  cameraControlsRef.current?.colliderMeshes.push(bbox[key])
-                } else {
-                  cameraControlsRef.current?.colliderMeshes.push(nodes[key])
+          cameraControlsRef.current?.moveTo(...values, true).then(() => {
+            cameraControlsRef.current?.colliderMeshes.splice(0)
+            cameraControlsRef.current?.colliderMeshes.push(groundPlane())
+
+            Object.keys(bbox)
+              .filter((key) => key != name && !(props.hidden && props.hidden.indexOf(key) >= 0))
+              .forEach((key) => {
+                if (nodes[key]) {
+                  if (collider == 'bbox') {
+                    cameraControlsRef.current?.colliderMeshes.push(bbox[key])
+                  } else {
+                    cameraControlsRef.current?.colliderMeshes.push(nodes[key])
+                  }
                 }
-              }
-            })
-        })
+              })
+          })
 
-        const minlength = 100
-        const minscaler = -100
-        const maxlength = 300
-        const maxscaler = -200
-        const minheight = 120
-        const defheight = 120
+          const minlength = 100
+          const minscaler = -100
+          const maxlength = 300
+          const maxscaler = -200
+          const minheight = 120
+          const defheight = 120
 
-        const direction = cameraDirection()
-        if (direction.length() < minlength) {
-          const direction = cameraDirection().normalize().multiplyScalar(minscaler)
-          cameraPosition = cameraPosition.add(direction)
-          apply = true
-        } else if (direction.length() > maxlength) {
-          const cameraTarget = new THREE.Vector3()
-          cameraControlsRef.current?.getTarget(cameraTarget)
-          const direction = cameraDirection().normalize().multiplyScalar(maxscaler)
-          cameraPosition = cameraTarget.add(direction)
-          apply = true
+          const direction = cameraDirection()
+          if (direction.length() < minlength) {
+            const direction = cameraDirection().normalize().multiplyScalar(minscaler)
+            cameraPosition = cameraPosition.add(direction)
+            apply = true
+          } else if (direction.length() > maxlength) {
+            const cameraTarget = new THREE.Vector3()
+            cameraControlsRef.current?.getTarget(cameraTarget)
+            const direction = cameraDirection().normalize().multiplyScalar(maxscaler)
+            cameraPosition = cameraTarget.add(direction)
+            apply = true
+          }
+
+          if (cameraPosition.y < minheight) {
+            cameraPosition.setY(defheight)
+            apply = true
+          }
+
+          if (apply) {
+            cameraControlsRef.current?.setPosition(...cameraPosition.toArray(), true)
+          }
+          setPointCamera('')
+          setSelectObject('')
+          setFocusObject(name)
+          console.log('focus' + name)
+          console.log(nodes[name])
         }
-
-        if (cameraPosition.y < minheight) {
-          cameraPosition.setY(defheight)
-          apply = true
-        }
-
-        if (apply) {
-          cameraControlsRef.current?.setPosition(...cameraPosition.toArray(), true)
-        }
-        setPointCamera('')
-        setSelectObject('')
-        setFocusObject(name)
-        console.log('focus' + name)
-        console.log(nodes[name])
+      } else {
+        console.log('focusBuilding:cannot find ' + name)
       }
-    } else {
-      console.log('focusBuilding:cannot find ' + name)
-    }
-  }
+    },
+    [collider, nodes, props.geometories, props.scenes, props.hidden]
+  )
+
   function geo_success(position: GeolocationPosition) {
     //位置情報が更新された際に呼び出される
     console.log(position)
@@ -233,6 +269,7 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
       },
     }
   })
+
   useEffect(() => {
     console.log(`focusObject ${focusObject}`)
   }, [focusObject])
@@ -314,13 +351,13 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
     ;(recognizer as any).onresult = (event: any) => {
       console.log('result', event.results)
       const resultText = event.results[0][0].transcript //音声認識結果
-      focusBuilding(resultText)
+      focusBuilding(resultText, boxes)
     }
     ;(recognizer as any).onend = (event: any) => {
       console.log('end', event)
     }
     speechRef.current = recognizer
-  }, [nodes])
+  }, [nodes, initialcamera, props, focusBuilding])
 
   // 視線方向のベクトルを計算
   const cameraDirection = () => {
@@ -383,21 +420,28 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
         }}
       />
       {/* -------------------------- シーンの描画 -------------------------- */}
-      <Scene {...props} focusBuilding={focusBuilding} />
+      <Scene
+        {...props}
+        selectObject={selectObject}
+        focusObject={focusObject}
+        focusBuilding={(name) => focusBuilding(name, bbox)}
+      />
       {/* -------------------------- バウンディングボックスの表示 -------------------------- */}
       {SHOW_BOUNDING_BOX
-        ? Object.keys(bbox).map((key) => {
-            const box = bbox[key]
-            return (
-              <Mesh
-                key={`bbox-${key}`}
-                position={[0, 0, 0]}
-                rotation={[0, 0, 0]}
-                geometry={box.geometry}
-                // material={nodes[name].material}
-              />
-            )
-          })
+        ? Object.keys(bbox)
+            .filter((key) => !(props.hidden && props.hidden.indexOf(key) >= 0))
+            .map((key) => {
+              const box = bbox[key]
+              return (
+                <Mesh
+                  key={`bbox-${key}`}
+                  position={[0, 0, 0]}
+                  rotation={[0, 0, 0]}
+                  geometry={box.geometry}
+                  // material={nodes[name].material}
+                />
+              )
+            })
         : null}
       {/* -------------------------- gltfjsxのモデル表示 -------------------------- */}
       {/* <Model ref={modelRef} position={[-100, 0, 0]} /> */}

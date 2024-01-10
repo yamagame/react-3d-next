@@ -23,7 +23,11 @@ export type SceneItem = {
 
 export type SceneProps = {
   gltf: string
-  geometories: { name: string; label?: string }[]
+  geometories: {
+    name: string
+    bbox?: string
+    label?: string
+  }[]
   camera: {
     target: number[]
     position: number[]
@@ -68,6 +72,7 @@ export const RenderScene = (
   }
   return scenes.map((scene) => {
     if (props.hidden && props.hidden.indexOf(scene.name) >= 0) return null
+    if (props.geometories.some((v) => v.bbox === scene.name)) return null
     if (scene.children.length > 0) {
       return (
         <group
@@ -80,7 +85,7 @@ export const RenderScene = (
         </group>
       )
     }
-    if (scene.material && gltf.nodes[scene.name]) {
+    if (gltf.nodes[scene.name]) {
       const name = scene.name
       const label = props.geometories.find((v) => v.name === name)?.label
       const geometory = gltf.nodes[name].geometry
@@ -88,7 +93,7 @@ export const RenderScene = (
       const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
       return (
         <group key={`${name}-container`}>
-          {label ? (
+          {label || !scene.material ? (
             <HoverMesh
               name={scene.name}
               key={scene.name}
