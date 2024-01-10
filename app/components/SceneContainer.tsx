@@ -314,17 +314,22 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     const boxes: { [index: string]: THREE.Mesh } = {}
     // console.log(Object.keys(nodes))
     Object.keys(nodes)
-      .filter((key) => key.indexOf('building') == 0)
+      .filter((key) => props.geometories.some((n) => n.name == key))
       .forEach((key) => {
-        const box3 = nodes[key].geometry.boundingBox
-        if (box3) {
-          const vertices = box3ToVert(box3)
-          const geometry = new THREE.BufferGeometry()
-          geometry.setIndex([0, 1, 2, 0, 2, 3, 4, 6, 5, 4, 7, 6, 0, 4, 1, 1, 4, 5, 2, 7, 3, 2, 6, 7])
-          geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
-          const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-          const mesh = new THREE.Mesh(geometry, material)
-          boxes[key] = mesh
+        const geo = props.geometories.find((n) => n.name == key)
+        if (geo?.bbox) {
+          boxes[key] = nodes[geo.bbox]
+        } else {
+          const box3 = nodes[key].geometry.boundingBox
+          if (box3) {
+            const vertices = box3ToVert(box3)
+            const geometry = new THREE.BufferGeometry()
+            geometry.setIndex([0, 1, 2, 0, 2, 3, 4, 6, 5, 4, 7, 6, 0, 4, 1, 1, 4, 5, 2, 7, 3, 2, 6, 7])
+            geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+            const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+            const mesh = new THREE.Mesh(geometry, material)
+            boxes[key] = mesh
+          }
         }
       })
     // boxes['Plane'] = groundPlane()

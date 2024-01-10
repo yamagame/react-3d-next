@@ -2,15 +2,18 @@
   "gltf": "/cubes.glb",
   "geometories": [
     {
-      "name": "BlueTall",
+      "name": "cube-blue",
+      "bbox": "BlueTall",
       "label": "BlueTall"
     },
     {
-      "name": "Cube",
+      "name": "cube-red",
+      "bbox": "Cube",
       "label": "Cube"
     },
     {
-      "name": "GreenCube",
+      "name": "cube-green",
+      "bbox": "GreenCube",
       "label": "GreenCube"
     }
   ],

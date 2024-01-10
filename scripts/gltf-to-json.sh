@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # gltf をパースしてシーンのJSONデータを作成する
+# ./scripts/gltf-to-json.sh ./assets/gltf/cubes.gltf
 #
 
 CWD=`pwd`
