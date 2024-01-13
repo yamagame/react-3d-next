@@ -284,8 +284,8 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         console.log('select:' + name)
       },
       startRecognition() {
-        //page.tsxから参照
         ;(speechRef.current as any).start()
+        props.setOnRecognizing(true)
       },
       startGeolocation() {
         console.log('ここでGeolocationをスタートorストップする!')
@@ -315,6 +315,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
 
   const cameraControlsRef = useRef<CameraControls>(null)
   const speechRef = useRef()
+  const resultText = useRef<string>('')
   const geolocationRef = useRef(0)
   const w11PosRef = useRef<PosAndLatLong>(null!)
   const auditoriumPosRef = useRef<PosAndLatLong>(null!)
@@ -383,6 +384,8 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     const SpeechGrammarList = (window as any).webkitSpeechGrammarList || (window as any).SpeechGrammarList
     const recognizer = new SpeechRecognition() as any
     recognizer.lang = 'ja-JP'
+    recognizer.interimResults = true // 認識途中で暫定の結果を返す
+
     // recognizer.interimResults = true
     // recognizer.continuous = true
     //辞書登録
@@ -398,11 +401,16 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     // (speechRef.current as any).grammars = speechRecognitionList;
     ;(recognizer as any).onresult = (event: any) => {
       console.log('result', event.results)
-      const resultText = event.results[0][0].transcript //音声認識結果
-      focusBuilding(resultText, boxes)
+      resultText.current = event.results[0][0].transcript //音声認識結果
+      props.setRecognizedText(resultText.current)
     }
     ;(recognizer as any).onend = (event: any) => {
       console.log('end', event)
+      focusBuilding(resultText.current, bbox)
+      setTimeout(() => {
+        props.setOnRecognizing(false)
+        props.setRecognizedText('')
+      }, 2000)
     }
     speechRef.current = recognizer
   }, [nodes, initialcamera, props, focusBuilding])
