@@ -22,7 +22,7 @@ export function HoverMesh(
     roughness: { value: 0.5, min: 0, max: 1 },
     metalness: { value: 0.5, min: 0, max: 1 },
   })
-  const uselocalmatarial = hovered
+  const uselocalmatarial = hovered || props.hover
   return (
     <mesh
       {...props}
@@ -42,7 +42,7 @@ export function HoverMesh(
         <meshStandardMaterial
           metalness={metalness}
           roughness={roughness}
-          color={props.selected ? 'hotpink' : hovered ? 'pink' : 'white'}
+          color={props.selected ? 'hotpink' : hovered || props.hover ? 'pink' : 'white'}
         />
       ) : null}
     </mesh>

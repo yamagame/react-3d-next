@@ -126,15 +126,13 @@ export const RenderScene = (
             position={new THREE.Vector3(...position)}
             rotation={new THREE.Euler(...rotation)}
             onPointerOver={(e) => {
-              if (local_geo) {
+              if (cgeo && local_geo && local_geo.name) {
                 setHoverObject(local_geo.name)
+                e.stopPropagation()
               }
-              // console.log('over', local_geo)
-              e.stopPropagation()
             }}
             onPointerOut={(e) => {
               setHoverObject('')
-              // console.log('out', props.name)
               e.stopPropagation()
             }}
             onClick={(e: ThreeEvent<MouseEvent>) => {
@@ -154,7 +152,7 @@ export const RenderScene = (
               gltfResult={gltfResult}
               textRef={textRef}
               geo={local_geo}
-              hover={hoverObject == local_geo?.name}
+              hover={hoverObject == local_geo?.name || hover}
             />
           </HoverGroup>
         )
@@ -173,7 +171,7 @@ export const RenderScene = (
             gltfResult={gltfResult}
             textRef={textRef}
             geo={local_geo}
-            hover={false}
+            hover={hover}
           />
         </group>
       )
