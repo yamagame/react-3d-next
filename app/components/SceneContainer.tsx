@@ -109,21 +109,8 @@ function TransformVector(name: string, scenes: SceneItem[]): THREE.Vector3 | nul
   return null
 }
 
-// function getBranchName(scenes: SceneItem[], name: string) {
-//   return getBranch(scenes, "root", name)
-// }
-
-function applyBranchName(scenes: SceneItem[], geometories: Geometory[]) {
-  // geometories.forEach((geo) => {
-  //   const name = geo.name
-  //   geo.bname = getBranchName(scenes, name)
-  // })
-  return geometories
-}
-
 export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref) => {
-  const { camera, collider } = props
-  const geometories = useMemo(() => applyBranchName(props.scenes, props.geometories), [props.scenes, props.geometories])
+  const { camera, collider, geometories } = props
   const makeInitialCamera = (camera: Camera) => {
     return {
       target: { x: camera.target[0], y: camera.target[1], z: camera.target[2] },
@@ -294,10 +281,6 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       },
     }
   })
-
-  useEffect(() => {
-    console.log(`### focusObject ${focusObject}`)
-  }, [focusObject])
 
   const cameraControlsRef = useRef<CameraControls>(null)
   const speechRef = useRef()

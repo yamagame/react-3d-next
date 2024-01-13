@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useRef, useMemo, RefObject, createRef, MutableRefObject } from 'react'
+import React, { useRef, useMemo, useState, RefObject, createRef, MutableRefObject } from 'react'
 import * as THREE from 'three'
 import { HoverMesh } from './HoverMesh'
 import { Mesh } from './Mesh'
+import { HoverGroup } from './HoverGroup'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Text, useGLTF } from '@react-three/drei'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
@@ -67,12 +68,15 @@ const find = (scenes: SceneItem[], name: string): SceneItem | null => {
 }
 
 export const RenderScene = (
-  props: SceneProps,
-  scenes: SceneItem[],
-  gltf: GLTFResult,
-  textRef: MutableRefObject<TextRef>,
-  geo: Geometory | null
+  props: SceneProps & {
+    scenes: SceneItem[]
+    gltfResult: GLTFResult
+    textRef: MutableRefObject<TextRef>
+    geo: Geometory | null
+    hover: boolean
+  }
 ) => {
+  const { scenes, gltfResult, textRef, geo, hover } = props
   const fontProps = {
     font: 'NotoSansJP-Bold.ttf',
     fontSize: 2.5,
@@ -80,12 +84,13 @@ export const RenderScene = (
     lineHeight: 1,
     'material-toneMapped': false,
   }
+  const [hoverObject, setHoverObject] = useState('')
   return scenes.map((scene) => {
     if (props.hidden && props.hidden.indexOf(scene.name) >= 0) return null
     if (props.geometories.some((v) => v.bbox === scene.name)) {
       const name = scene.name
       const label = props.geometories.find((v) => v.bbox === name)?.label
-      const geometory = gltf.nodes[name].geometry
+      const geometory = gltfResult.nodes[name].geometry
       const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
       const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
       return (
@@ -112,32 +117,64 @@ export const RenderScene = (
       if (cgeo) {
         local_geo = { ...cgeo }
       }
+      if (local_geo) {
+        return (
+          <HoverGroup
+            key={name}
+            name={name}
+            scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
+            position={new THREE.Vector3(...position)}
+            rotation={new THREE.Euler(...rotation)}
+            onPointerOver={(e) => {
+              if (local_geo) {
+                setHoverObject(local_geo.name)
+              }
+              // console.log('over', local_geo)
+              e.stopPropagation()
+            }}
+            onPointerOut={(e) => {
+              setHoverObject('')
+              // console.log('out', props.name)
+              e.stopPropagation()
+            }}
+            onClick={(e: ThreeEvent<MouseEvent>) => {
+              if (local_geo && local_geo.bbox) {
+                if (e.delta > 1) {
+                  e.stopPropagation()
+                  return
+                }
+                props.focusBuilding(local_geo.bbox)
+                e.stopPropagation()
+              }
+            }}
+          >
+            <RenderScene
+              {...props}
+              scenes={scene.children}
+              gltfResult={gltfResult}
+              textRef={textRef}
+              geo={local_geo}
+              hover={hoverObject == local_geo?.name}
+            />
+          </HoverGroup>
+        )
+      }
       return (
         <group
           key={name}
+          name={name}
           scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
           position={new THREE.Vector3(...position)}
           rotation={new THREE.Euler(...rotation)}
-          onPointerOver={(e) => {
-            // console.log('over', geo)
-            e.stopPropagation()
-          }}
-          onPointerOut={(e) => {
-            // console.log('out', geo)
-            e.stopPropagation()
-          }}
-          onClick={(e: ThreeEvent<MouseEvent>) => {
-            if (local_geo && local_geo.bbox) {
-              if (e.delta > 1) {
-                e.stopPropagation()
-                return
-              }
-              props.focusBuilding(local_geo.bbox)
-              e.stopPropagation()
-            }
-          }}
         >
-          {RenderScene(props, scene.children, gltf, textRef, local_geo)}
+          <RenderScene
+            {...props}
+            scenes={scene.children}
+            gltfResult={gltfResult}
+            textRef={textRef}
+            geo={local_geo}
+            hover={false}
+          />
         </group>
       )
     }
@@ -164,13 +201,13 @@ export const RenderScene = (
             }
             e.stopPropagation()
           }}
-          geometry={gltf.nodes[name].geometry}
-          material={scene.material ? gltf.materials[scene.material] : null}
+          geometry={gltfResult.nodes[name].geometry}
+          material={scene.material ? gltfResult.materials[scene.material] : null}
         />
       )
-    } else if (gltf.nodes[scene.name]) {
+    } else if (gltfResult.nodes[scene.name]) {
       const name = scene.name
-      const geometory = gltf.nodes[name].geometry
+      const geometory = gltfResult.nodes[name].geometry
       const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
       const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
       const cgeo = props.geometories.find((v) => v.name === name)
@@ -196,6 +233,7 @@ export const RenderScene = (
               rotation={scene.rotation ? new THREE.Euler(...scene.rotation) : [0, 0, 0]}
               selected={props.selectObject === name}
               focused={props.focusObject === name}
+              hover={hover}
               onClick={(e: ThreeEvent<MouseEvent>) => {
                 if (e.delta > 1) {
                   e.stopPropagation()
@@ -204,8 +242,8 @@ export const RenderScene = (
                 props.focusBuilding(focusName)
                 e.stopPropagation()
               }}
-              geometry={gltf.nodes[scene.name].geometry}
-              material={scene.material ? gltf.materials[scene.material] : null}
+              geometry={gltfResult.nodes[scene.name].geometry}
+              material={scene.material ? gltfResult.materials[scene.material] : null}
             />
           ) : (
             <Mesh
@@ -216,8 +254,9 @@ export const RenderScene = (
               scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
               position={scene.position ? new THREE.Vector3(...scene.position) : [0, 0, 0]}
               rotation={scene.rotation ? new THREE.Euler(...scene.rotation) : [0, 0, 0]}
-              geometry={gltf.nodes[scene.name].geometry}
-              material={scene.material ? gltf.materials[scene.material] : null}
+              geometry={gltfResult.nodes[scene.name].geometry}
+              material={scene.material ? gltfResult.materials[scene.material] : null}
+              hover={hover}
             />
           )}
           {label ? (
@@ -258,6 +297,15 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     })
   })
 
-  return RenderScene(props, props.scenes, { nodes, materials } as GLTFResult, textRef, null)
+  return (
+    <RenderScene
+      {...props}
+      scenes={props.scenes}
+      gltfResult={{ nodes, materials } as GLTFResult}
+      textRef={textRef}
+      geo={null}
+      hover={false}
+    />
+  )
 })
 Scene.displayName = 'Scene'

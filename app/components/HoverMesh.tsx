@@ -13,6 +13,7 @@ export function HoverMesh(
     geometry?: any
     selected?: boolean
     focused?: boolean
+    hover?: boolean
   }
 ) {
   const ref = useRef<THREE.Mesh>(null!)
