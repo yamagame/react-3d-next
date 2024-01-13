@@ -21,6 +21,7 @@ export function HoverMesh(
     roughness: { value: 0.5, min: 0, max: 1 },
     metalness: { value: 0.5, min: 0, max: 1 },
   })
+  const uselocalmatarial = hovered
   return (
     <mesh
       {...props}
@@ -36,11 +37,13 @@ export function HoverMesh(
       material={props.material}
     >
       {!props.geometry && <boxGeometry args={props.size || [1, 1, 1]} />}
-      <meshStandardMaterial
-        metalness={metalness}
-        roughness={roughness}
-        color={props.selected ? 'hotpink' : hovered ? 'pink' : 'white'}
-      />
+      {uselocalmatarial || !props.material ? (
+        <meshStandardMaterial
+          metalness={metalness}
+          roughness={roughness}
+          color={props.selected ? 'hotpink' : hovered ? 'pink' : 'white'}
+        />
+      ) : null}
     </mesh>
   )
 }

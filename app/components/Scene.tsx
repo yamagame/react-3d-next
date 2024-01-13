@@ -3,6 +3,7 @@
 import React, { useRef, useMemo, RefObject, createRef, MutableRefObject } from 'react'
 import * as THREE from 'three'
 import { HoverMesh } from './HoverMesh'
+import { Mesh } from './Mesh'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Text, useGLTF } from '@react-three/drei'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
@@ -31,6 +32,7 @@ export type Camera = {
 export type Geometory = {
   name: string
   bbox?: string
+  bname?: string
   label?: string
 }
 
@@ -106,8 +108,9 @@ export const RenderScene = (
       const position = scene.position ? scene.position : [0, 0, 0]
       const rotation = scene.rotation ? scene.rotation : [0, 0, 0]
       const cgeo = props.geometories.find((v) => v.name === name)
+      let local_geo = geo ? { ...geo } : null
       if (cgeo) {
-        geo = cgeo
+        local_geo = { ...cgeo }
       }
       return (
         <group
@@ -115,18 +118,26 @@ export const RenderScene = (
           scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
           position={new THREE.Vector3(...position)}
           rotation={new THREE.Euler(...rotation)}
+          onPointerOver={(e) => {
+            // console.log('over', geo)
+            e.stopPropagation()
+          }}
+          onPointerOut={(e) => {
+            // console.log('out', geo)
+            e.stopPropagation()
+          }}
           onClick={(e: ThreeEvent<MouseEvent>) => {
-            if (geo && geo.bbox) {
+            if (local_geo && local_geo.bbox) {
               if (e.delta > 1) {
                 e.stopPropagation()
                 return
               }
-              props.focusBuilding(geo.bbox)
+              props.focusBuilding(local_geo.bbox)
               e.stopPropagation()
             }
           }}
         >
-          {RenderScene(props, scene.children, gltf, textRef, geo)}
+          {RenderScene(props, scene.children, gltf, textRef, local_geo)}
         </group>
       )
     }
@@ -159,16 +170,25 @@ export const RenderScene = (
       )
     } else if (gltf.nodes[scene.name]) {
       const name = scene.name
-      const label = props.geometories.find((v) => v.name === name)?.label
       const geometory = gltf.nodes[name].geometry
       const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
       const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
+      const cgeo = props.geometories.find((v) => v.name === name)
+      let local_geo = geo ? { ...geo } : null
+      let label = null
+      if (cgeo) {
+        local_geo = cgeo
+        if (!local_geo.bbox) {
+          label = cgeo.label
+        }
+      }
+      const focusName = local_geo?.bbox || local_geo?.name
       return (
         <group key={`${name}-container`}>
-          {label || !scene.material ? (
+          {cgeo && focusName ? (
             <HoverMesh
-              name={scene.name}
-              key={scene.name}
+              name={name}
+              key={name}
               castShadow
               receiveShadow
               scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
@@ -181,23 +201,23 @@ export const RenderScene = (
                   e.stopPropagation()
                   return
                 }
-                props.focusBuilding(name)
+                props.focusBuilding(focusName)
                 e.stopPropagation()
               }}
               geometry={gltf.nodes[scene.name].geometry}
-              // material={gltf.materials[scene.material]}
+              material={scene.material ? gltf.materials[scene.material] : null}
             />
           ) : (
-            <mesh
-              name={scene.name}
-              key={scene.name}
+            <Mesh
+              name={name}
+              key={name}
               castShadow
               receiveShadow
               scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
               position={scene.position ? new THREE.Vector3(...scene.position) : [0, 0, 0]}
               rotation={scene.rotation ? new THREE.Euler(...scene.rotation) : [0, 0, 0]}
               geometry={gltf.nodes[scene.name].geometry}
-              material={gltf.materials[scene.material]}
+              material={scene.material ? gltf.materials[scene.material] : null}
             />
           )}
           {label ? (

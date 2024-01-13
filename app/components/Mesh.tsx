@@ -16,7 +16,7 @@ export function Mesh(
   return (
     <mesh {...props} ref={ref}>
       {!props.geometry && <boxGeometry args={props.size || [1, 1, 1]} />}
-      <meshStandardMaterial />
+      {props.material ? null : <meshStandardMaterial />}
     </mesh>
   )
 }

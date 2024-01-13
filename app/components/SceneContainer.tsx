@@ -9,7 +9,7 @@ import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Sky, Text, CameraControls, useGLTF, Sphere } from '@react-three/drei'
 import { Env } from '../environment'
-import { SceneItem, Scene, SceneProps, GLTFResult, Camera } from './Scene'
+import { SceneItem, Scene, SceneProps, GLTFResult, Camera, Geometory } from './Scene'
 
 const w11Lat = 35.65812474191075
 const w11Long = 139.54082511503555
@@ -17,7 +17,7 @@ const auditoriumLat = 35.65563229930534
 const auditoriumLong = 139.54433508505537
 
 const SHOW_BOUNDING_BOX = false
-const ENABLE_CAMERA_COLLIDER = false
+const ENABLE_CAMERA_COLLIDER = true
 
 type PosAndLatLong = {
   position: THREE.Vector3
@@ -29,11 +29,7 @@ type BBox = { [index: string]: THREE.Mesh }
 
 export type SceneContainerProps = {
   gltf: string
-  geometories: {
-    name: string
-    bbox?: string
-    label?: string
-  }[]
+  geometories: Geometory[]
   camera: Camera
   collider: string // bbox or mesh
   scenes: SceneItem[]
@@ -113,8 +109,21 @@ function TransformVector(name: string, scenes: SceneItem[]): THREE.Vector3 | nul
   return null
 }
 
+// function getBranchName(scenes: SceneItem[], name: string) {
+//   return getBranch(scenes, "root", name)
+// }
+
+function applyBranchName(scenes: SceneItem[], geometories: Geometory[]) {
+  // geometories.forEach((geo) => {
+  //   const name = geo.name
+  //   geo.bname = getBranchName(scenes, name)
+  // })
+  return geometories
+}
+
 export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref) => {
   const { camera, collider } = props
+  const geometories = useMemo(() => applyBranchName(props.scenes, props.geometories), [props.scenes, props.geometories])
   const makeInitialCamera = (camera: Camera) => {
     return {
       target: { x: camera.target[0], y: camera.target[1], z: camera.target[2] },
@@ -124,7 +133,6 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   // const initialcamera = makeInitialCamera(camera)
   const [initialcamera, setInitialCamera] = useState(makeInitialCamera(camera))
   const modelRef = useRef(null)
-  console.log(`props.gltf`, props.gltf)
   const { nodes, materials } = useGLTF(props.gltf) as GLTFResult
   const [pointCamera, setPointCamera] = useState('')
   const [selectObject, setSelectObject] = useState('')
@@ -144,9 +152,9 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
 
   // nameと一致する建物にフォーカスする
   const focusBuilding = useCallback(
-    (str: string, bbox: BBox) => {
-      let name = props.geometories.find((v) => v.label && v.label.indexOf(str) >= 0)?.name || str
-      name = Object.keys(nodes).find((key) => key.indexOf(name) >= 0) || name
+    (name: string, bbox: BBox) => {
+      // let name = geometories.find((v) => v.label && v.label.indexOf(str) >= 0)?.name || str
+      // name = Object.keys(nodes).find((key) => key.indexOf(name) >= 0) || name
       if (nodes[name] != null) {
         //その名前の建物が存在する
         const geometory = nodes[name].geometry
@@ -174,11 +182,13 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
                     if (collider == 'bbox') {
                       cameraControlsRef.current?.colliderMeshes.push(bbox[key])
                     } else {
-                      const geo = props.geometories.find((v) => v.name == key)
+                      const geo = geometories.find((v) => v.name == key)
+                      let nodename = key
                       if (geo && geo.bbox) {
-                        cameraControlsRef.current?.colliderMeshes.push(nodes[geo.bbox])
-                      } else {
-                        cameraControlsRef.current?.colliderMeshes.push(nodes[key])
+                        nodename = geo.bbox
+                      }
+                      if (nodename != name) {
+                        cameraControlsRef.current?.colliderMeshes.push(nodes[nodename])
                       }
                     }
                   }
@@ -217,14 +227,12 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
           setPointCamera('')
           setSelectObject('')
           setFocusObject(name)
-          console.log('focus' + name)
-          console.log(nodes[name])
         }
       } else {
         console.log('focusBuilding:cannot find ' + name)
       }
     },
-    [collider, nodes, props.geometories, props.scenes, props.hidden]
+    [collider, nodes, geometories, props.scenes, props.hidden]
   )
 
   const focusPointCamera = useCallback((name: string, center: THREE.Vector3) => {
@@ -269,7 +277,6 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       },
       selectBuilding(name: string) {
         setFocusObject(name)
-        console.log('select:' + name)
       },
       startRecognition() {
         //page.tsxから参照
@@ -289,7 +296,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   })
 
   useEffect(() => {
-    console.log(`focusObject ${focusObject}`)
+    console.log(`### focusObject ${focusObject}`)
   }, [focusObject])
 
   const cameraControlsRef = useRef<CameraControls>(null)
@@ -332,9 +339,9 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     const boxes: { [index: string]: THREE.Mesh } = {}
     // console.log(Object.keys(nodes))
     Object.keys(nodes)
-      .filter((key) => props.geometories.some((n) => n.name == key))
+      .filter((key) => geometories.some((n) => n.name == key))
       .forEach((key) => {
-        const geo = props.geometories.find((n) => n.name == key)
+        const geo = geometories.find((n) => n.name == key)
         if (geo?.bbox) {
           boxes[key] = nodes[geo.bbox]
         } else {
@@ -374,13 +381,15 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     ;(recognizer as any).onresult = (event: any) => {
       console.log('result', event.results)
       const resultText = event.results[0][0].transcript //音声認識結果
-      focusBuilding(resultText, boxes)
+      let name = geometories.find((v) => v.label && v.label.indexOf(resultText) >= 0)?.name || resultText
+      name = Object.keys(nodes).find((key) => key.indexOf(name) >= 0) || name
+      focusBuilding(name, boxes)
     }
     ;(recognizer as any).onend = (event: any) => {
       console.log('end', event)
     }
     speechRef.current = recognizer
-  }, [nodes, initialcamera, props, focusBuilding])
+  }, [nodes, initialcamera, geometories, focusBuilding])
 
   // 視線方向のベクトルを計算
   const cameraDirection = () => {
@@ -449,7 +458,9 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         selectObject={selectObject}
         focusObject={focusObject}
         pointCamera={pointCamera}
-        focusBuilding={(name) => focusBuilding(name, bbox)}
+        focusBuilding={(name) => {
+          focusBuilding(name, bbox)
+        }}
         focusPointCamera={(name, center) => focusPointCamera(name, center)}
       />
       {/* -------------------------- バウンディングボックスの表示 -------------------------- */}
