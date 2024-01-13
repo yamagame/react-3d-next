@@ -9,7 +9,7 @@ import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Sky, Text, CameraControls, useGLTF, Sphere } from '@react-three/drei'
 import { Env } from '../environment'
-import { SceneItem, Scene, SceneProps, GLTFResult } from './Scene'
+import { SceneItem, Scene, SceneProps, GLTFResult, Camera } from './Scene'
 
 const w11Lat = 35.65812474191075
 const w11Long = 139.54082511503555
@@ -22,12 +22,6 @@ type PosAndLatLong = {
   position: THREE.Vector3
   latitude: number
   longitude: number
-}
-
-type Camera = {
-  target: number[]
-  position: number[]
-  distance: { max: number }
 }
 
 type BBox = { [index: string]: THREE.Mesh }
@@ -178,7 +172,13 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
                   if (collider == 'bbox') {
                     cameraControlsRef.current?.colliderMeshes.push(bbox[key])
                   } else {
-                    cameraControlsRef.current?.colliderMeshes.push(nodes[key])
+                    console.log(key)
+                    const geo = props.geometories.find((v) => v.name == key)
+                    if (geo && geo.bbox) {
+                      cameraControlsRef.current?.colliderMeshes.push(nodes[geo.bbox])
+                    } else {
+                      cameraControlsRef.current?.colliderMeshes.push(nodes[key])
+                    }
                   }
                 }
               })
@@ -224,6 +224,22 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     },
     [collider, nodes, props.geometories, props.scenes, props.hidden]
   )
+
+  const focusPointCamera = useCallback((name: string, center: THREE.Vector3) => {
+    const direction = cameraDirection()
+      .multiply(new THREE.Vector3(1, 0, 1))
+      .normalize()
+      .multiplyScalar(0.01)
+    const target = direction.add(center)
+    cameraControlsRef.current?.moveTo(...target.toArray(), true)
+    cameraControlsRef.current?.setPosition(...center.toArray(), true)
+    setPointCamera(name)
+    setSelectObject('')
+    setFocusObject('')
+
+    cameraControlsRef.current?.colliderMeshes.splice(0)
+    cameraControlsRef.current?.colliderMeshes.push(groundPlane())
+  }, [])
 
   function geo_success(position: GeolocationPosition) {
     //位置情報が更新された際に呼び出される
@@ -423,13 +439,16 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
           console.log(currentPosition)
           console.log(e.object.position)
         }}
+        visible={geolocationRef.current == 0 ? false : true}
       />
       {/* -------------------------- シーンの描画 -------------------------- */}
       <Scene
         {...props}
         selectObject={selectObject}
         focusObject={focusObject}
+        pointCamera={pointCamera}
         focusBuilding={(name) => focusBuilding(name, bbox)}
+        focusPointCamera={(name, center) => focusPointCamera(name, center)}
       />
       {/* -------------------------- バウンディングボックスの表示 -------------------------- */}
       {SHOW_BOUNDING_BOX
@@ -437,15 +456,18 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
             .filter((key) => !(props.hidden && props.hidden.indexOf(key) >= 0))
             .map((key) => {
               const box = bbox[key]
-              return (
-                <Mesh
-                  key={`bbox-${key}`}
-                  position={[0, 0, 0]}
-                  rotation={[0, 0, 0]}
-                  geometry={box.geometry}
-                  // material={nodes[name].material}
-                />
-              )
+              if (box && box.geometry) {
+                return (
+                  <Mesh
+                    key={`bbox-${key}`}
+                    position={[0, 0, 0]}
+                    rotation={[0, 0, 0]}
+                    geometry={box.geometry}
+                    // material={nodes[name].material}
+                  />
+                )
+              }
+              return null
             })
         : null}
       {/* -------------------------- gltfjsxのモデル表示 -------------------------- */}

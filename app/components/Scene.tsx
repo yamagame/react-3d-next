@@ -21,27 +21,34 @@ export type SceneItem = {
   children: SceneItem[]
 }
 
+export type Camera = {
+  target: number[]
+  position: number[]
+  distance: { max: number }
+  'point-cameras'?: { name: string }[]
+}
+
+export type Geometory = {
+  name: string
+  bbox?: string
+  label?: string
+}
+
 export type SceneProps = {
   gltf: string
-  geometories: {
-    name: string
-    bbox?: string
-    label?: string
-  }[]
-  camera: {
-    target: number[]
-    position: number[]
-    distance: { max: number }
-  }
+  geometories: Geometory[]
+  camera: Camera
   collider: string // bbox or mesh
   selectObject: string
   focusObject: string
   scenes: SceneItem[]
   hidden?: string[]
+  pointCamera: string
   focusBuilding: (name: string) => void
   setOnRecognizing: (state: boolean) => void
   setRecognizedText: (text: string) => void
   setOnUsingGeolocation: (state: boolean) => void
+  focusPointCamera: (name: string, center: THREE.Vector3) => void
 }
 
 type TextRef = { [index: string]: RefObject<THREE.Mesh> }
@@ -61,7 +68,8 @@ export const RenderScene = (
   props: SceneProps,
   scenes: SceneItem[],
   gltf: GLTFResult,
-  textRef: MutableRefObject<TextRef>
+  textRef: MutableRefObject<TextRef>,
+  geo: Geometory | null
 ) => {
   const fontProps = {
     font: 'NotoSansJP-Bold.ttf',
@@ -72,20 +80,84 @@ export const RenderScene = (
   }
   return scenes.map((scene) => {
     if (props.hidden && props.hidden.indexOf(scene.name) >= 0) return null
-    if (props.geometories.some((v) => v.bbox === scene.name)) return null
-    if (scene.children.length > 0) {
+    if (props.geometories.some((v) => v.bbox === scene.name)) {
+      const name = scene.name
+      const label = props.geometories.find((v) => v.bbox === name)?.label
+      const geometory = gltf.nodes[name].geometry
+      const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
+      const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
       return (
-        <group
-          key={scene.name}
-          scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
-          position={scene.position ? new THREE.Vector3(...scene.position) : [0, 0, 0]}
-          rotation={scene.rotation ? new THREE.Euler(...scene.rotation) : [0, 0, 0]}
-        >
-          {RenderScene(props, scene.children, gltf, textRef)}
+        <group key={`${name}-container`}>
+          {label ? (
+            <Text
+              key={`${name}-text`}
+              ref={textRef.current[name]}
+              position={center?.clone().add(size.multiply(new THREE.Vector3(0, 0.8, 0)))}
+              {...fontProps}
+            >
+              {label}
+            </Text>
+          ) : null}
         </group>
       )
     }
-    if (gltf.nodes[scene.name]) {
+    if (scene.children.length > 0) {
+      const name = scene.name
+      const position = scene.position ? scene.position : [0, 0, 0]
+      const rotation = scene.rotation ? scene.rotation : [0, 0, 0]
+      const cgeo = props.geometories.find((v) => v.name === name)
+      if (cgeo) {
+        geo = cgeo
+      }
+      return (
+        <group
+          key={name}
+          scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
+          position={new THREE.Vector3(...position)}
+          rotation={new THREE.Euler(...rotation)}
+          onClick={(e: ThreeEvent<MouseEvent>) => {
+            if (geo && geo.bbox) {
+              if (e.delta > 1) {
+                e.stopPropagation()
+                return
+              }
+              props.focusBuilding(geo.bbox)
+              e.stopPropagation()
+            }
+          }}
+        >
+          {RenderScene(props, scene.children, gltf, textRef, geo)}
+        </group>
+      )
+    }
+    if (props.camera['point-cameras']?.find((v) => v.name === scene.name)) {
+      const name = scene.name
+      if (name === props.pointCamera) {
+        return null
+      }
+      // ポイントカメラ
+      return (
+        <HoverMesh
+          key={name}
+          // scale={0.1}
+          castShadow
+          receiveShadow
+          scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
+          position={scene.position ? new THREE.Vector3(...scene.position) : [0, 0, 0]}
+          rotation={scene.rotation ? new THREE.Euler(...scene.rotation) : [0, 0, 0]}
+          onClick={(e: ThreeEvent<MouseEvent>) => {
+            // const center = gltf.nodes[name].geometry.boundingBox?.getCenter(new THREE.Vector3())
+            const center = scene.position || [0, 0, 0]
+            if (center) {
+              props.focusPointCamera(name, new THREE.Vector3(...center))
+            }
+            e.stopPropagation()
+          }}
+          geometry={gltf.nodes[name].geometry}
+          material={scene.material ? gltf.materials[scene.material] : null}
+        />
+      )
+    } else if (gltf.nodes[scene.name]) {
       const name = scene.name
       const label = props.geometories.find((v) => v.name === name)?.label
       const geometory = gltf.nodes[name].geometry
@@ -166,6 +238,6 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     })
   })
 
-  return RenderScene(props, props.scenes, { nodes, materials } as GLTFResult, textRef)
+  return RenderScene(props, props.scenes, { nodes, materials } as GLTFResult, textRef, null)
 })
 Scene.displayName = 'Scene'

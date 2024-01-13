@@ -87,7 +87,7 @@
 		},
 		{
 			"mesh":4,
-			"name":"camera-point"
+			"name":"point-camera.000"
 		},
 		{
 			"mesh":5,
@@ -155,43 +155,43 @@
 		},
 		{
 			"mesh":21,
-			"name":"camera-point.001"
+			"name":"point-camera.001"
 		},
 		{
 			"mesh":22,
-			"name":"camera-point.002"
+			"name":"point-camera.002"
 		},
 		{
 			"mesh":23,
-			"name":"camera-point.003"
+			"name":"point-camera.003"
 		},
 		{
 			"mesh":24,
-			"name":"camera-point.004"
+			"name":"point-camera.004"
 		},
 		{
 			"mesh":25,
-			"name":"camera-point.005"
+			"name":"point-camera.005"
 		},
 		{
 			"mesh":26,
-			"name":"camera-point.006"
+			"name":"point-camera.006"
 		},
 		{
 			"mesh":27,
-			"name":"camera-point.007"
+			"name":"point-camera.007"
 		},
 		{
 			"mesh":28,
-			"name":"camera-point.008"
+			"name":"point-camera.008"
 		},
 		{
 			"mesh":29,
-			"name":"camera-point.009"
+			"name":"point-camera.009"
 		},
 		{
 			"mesh":30,
-			"name":"camera-point.010"
+			"name":"point-camera.010"
 		},
 		{
 			"mesh":31,
@@ -199,7 +199,7 @@
 		},
 		{
 			"mesh":32,
-			"name":"camera-point.011"
+			"name":"point-camera.011"
 		},
 		{
 			"mesh":33,

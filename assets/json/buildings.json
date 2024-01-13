@@ -44,7 +44,21 @@
   "camera": {
     "target": [0, 1, 0],
     "position": [90, 40, 90],
-    "distance": { "max": 300 }
+    "distance": { "max": 300 },
+    "point-cameras": [
+      { "name": "point-camera000" },
+      { "name": "point-camera001" },
+      { "name": "point-camera002" },
+      { "name": "point-camera003" },
+      { "name": "point-camera004" },
+      { "name": "point-camera005" },
+      { "name": "point-camera006" },
+      { "name": "point-camera007" },
+      { "name": "point-camera008" },
+      { "name": "point-camera009" },
+      { "name": "point-camera010" },
+      { "name": "point-camera011" }
+    ]
   },
   "collider": "bbox",
   "hidden": ["building1001"]

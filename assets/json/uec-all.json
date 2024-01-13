@@ -2,7 +2,8 @@
   "gltf": "/uec-all.glb",
   "geometories": [
     {
-      "name": "buil_東A棟",
+      "name": "hi_東A棟",
+      "bbox": "buil_東A棟",
       "label": "A棟"
     },
     {
@@ -26,8 +27,9 @@
       "label": "アライアンスセンター"
     },
     {
-      "name": "buil_東リーサジュ",
-      "label": "リーサジュ"
+      "name": "hi_東リサージュ",
+      "bbox": "buil_東リサージュ",
+      "label": "リサージュ"
     },
     {
       "name": "buil_西体育館",
@@ -58,7 +60,8 @@
       "label": "国際交流会館"
     },
     {
-      "name": "buil_東学生会館",
+      "name": "hi_東学生会館",
+      "bbox": "buil_東学生会館",
       "label": "学生会館"
     },
     {
@@ -74,7 +77,8 @@
       "label": "学生寮"
     },
     {
-      "name": "buil_東正門守衛所",
+      "name": "hi_東正門守衛所",
+      "bbox": "buil_東正門守衛所",
       "label": "正門守衛所"
     },
     {
@@ -86,7 +90,8 @@
       "label": "弓道場"
     },
     {
-      "name": "buil_東本館A",
+      "name": "hi_東本館",
+      "bbox": "buil_東本館A",
       "label": "本館"
     },
     {
@@ -230,7 +235,8 @@
       "label": "課外活動施設"
     },
     {
-      "name": "buil_東講堂",
+      "name": "hi_東講堂",
+      "bbox": "buil_東講堂",
       "label": "講堂"
     },
     {
@@ -253,8 +259,47 @@
   "camera": {
     "target": [-50, 1, -50],
     "position": [-50, 600, 150],
-    "distance": { "max": 800 }
+    "distance": { "max": 800 },
+    "point-cameras": [
+      { "name": "point-camera000" },
+      { "name": "point-camera001" },
+      { "name": "point-camera002" },
+      { "name": "point-camera003" },
+      { "name": "point-camera004" },
+      { "name": "point-camera005" },
+      { "name": "point-camera006" },
+      { "name": "point-camera007" },
+      { "name": "point-camera008" },
+      { "name": "point-camera009" },
+      { "name": "point-camera010" },
+      { "name": "point-camera011" },
+      { "name": "point-camera012" },
+      { "name": "point-camera013" },
+      { "name": "point-camera014" },
+      { "name": "point-camera015" },
+      { "name": "point-camera016" },
+      { "name": "point-camera017" },
+      { "name": "point-camera018" },
+      { "name": "point-camera019" },
+      { "name": "point-camera020" },
+      { "name": "point-camera021" },
+      { "name": "point-camera022" },
+      { "name": "point-camera023" },
+      { "name": "point-camera024" },
+      { "name": "point-camera025" },
+      { "name": "point-camera026" },
+      { "name": "point-camera027" },
+      { "name": "point-camera028" },
+      { "name": "point-camera029" },
+      { "name": "point-camera030" },
+      { "name": "point-camera031" },
+      { "name": "point-camera032" },
+      { "name": "point-camera033" },
+      { "name": "point-camera034" },
+      { "name": "point-camera035" },
+      { "name": "point-camera036" }
+    ]
   },
   "collider": "model",
-  "hidden": ["hi-building"]
+  "hidden": ["hi-building-"]
 }

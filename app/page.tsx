@@ -3,13 +3,13 @@
 import React, { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 
-// import { SceneContainer, SceneHandler } from './components/SceneContainer'
+import { SceneContainer, SceneHandler } from './components/SceneContainer'
 // import scenedata from './scenes/cubes.json'
-// import scenedata from './scenes/buildings.json'
+import scenedata from './scenes/buildings.json'
 // import scenedata from './scenes/uec-all.json'
 
-import { SceneContainer, SceneHandler } from './scene'
-import scenedata from './scenes/uec-ground.json'
+// import { SceneContainer, SceneHandler } from './scene'
+// import scenedata from './scenes/uec-ground.json'
 // import scenedata from './scenes/buildings.json'
 
 import { Leva } from 'leva'
