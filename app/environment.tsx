@@ -1,6 +1,6 @@
-import React, { useState, useTransition } from "react"
-import { useControls } from "leva"
-import { Environment } from "@react-three/drei"
+import React, { useState, useTransition } from 'react'
+import { useControls } from 'leva'
+import { Environment } from '@react-three/drei'
 
 enum PresetType {
   sunset,
@@ -20,7 +20,7 @@ const options = Object.keys(PresetType).filter((v) => {
 })
 
 export function Env() {
-  const [preset, setPreset] = useState<keyof typeof PresetType>("sunset")
+  const [preset, setPreset] = useState<keyof typeof PresetType>('sunset')
   const [inTransition, startTransition] = useTransition()
   const { blur } = useControls({
     blur: { value: 0.65, min: 0, max: 1 },
