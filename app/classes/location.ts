@@ -10,6 +10,7 @@ export type GeoPosition = {
 const zero = () => ({ lonlat: { latitude: 0, longitude: 9 }, pos: new THREE.Vector3() })
 
 export class GeoLocation {
+  id: number
   location: LonLat
   pos1: GeoPosition
   pos2: GeoPosition
@@ -19,6 +20,7 @@ export class GeoLocation {
     this.pos1 = zero()
     this.pos2 = zero()
     this.scale = 2.0
+    this.id = 0
   }
 
   setLocation(latitude: number | null, longitude: number | null) {

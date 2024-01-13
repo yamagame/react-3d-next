@@ -290,19 +290,19 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       startGeolocation() {
         console.log('ここでGeolocationをスタートorストップする!')
         //Geolocation, GPS, 位置情報
-        if (geolocationRef.current == null || geolocationRef.current == 0) {
+        if (currentPositionRef.current.id == null || currentPositionRef.current.id == 0) {
           //位置情報未起動
           let geo_options = {
             enableHighAccuracy: false,
             timeout: 5000,
             maximumAge: 0,
           }
-          geolocationRef.current = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options)
+          currentPositionRef.current.id = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options)
           props.setOnUsingGeolocation(true)
         } else {
           //停止
-          navigator.geolocation.clearWatch(geolocationRef.current)
-          geolocationRef.current = 0
+          navigator.geolocation.clearWatch(currentPositionRef.current.id)
+          currentPositionRef.current.id = 0
           props.setOnUsingGeolocation(false)
         }
       },
@@ -316,9 +316,6 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   const cameraControlsRef = useRef<CameraControls>(null)
   const speechRef = useRef()
   const resultText = useRef<string>('')
-  const geolocationRef = useRef(0)
-  const w11PosRef = useRef<PosAndLatLong>(null!)
-  const auditoriumPosRef = useRef<PosAndLatLong>(null!)
   //GeoLocation
   useEffect(() => {
     let pos1: GeoPosition = { pos: new THREE.Vector3(), lonlat: { latitude: 0, longitude: 9 } }
@@ -471,7 +468,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
           console.log(currentPosition)
           console.log(e.object.position)
         }}
-        visible={geolocationRef.current == 0 ? false : true}
+        visible={currentPositionRef.current.id == 0 ? false : true}
       />
       {/* -------------------------- シーンの描画 -------------------------- */}
       <Scene
