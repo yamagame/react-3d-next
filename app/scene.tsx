@@ -8,6 +8,7 @@ import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Sky, Text, CameraControls, useGLTF, Sphere } from '@react-three/drei'
 import { Env } from './environment'
+import { GeoLocation } from './classes/location'
 
 const w11Lat = 35.65812474191075
 const w11Long = 139.54082511503555
@@ -28,6 +29,10 @@ type SceneProps = {
     distance: { max: number }
   }
   collider: string // bbox or mesh
+  geolocation?: {
+    pos1: { name: string; latitude: number; longitude: number }
+    pos2: { name: string; latitude: number; longitude: number }
+  }
   setOnRecognizing: (state: boolean) => void
   setRecognizedText: (text: string) => void
   setOnUsingGeolocation: (state: boolean) => void
@@ -103,7 +108,10 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
   const [bbox, setBbox] = useState<{ [index: string]: THREE.Mesh }>({})
 
   const textRef = useRef<{ [index: string]: RefObject<THREE.Mesh> }>({})
+
+  const currentPositionRef = useRef<GeoLocation>(new GeoLocation())
   const [currentPosition, setCurrentPosition] = useState<THREE.Vector3>(new THREE.Vector3()) //現在位置
+
   const currentPositionCtl = useControls('Geolocation', {
     //Levaを使う場合はこちら
     latitude: { value: 35.656, min: auditoriumLat, max: w11Lat },
@@ -178,9 +186,10 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
   }
   function geo_success(position: GeolocationPosition) {
     //位置情報が更新された際に呼び出される
-    console.log(position)
-    setCurrentPosition(calcCurrentPosition(position.coords.latitude, position.coords.longitude))
-    console.log(calcCurrentPosition(position.coords.latitude, position.coords.longitude))
+    currentPositionRef.current.setLocation(position.coords.latitude, position.coords.longitude)
+    setCurrentPosition(currentPositionRef.current.calcCurrentPosition())
+    // setCurrentPosition(calcCurrentPosition(position.coords.latitude, position.coords.longitude))
+    // console.log(calcCurrentPosition(position.coords.latitude, position.coords.longitude))
   }
   function geo_error(error: GeolocationPositionError) {
     console.log('位置情報の取得に失敗しました timestamp: ' + error.message)
@@ -238,28 +247,51 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
   const speechRef = useRef()
   const resultText = useRef<string>('')
   const geolocationRef = useRef(0)
-  const w11PosRef = useRef<PosAndLatLong>(null!)
-  const auditoriumPosRef = useRef<PosAndLatLong>(null!)
 
-  function calcCurrentPosition(latitude: number | null, longitude: number | null) {
-    if (latitude == null || longitude == null) {
-      console.log('Failed to calc position:Latitude or Longitude is Null')
-      return new THREE.Vector3(-1, -1, -1)
-    }
-    const latLength = auditoriumPosRef.current?.latitude - w11PosRef.current?.latitude
-    const longLength = auditoriumPosRef.current?.longitude - w11PosRef.current?.longitude
-    const xLength = auditoriumPosRef.current?.position.x - w11PosRef.current?.position.x
-    const zLength = auditoriumPosRef.current?.position.z - w11PosRef.current?.position.z
-    const w11lat = w11PosRef.current?.latitude
-    const w11long = w11PosRef.current?.longitude
-    const w11x = w11PosRef.current?.position.x
-    const w11z = w11PosRef.current?.position.z
-    let position = new THREE.Vector3()
-    position.y = (w11PosRef.current?.position.y + auditoriumPosRef.current?.position.y) / 2
-    position.z = ((latitude - w11lat) / latLength) * zLength + w11z
-    position.x = ((longitude - w11long) / longLength) * xLength + w11x
-    return position
-  }
+  // const w11PosRef = useRef<PosAndLatLong>(null!)
+  // const auditoriumPosRef = useRef<PosAndLatLong>(null!)
+
+  // function calcCurrentPosition(latitude: number | null, longitude: number | null) {
+  //   if (latitude == null || longitude == null) {
+  //     console.log('Failed to calc position:Latitude or Longitude is Null')
+  //     return new THREE.Vector3(-1, -1, -1)
+  //   }
+  //   const latLength = auditoriumPosRef.current?.latitude - w11PosRef.current?.latitude
+  //   const longLength = auditoriumPosRef.current?.longitude - w11PosRef.current?.longitude
+  //   const xLength = auditoriumPosRef.current?.position.x - w11PosRef.current?.position.x
+  //   const zLength = auditoriumPosRef.current?.position.z - w11PosRef.current?.position.z
+  //   const w11lat = w11PosRef.current?.latitude
+  //   const w11long = w11PosRef.current?.longitude
+  //   const w11x = w11PosRef.current?.position.x
+  //   const w11z = w11PosRef.current?.position.z
+  //   let position = new THREE.Vector3()
+  //   position.y = (w11PosRef.current?.position.y + auditoriumPosRef.current?.position.y) / 2
+  //   position.z = ((latitude - w11lat) / latLength) * zLength + w11z
+  //   position.x = ((longitude - w11long) / longLength) * xLength + w11x
+  //   return position
+  // }
+
+  useEffect(() => {
+    let pos1 = { position: new THREE.Vector3(), latitude: 0, longitude: 0 }
+    let pos2 = { position: new THREE.Vector3(), latitude: 0, longitude: 0 }
+    Object.keys(nodes).map((name) => {
+      if (!props.geolocation) return
+      const geometory = nodes[name].geometry
+      const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
+      if (name.indexOf(props.geolocation.pos1.name) == 0) {
+        pos1.position = center || new THREE.Vector3()
+        pos1.latitude = props.geolocation.pos1.latitude
+        pos1.longitude = props.geolocation.pos1.longitude
+      } else if (name.indexOf(props.geolocation.pos2.name) == 0) {
+        pos2.position = center || new THREE.Vector3()
+        pos2.latitude = props.geolocation.pos2.latitude
+        pos2.longitude = props.geolocation.pos2.longitude
+      }
+    })
+    currentPositionRef.current.pos1.lonlat = pos1
+    currentPositionRef.current.pos2.lonlat = pos2
+    setCurrentPosition(currentPositionRef.current.calcCurrentPosition())
+  }, [nodes, props.geolocation, currentPositionRef])
 
   useMemo(() => {
     Object.keys(nodes).forEach((name) => {
@@ -455,20 +487,20 @@ export const SceneContainer = React.forwardRef((props: SceneProps, ref) => {
             const geometory = nodes[name].geometry
             const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
             const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
-            if (name.indexOf('building_西11号館ボディ') == 0) {
-              const pos = center || new THREE.Vector3()
-              w11PosRef.current = { position: pos, latitude: 0, longitude: 0 }
-              w11PosRef.current.position = center || new THREE.Vector3()
-              w11PosRef.current.latitude = w11Lat
-              w11PosRef.current.longitude = w11Long
-              console.log('set w11')
-            } else if (name.indexOf('building_講堂ボディ') == 0) {
-              const pos = center || new THREE.Vector3()
-              auditoriumPosRef.current = { position: pos, latitude: 0, longitude: 0 }
-              auditoriumPosRef.current.latitude = auditoriumLat
-              auditoriumPosRef.current.longitude = auditoriumLong
-              console.log('set auditorium')
-            }
+            // if (name.indexOf('building_西11号館ボディ') == 0) {
+            //   const pos = center || new THREE.Vector3()
+            //   w11PosRef.current = { position: pos, latitude: 0, longitude: 0 }
+            //   w11PosRef.current.position = center || new THREE.Vector3()
+            //   w11PosRef.current.latitude = w11Lat
+            //   w11PosRef.current.longitude = w11Long
+            //   console.log('set w11')
+            // } else if (name.indexOf('building_講堂ボディ') == 0) {
+            //   const pos = center || new THREE.Vector3()
+            //   auditoriumPosRef.current = { position: pos, latitude: 0, longitude: 0 }
+            //   auditoriumPosRef.current.latitude = auditoriumLat
+            //   auditoriumPosRef.current.longitude = auditoriumLong
+            //   console.log('set auditorium')
+            // }
             return (
               <group key={`${name}-container`}>
                 <HoverMesh
