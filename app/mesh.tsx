@@ -1,14 +1,14 @@
-"use client"
+'use client'
 
-import React, { useRef, useState } from "react"
-import THREE from "three"
-import { useControls } from "leva"
-import { GLTF } from "three/examples/jsm/loaders/GLTFLoader"
-import { ThreeElements } from "@react-three/fiber"
+import React, { useRef, useState } from 'react'
+import THREE from 'three'
+import { useControls } from 'leva'
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
+import { ThreeElements } from '@react-three/fiber'
 // import { Center } from "@react-three/drei"
 
 export function HoverMesh(
-  props: ThreeElements["mesh"] & {
+  props: ThreeElements['mesh'] & {
     size?: typeof THREE.BoxGeometry.arguments
     object?: GLTF
     geometry?: any
@@ -41,7 +41,7 @@ export function HoverMesh(
       <meshStandardMaterial
         metalness={metalness}
         roughness={roughness}
-        color={props.selected ? "hotpink" : hovered ? "pink" : "white"}
+        color={props.selected ? 'hotpink' : hovered ? 'pink' : 'white'}
       />
       {/* <shadowMaterial attach="material" color="#000" transparent={false} fog /> */}
     </mesh>
@@ -49,7 +49,7 @@ export function HoverMesh(
 }
 
 export function Mesh(
-  props: ThreeElements["mesh"] & {
+  props: ThreeElements['mesh'] & {
     size?: typeof THREE.BoxGeometry.arguments
     object?: GLTF
     geometry?: any
