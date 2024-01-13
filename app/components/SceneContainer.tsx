@@ -17,6 +17,7 @@ const auditoriumLat = 35.65563229930534
 const auditoriumLong = 139.54433508505537
 
 const SHOW_BOUNDING_BOX = false
+const ENABLE_CAMERA_COLLIDER = false
 
 type PosAndLatLong = {
   position: THREE.Vector3
@@ -165,23 +166,24 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
             cameraControlsRef.current?.colliderMeshes.splice(0)
             cameraControlsRef.current?.colliderMeshes.push(groundPlane())
 
-            Object.keys(bbox)
-              .filter((key) => key != name && !(props.hidden && props.hidden.indexOf(key) >= 0))
-              .forEach((key) => {
-                if (nodes[key]) {
-                  if (collider == 'bbox') {
-                    cameraControlsRef.current?.colliderMeshes.push(bbox[key])
-                  } else {
-                    console.log(key)
-                    const geo = props.geometories.find((v) => v.name == key)
-                    if (geo && geo.bbox) {
-                      cameraControlsRef.current?.colliderMeshes.push(nodes[geo.bbox])
+            if (ENABLE_CAMERA_COLLIDER) {
+              Object.keys(bbox)
+                .filter((key) => key != name && !(props.hidden && props.hidden.indexOf(key) >= 0))
+                .forEach((key) => {
+                  if (nodes[key]) {
+                    if (collider == 'bbox') {
+                      cameraControlsRef.current?.colliderMeshes.push(bbox[key])
                     } else {
-                      cameraControlsRef.current?.colliderMeshes.push(nodes[key])
+                      const geo = props.geometories.find((v) => v.name == key)
+                      if (geo && geo.bbox) {
+                        cameraControlsRef.current?.colliderMeshes.push(nodes[geo.bbox])
+                      } else {
+                        cameraControlsRef.current?.colliderMeshes.push(nodes[key])
+                      }
                     }
                   }
-                }
-              })
+                })
+            }
           })
 
           const minlength = 100
