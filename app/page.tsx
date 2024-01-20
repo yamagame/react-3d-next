@@ -73,16 +73,7 @@ export default function Home() {
         </a>
       </div>
       <Leva collapsed />
-      <Canvas
-        shadows
-        camera={{ fov: 55, near: 0.1, far: 5000 }}
-        style={{ borderRadius: 10 }}
-        // onCreated={({ gl }) => {
-        //   // gl.shadowMap.enabled = true
-        //   gl.shadowMap.type = THREE.PCFSoftShadowMap
-        //   // gl.setPixelRatio(window.devicePixelRatio || 2)
-        // }}
-      >
+      <Canvas shadows camera={{ fov: 65, near: 0.1, far: 5000 }} style={{ borderRadius: 10 }}>
         <SceneContainer
           ref={sceneRef}
           {...scenedata}

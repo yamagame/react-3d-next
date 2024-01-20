@@ -7,24 +7,24 @@
       "label": "A棟"
     },
     {
-      "name": "buil_東B棟",
+      "name": "hi_東B棟",
+      "bbox": "buil_東B棟",
       "label": "B棟"
     },
     {
-      "name": "buil_東C棟",
+      "name": "hi_東C棟",
+      "bbox": "buil_東C棟",
       "label": "C棟"
     },
     {
-      "name": "buil_東D棟",
+      "name": "hi_東D棟",
+      "bbox": "buil_東D棟",
       "label": "D棟"
     },
     {
-      "name": "buil_東どんぐり",
+      "name": "hi_東どんぐり",
+      "bbox": "buil_東どんぐり",
       "label": "保育施設どんぐり"
-    },
-    {
-      "name": "buil_UECポートアライアンスセンター",
-      "label": "アライアンスセンター"
     },
     {
       "name": "hi_東リサージュ",
@@ -32,31 +32,28 @@
       "label": "リサージュ"
     },
     {
-      "name": "buil_西体育館",
+      "name": "hi_西体育館",
+      "bbox": "buil_西体育館",
       "label": "体育館"
     },
     {
-      "name": "buil_東保健センターA",
+      "name": "hi_東保健センター",
+      "bbox": "buil_東保健センター",
       "label": "保健センター"
     },
     {
-      "name": "buil_東保健センターB",
-      "label": "保健センター"
-    },
-    {
-      "name": "buil_東図書館A",
+      "name": "hi_東図書館A",
+      "bbox": "buil_東図書館A",
       "label": "図書館"
     },
     {
-      "name": "buil_東図書館B",
+      "name": "hi_東図書館B",
+      "bbox": "buil_東図書館B",
       "label": "図書館"
     },
     {
-      "name": "buil_東国際交流会館A",
-      "label": "国際交流会館"
-    },
-    {
-      "name": "buil_東国際交流会館B",
+      "name": "hi_東国際交流会館",
+      "bbox": "buil_東国際交流会館",
       "label": "国際交流会館"
     },
     {
@@ -65,15 +62,8 @@
       "label": "学生会館"
     },
     {
-      "name": "buil_UECポートドーム友達",
-      "label": "学生宿舎"
-    },
-    {
-      "name": "buil_UECポートドーム絆",
-      "label": "学生宿舎"
-    },
-    {
-      "name": "buil_西学生寮",
+      "name": "hi_西学生寮",
+      "bbox": "buil_西学生寮",
       "label": "学生寮"
     },
     {
@@ -82,11 +72,13 @@
       "label": "正門守衛所"
     },
     {
-      "name": "buil_東実験工場",
-      "label": "実験工場"
+      "name": "hi_東37号館",
+      "bbox": "buil_東37号館",
+      "label": "東37号館"
     },
     {
-      "name": "buil_西弓道場",
+      "name": "hi_西弓道場",
+      "bbox": "buil_西弓道場",
       "label": "弓道場"
     },
     {
@@ -95,143 +87,163 @@
       "label": "本館"
     },
     {
-      "name": "buil_東本館B",
-      "label": "本館"
-    },
-    {
-      "name": "buil_東10号館",
+      "name": "hi_東10号館",
+      "bbox": "buil_東10号館",
       "label": "東10号館"
     },
     {
-      "name": "buil_東1号館",
+      "name": "hi_東1号館",
+      "bbox": "buil_東1号館",
       "label": "東1号館"
     },
     {
-      "name": "buil_東2号館",
+      "name": "hi_東2号館",
+      "bbox": "buil_東2号館",
       "label": "東2号館"
     },
     {
-      "name": "buil_東31号館",
+      "name": "hi_東31号館",
+      "bbox": "buil_東31号館",
       "label": "東31号館"
     },
     {
-      "name": "buil_東32号館",
+      "name": "hi_東32号館",
+      "bbox": "buil_東32号館",
       "label": "東32号館"
     },
     {
-      "name": "buil_東33号館",
+      "name": "hi_東33号館",
+      "bbox": "buil_東33号館",
       "label": "東33号館"
     },
     {
-      "name": "buil_東34号館",
+      "name": "hi_東34号館",
+      "bbox": "buil_東34号館",
       "label": "東34号館"
     },
     {
-      "name": "buil_東35号館A",
+      "name": "hi_東35号館",
+      "bbox": "buil_東35号館",
       "label": "東35号館"
     },
     {
-      "name": "buil_東35号館B",
-      "label": "東35号館"
-    },
-    {
-      "name": "buil_東36号館",
+      "name": "hi_東36号館",
+      "bbox": "buil_東36号館",
       "label": "東36号館"
     },
     {
-      "name": "buil_東3号館",
+      "name": "hi_東3号館",
+      "bbox": "buil_東3号館",
       "label": "東3号館"
     },
     {
-      "name": "buil_東4号館A",
+      "name": "hi_東4号館",
+      "bbox": "buil_東4号館",
       "label": "東4号館"
     },
     {
-      "name": "buil_東4号館B",
-      "label": "東4号館"
+      "name": "hi_東5号館",
+      "bbox": "buil_東5号館",
+      "label": "東5号館"
     },
     {
-      "name": "buil_東4号館C",
-      "label": "東4号館"
-    },
-    {
-      "name": "buil_東6号館",
+      "name": "hi_東6号館",
+      "bbox": "buil_東6号館",
       "label": "東6号館"
     },
     {
-      "name": "buil_東7号館",
+      "name": "hi_東7号館",
+      "bbox": "buil_東7号館",
       "label": "東7号館"
     },
     {
-      "name": "buil_東8号館",
+      "name": "hi_東8号館",
+      "bbox": "buil_東8号館",
       "label": "東8号館"
     },
     {
-      "name": "buil_東9号館",
+      "name": "hi_東9号館",
+      "bbox": "buil_東9号館",
       "label": "東9号館"
     },
     {
-      "name": "buil_西第2体育館",
+      "name": "hi_西第2体育館",
+      "bbox": "buil_西第2体育館",
       "label": "第2体育館"
     },
     {
-      "name": "buil_西10号館",
+      "name": "hi_西10号館",
+      "bbox": "buil_西10号館",
       "label": "西10号館"
     },
     {
-      "name": "buil_西11号館",
+      "name": "hi_西11号館",
+      "bbox": "buil_西11号館",
       "label": "西11号館"
     },
     {
-      "name": "buil_西1号館",
+      "name": "hi_西1号館",
+      "bbox": "buil_西1号館",
       "label": "西1号館"
     },
     {
-      "name": "buil_西2号館",
+      "name": "hi_西2号館",
+      "bbox": "buil_西2号館",
       "label": "西2号館"
     },
     {
-      "name": "buil_西31号館",
+      "name": "hi_西31号館",
+      "bbox": "buil_西31号館",
       "label": "西31号館"
     },
     {
-      "name": "buil_西3号館",
+      "name": "hi_西3号館",
+      "bbox": "buil_西3号館",
       "label": "西3号館"
     },
     {
-      "name": "buil_西4号館",
+      "name": "hi_西4号館",
+      "bbox": "buil_西4号館",
       "label": "西4号館"
     },
     {
-      "name": "buil_西5号館",
+      "name": "hi_西5号館",
+      "bbox": "buil_西5号館",
       "label": "西5号館"
     },
     {
-      "name": "buil_西6号館",
+      "name": "hi_西6号館",
+      "bbox": "buil_西6号館",
       "label": "西6号館"
     },
     {
-      "name": "buil_西7号館",
+      "name": "hi_西7号館",
+      "bbox": "buil_西7号館",
       "label": "西7号館"
     },
     {
-      "name": "buil_西8号館",
+      "name": "hi_西8号館",
+      "bbox": "buil_西8号館",
       "label": "西8号館"
     },
     {
-      "name": "buil_西9号館",
+      "name": "hi_西9号館",
+      "bbox": "buil_西9号館",
       "label": "西9号館"
     },
     {
-      "name": "buil_西門守衛所",
+      "name": "hi_西門守衛所",
+      "bbox": "buil_西門守衛所",
       "label": "西門守衛所"
     },
     {
-      "name": "buil_西地区食堂",
+      "name": "hi_西地区食堂",
+      "bbox": "buil_西地区食堂",
       "label": "西地区食堂"
     },
     {
-      "name": "buil_東課外活動施設",
+      "name": "hi_東課外活動施設",
+      "bbox": "buil_東課外活動施設",
       "label": "課外活動施設"
     },
     {
@@ -240,26 +252,50 @@
       "label": "講堂"
     },
     {
-      "name": "buil_東新C棟",
+      "name": "hi_東新C棟",
+      "bbox": "buil_東新C棟",
       "label": "新C棟"
     },
     {
-      "name": "buil_東職員研修所",
+      "name": "hi_東職員研修所",
+      "bbox": "buil_東職員研修所",
       "label": "職員研修所"
     },
     {
-      "name": "buil_東職員休憩室",
+      "name": "hi_東職員休憩室",
+      "bbox": "buil_東職員休憩室",
       "label": "職員休憩室"
     },
     {
-      "name": "buil_UECポート職員宿舎",
+      "name": "hi_東保健センター",
+      "bbox": "buil_東保健センター",
+      "label": "保健センター"
+    },
+    {
+      "name": "hi_UECポートアライアンスセンター",
+      "bbox": "buil_UECポートアライアンスセンター",
+      "label": "アライアンスセンター"
+    },
+    {
+      "name": "hi_UECポートドーム友達",
+      "bbox": "buil_UECポートドーム友達",
+      "label": "学生宿舎"
+    },
+    {
+      "name": "hi_UECポートドーム絆",
+      "bbox": "buil_UECポートドーム絆",
+      "label": "学生宿舎"
+    },
+    {
+      "name": "hi_UECポート職員宿舎",
+      "bbox": "buil_UECポート職員宿舎",
       "label": "職員宿舎"
     }
   ],
   "camera": {
     "target": [-50, 1, -50],
-    "position": [-50, 600, 150],
-    "distance": { "max": 800 },
+    "position": [-50, 350, 100],
+    "distance": { "max": 600 },
     "point-cameras": [
       { "name": "point-camera000" },
       { "name": "point-camera001" },
@@ -301,7 +337,7 @@
     ]
   },
   "collider": "model",
-  "hidden": ["hi-building-"],
+  "hidden": ["hide-object", "position"],
   "geolocation": {
     "pos1": { "name": "buil_西11号館", "latitude": 35.65812474191075, "longitude": 139.54082511503555 },
     "pos2": { "name": "buil_東講堂", "latitude": 35.65563229930534, "longitude": 139.54433508505537 }

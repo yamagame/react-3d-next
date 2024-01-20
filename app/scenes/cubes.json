@@ -18,107 +18,371 @@
     }
   ],
   "camera": {
-    "target": [0, 1, 0],
-    "position": [90, 40, 90],
+    "target": [
+      0,
+      1,
+      0
+    ],
+    "position": [
+      90,
+      40,
+      90
+    ],
     "distance": {
       "max": 300
     }
   },
-  "collider": "bbox",
+  "collider": "model",
   "scenes": [
     {
       "name": "Scene",
-      "scale": [1, 1, 1],
-      "position": [0, 0, 0],
-      "rotation": [0, 0, 0],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
       "children": [
         {
           "name": "Empty",
-          "scale": [1, 1, 1],
-          "position": [0, 0, 30],
-          "rotation": [0, 0, 0],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
           "children": [
             {
               "name": "BlueTall",
-              "scale": [1, 1, 1],
-              "position": [-22.42355728149414, 0, -25.097856521606445],
-              "rotation": [0, 0.797875250718977, 0],
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
               "material": "Blue",
               "children": []
             },
             {
               "name": "Cube",
-              "scale": [0.5, 0.5, 0.5],
-              "position": [29, 0, -30],
-              "rotation": [0, 0, 0],
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
               "material": "Red",
               "children": []
             },
             {
               "name": "GreenCube",
-              "scale": [1, 1, 1],
-              "position": [0, 0, 0],
-              "rotation": [0, 0, 0],
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
               "material": "Green",
               "children": []
             }
           ]
         },
         {
+          "name": "cube-red",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            21.5,
+            0,
+            7.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "name": "Empty001",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                5,
+                7.5,
+                -7.5
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "name": "Empty002",
+                  "scale": [
+                    1,
+                    1,
+                    1
+                  ],
+                  "position": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "name": "CubeB",
+                      "scale": [
+                        1,
+                        1,
+                        1
+                      ],
+                      "position": [
+                        0,
+                        0,
+                        -3.918314218521118
+                      ],
+                      "rotation": [
+                        0,
+                        0,
+                        0
+                      ],
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CubeA",
+                  "scale": [
+                    2,
+                    2,
+                    2
+                  ],
+                  "position": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "red",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Red",
+              "children": []
+            }
+          ]
+        },
+        {
           "name": "Original",
-          "scale": [1, 1, 1],
-          "position": [0, 0, 0],
-          "rotation": [0, 0, 0],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
           "children": []
         },
         {
           "name": "pos_BlueTall",
-          "scale": [1, 1, 1],
-          "position": [-22.42355728149414, 0, 4.902143478393555],
-          "rotation": [0, 0.7978760743697658, 0],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            -22.42355728149414,
+            0,
+            4.902143478393555
+          ],
+          "rotation": [
+            0,
+            0.7978760743697658,
+            0
+          ],
           "children": []
         },
         {
           "name": "pos_Cube",
-          "scale": [1, 1, 1],
-          "position": [21.5, 0, 7.5],
-          "rotation": [0, 0, 0],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            21.5,
+            0,
+            7.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
           "children": []
         },
         {
           "name": "pos_GreenCube",
-          "scale": [1, 1, 1],
-          "position": [-14.142135620117188, 0, 30],
-          "rotation": [0, -0.7853979340175556, 0],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            -14.142135620117188,
+            0,
+            30
+          ],
+          "rotation": [
+            0,
+            -0.7853979340175556,
+            0
+          ],
           "children": []
         },
         {
           "name": "Original001",
-          "scale": [1, 1, 1],
-          "position": [0, 0, 0],
-          "rotation": [0, 0, 0],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
           "children": []
         },
         {
           "name": "cube-blue",
-          "scale": [1, 1, 1],
-          "position": [0, 0, 0],
-          "rotation": [0, 0, 0],
-          "material": "Material",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Blue",
           "children": []
         },
         {
           "name": "cube-green",
-          "scale": [1, 1, 1],
-          "position": [0, 0, 0],
-          "rotation": [0, 0, 0],
-          "children": []
-        },
-        {
-          "name": "cube-red",
-          "scale": [1, 1, 1],
-          "position": [0, 0, 0],
-          "rotation": [0, 0, 0],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Green",
           "children": []
         }
       ]
