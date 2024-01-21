@@ -3,6 +3,7 @@
 import React, { useRef, useMemo, useState, RefObject, createRef, MutableRefObject } from 'react'
 import * as THREE from 'three'
 import { HoverMesh } from './HoverMesh'
+import { PointCamera } from './PointCamera'
 import { Mesh } from './Mesh'
 import { HoverGroup } from './HoverGroup'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
@@ -35,6 +36,9 @@ export type Geometory = {
   bbox?: string
   bname?: string
   label?: string
+  collider?: {
+    ignore?: string[]
+  }
 }
 
 export type SceneProps = {
@@ -82,7 +86,11 @@ export const RenderScene = (
     fontSize: 2.5,
     letterSpacing: -0.05,
     lineHeight: 1,
-    'material-toneMapped': false,
+    outlineWidth: 0.1,
+    outlineColor: 'black',
+    color: '#00A1FF',
+    'material-toneMapped': true,
+    depthOffset: -3000,
   }
   const [hoverObject, setHoverObject] = useState('')
   return scenes.map((scene) => {
@@ -93,13 +101,18 @@ export const RenderScene = (
       const geometory = gltfResult.nodes[name].geometry
       const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
       const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
+      // const dist = textRef.current && camera.position.distanceTo(textRef.current.position)
       return (
         <group key={`${name}-container`}>
           {label ? (
             <Text
               key={`${name}-text`}
               ref={textRef.current[name]}
-              position={center?.clone().add(size.multiply(new THREE.Vector3(0, 0.8, 0)))}
+              position={center
+                ?.clone()
+                .add(size.multiply(new THREE.Vector3(0, 0.5, 0)))
+                .add(new THREE.Vector3(0, 5, 0))}
+              scale={2}
               {...fontProps}
             >
               {label}
@@ -183,7 +196,7 @@ export const RenderScene = (
       }
       // ポイントカメラ
       return (
-        <HoverMesh
+        <PointCamera
           key={name}
           // scale={0.1}
           castShadow
@@ -279,10 +292,19 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   const color = useMemo(() => new THREE.Color(), [])
 
   useMemo(() => {
-    Object.keys(nodes).forEach((name) => {
-      textRef.current[name] = createRef<THREE.Mesh>()
+    textRef.current = {}
+    const buils: { [index: string]: string } = {}
+    props.geometories.forEach((geo) => {
+      if (geo.bbox) {
+        buils[geo.bbox] = geo.name
+      }
     })
-  }, [nodes])
+    Object.keys(nodes)
+      .filter((name) => buils[name])
+      .forEach((name) => {
+        textRef.current[name] = createRef<THREE.Mesh>()
+      })
+  }, [nodes, props])
 
   // テキストの向きをカメラに向ける
   useFrame(({ camera }) => {
@@ -290,7 +312,7 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
       const text = textRef.current[key]
       text.current?.quaternion.copy(camera.quaternion)
       if (text.current?.material instanceof THREE.MeshBasicMaterial) {
-        text.current.material.color.lerp(color.set('#2027fa'), 0.1)
+        text.current.material.color.lerp(color.set('white'), 1.0)
       }
     })
   })

@@ -53,10 +53,6 @@ body {
   letter-spacing: 0;
 }
 
-.label::after {
-  content: 'REACT-3D-DEMO';
-}
-
 .button {
   display: flex;
   align-items: center;

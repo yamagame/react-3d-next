@@ -1,15 +1,14 @@
 'use client'
 
-import React, { useRef, useMemo, useState, useEffect, RefObject, createRef, useTransition, useCallback } from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { useControls } from 'leva'
 import * as THREE from 'three'
 import { Mesh } from './Mesh'
-import { HoverMesh } from './HoverMesh'
-import { useFrame, ThreeEvent } from '@react-three/fiber'
-import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
-import { Sky, Text, CameraControls, useGLTF, Sphere } from '@react-three/drei'
+import { ThreeEvent } from '@react-three/fiber'
+import { Sky, CameraControls, useGLTF, Sphere } from '@react-three/drei'
 import { Env } from '../environment'
-import { SceneItem, Scene, SceneProps, GLTFResult, Camera, Geometory } from './Scene'
+import { SceneItem, Scene, GLTFResult, Camera, Geometory } from './Scene'
+import { Ocean } from './Ocean'
 import { GeoLocation, GeoPosition } from '../classes/location'
 
 const w11Lat = 35.65812474191075
@@ -30,6 +29,7 @@ type BBox = { [index: string]: THREE.Mesh }
 
 export type SceneContainerProps = {
   gltf: string
+  title: string
   geometories: Geometory[]
   camera: Camera
   collider: string // bbox or mesh
@@ -169,6 +169,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
             cameraControlsRef.current?.colliderMeshes.push(groundPlane())
 
             if (ENABLE_CAMERA_COLLIDER) {
+              const self_geo = geometories.find((v) => v.bbox == name)
               Object.keys(bbox)
                 .filter((key) => key != name && !(props.hidden && props.hidden.indexOf(key) >= 0))
                 .forEach((key) => {
@@ -181,7 +182,10 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
                       if (geo && geo.bbox) {
                         nodename = geo.bbox
                       }
-                      if (nodename != name) {
+                      if (
+                        nodename != name &&
+                        !(self_geo?.collider?.ignore && self_geo.collider.ignore.indexOf(nodename) >= 0)
+                      ) {
                         cameraControlsRef.current?.colliderMeshes.push(nodes[nodename])
                       }
                     }
@@ -190,12 +194,12 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
             }
           })
 
-          const minlength = 100
-          const minscaler = -100
-          const maxlength = 300
-          const maxscaler = -200
-          const minheight = 120
-          const defheight = 120
+          const minlength = 80
+          const minscaler = -80
+          const maxlength = 100
+          const maxscaler = -80
+          const minheight = 100
+          const defheight = 80
 
           const direction = cameraDirection()
           if (direction.length() < minlength) {
@@ -218,6 +222,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
           if (apply) {
             cameraControlsRef.current?.setPosition(...cameraPosition.toArray(), true)
           }
+
           setPointCamera('')
           setSelectObject('')
           setFocusObject(name)
@@ -433,10 +438,16 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   return (
     <>
       <Env />
-      <Sky />
+      <Sky distance={450000} />
+      <group position={[0, -10, 0]}>
+        <Ocean />
+      </group>
+      <ambientLight color="#8080FF" intensity={1.0} />
       <directionalLight
         visible={directionalCtl.visible}
         // intensity={0.5}
+        color="white"
+        intensity={1.0}
         position={[directionalCtl.position.x, directionalCtl.position.y, directionalCtl.position.z]}
         castShadow={directionalCtl.castShadow}
         shadow-camera-left={-400}
@@ -450,7 +461,12 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         shadow-mapSize={[2048, 2048]}
         // shadow-blurSamples={2}
       />
-      <CameraControls ref={cameraControlsRef} enabled={true} maxDistance={props.camera.distance.max} />
+      <CameraControls
+        ref={cameraControlsRef}
+        maxPolarAngle={pointCamera != '' ? Math.PI : (Math.PI * 80) / 180}
+        enabled={true}
+        maxDistance={props.camera.distance.max}
+      />
       {/* -------------------------- 現在位置の表示 -------------------------- */}
       <Sphere
         key={'currentPosition'}

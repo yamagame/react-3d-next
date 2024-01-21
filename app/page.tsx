@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <div className="main-canvas">
       <div className="nav">
-        <h1 className="label" />
+        <h1 className="label">{scenedata.title}</h1>
         <div />
         <div />
         <a
@@ -55,21 +55,21 @@ export default function Home() {
             sceneRef.current?.startGeolocation() //位置情報
           }}
         >
-          <div className={onUsingGeolocation ? 'button red' : 'button'}>位置情報</div>
+          <div className={onUsingGeolocation ? 'button red' : 'button'}>現在位置</div>
         </a>
         <a
           onClick={() => {
             sceneRef.current?.startRecognition() //音声認識スタート
           }}
         >
-          <div className={onRecognizing ? 'button red' : 'button'}>マイク</div>
+          <div className={onRecognizing ? 'button red' : 'button'}>音声検索</div>
         </a>
         <a
           onClick={() => {
             sceneRef.current?.resetCamera()
           }}
         >
-          <div className="button">ALL</div>
+          <div className="button">全体</div>
         </a>
       </div>
       <Leva collapsed />
@@ -81,7 +81,7 @@ export default function Home() {
           setRecognizedText={setRecognizedText}
           setOnUsingGeolocation={setOnUsingGeolocation}
         />
-        <axesHelper args={[50]} />
+        {/* <axesHelper args={[50]} /> */}
       </Canvas>
       <div className={onRecognizing ? 'floatingbox' : 'floatingbox dontdisplay'}>{recognizedText}</div>
       {/* <Overlay /> */}

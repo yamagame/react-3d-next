@@ -1,5 +1,6 @@
 {
   "gltf": "/buildings.glb",
+  "title": "サンプル 3Dマップ",
   "geometories": [
     { "name": "building1", "label": "建物1" },
     { "name": "building2", "label": "建物2" },
