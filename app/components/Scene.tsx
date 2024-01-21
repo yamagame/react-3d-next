@@ -42,10 +42,10 @@ export type Geometory = {
 }
 
 export type SceneProps = {
-  gltf: string
+  gltfResult: GLTFResult
   geometories: Geometory[]
   camera: Camera
-  collider: string // bbox or mesh
+  collider: string // 'bbox' | 'model'
   selectObject: string
   focusObject: string
   scenes: SceneItem[]
@@ -287,7 +287,6 @@ export const RenderScene = (
 }
 
 export const Scene = React.forwardRef((props: SceneProps, ref) => {
-  const { nodes, materials } = useGLTF(props.gltf) as GLTFResult
   const textRef = useRef<TextRef>({})
   const color = useMemo(() => new THREE.Color(), [])
 
@@ -299,12 +298,12 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
         buils[geo.bbox] = geo.name
       }
     })
-    Object.keys(nodes)
+    Object.keys(props.gltfResult?.nodes)
       .filter((name) => buils[name])
       .forEach((name) => {
         textRef.current[name] = createRef<THREE.Mesh>()
       })
-  }, [nodes, props])
+  }, [props])
 
   // テキストの向きをカメラに向ける
   useFrame(({ camera }) => {
@@ -317,15 +316,6 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     })
   })
 
-  return (
-    <RenderScene
-      {...props}
-      scenes={props.scenes}
-      gltfResult={{ nodes, materials } as GLTFResult}
-      textRef={textRef}
-      geo={null}
-      hover={false}
-    />
-  )
+  return <RenderScene {...props} scenes={props.scenes} textRef={textRef} geo={null} hover={false} />
 })
 Scene.displayName = 'Scene'

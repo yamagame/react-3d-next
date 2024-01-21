@@ -115,22 +115,22 @@ function TransformVector(name: string, scenes: SceneItem[]): THREE.Vector3 | nul
   return null
 }
 
+const makeInitialCamera = (camera: Camera) => {
+  return {
+    target: { x: camera.target[0], y: camera.target[1], z: camera.target[2] },
+    position: { x: camera.position[0], y: camera.position[1], z: camera.position[2] },
+  }
+}
+
 export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref) => {
   const { camera, collider, geometories } = props
-  const makeInitialCamera = (camera: Camera) => {
-    return {
-      target: { x: camera.target[0], y: camera.target[1], z: camera.target[2] },
-      position: { x: camera.position[0], y: camera.position[1], z: camera.position[2] },
-    }
-  }
-  // const initialcamera = makeInitialCamera(camera)
   const [initialcamera, setInitialCamera] = useState(makeInitialCamera(camera))
-  const modelRef = useRef(null)
   const { nodes, materials } = useGLTF(props.gltf) as GLTFResult
   const [pointCamera, setPointCamera] = useState('')
   const [selectObject, setSelectObject] = useState('')
   const [focusObject, setFocusObject] = useState('')
   const [bbox, setBbox] = useState<BBox>({})
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     setInitialCamera(makeInitialCamera(camera))
@@ -411,6 +411,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       }, 2000)
     }
     speechRef.current = recognizer
+    setOpen(true)
   }, [nodes, initialcamera, geometories, focusBuilding, props])
 
   // 視線方向のベクトルを計算
@@ -439,9 +440,11 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     <>
       <Env />
       <Sky distance={450000} />
-      <group position={[0, -10, 0]}>
-        <Ocean />
-      </group>
+      {open ? (
+        <group position={[0, -10, 0]}>
+          <Ocean />
+        </group>
+      ) : null}
       <ambientLight color="#8080FF" intensity={1.0} />
       <directionalLight
         visible={directionalCtl.visible}
@@ -483,16 +486,19 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         visible={currentPositionRef.current.id == 0 ? false : true}
       />
       {/* -------------------------- シーンの描画 -------------------------- */}
-      <Scene
-        {...props}
-        selectObject={selectObject}
-        focusObject={focusObject}
-        pointCamera={pointCamera}
-        focusBuilding={(name) => {
-          focusBuilding(name, bbox)
-        }}
-        focusPointCamera={(name, center) => focusPointCamera(name, center)}
-      />
+      {open ? (
+        <Scene
+          {...props}
+          gltfResult={{ nodes, materials } as GLTFResult}
+          selectObject={selectObject}
+          focusObject={focusObject}
+          pointCamera={pointCamera}
+          focusBuilding={(name) => {
+            focusBuilding(name, bbox)
+          }}
+          focusPointCamera={(name, center) => focusPointCamera(name, center)}
+        />
+      ) : null}
       {/* -------------------------- バウンディングボックスの表示 -------------------------- */}
       {SHOW_BOUNDING_BOX
         ? Object.keys(bbox)
