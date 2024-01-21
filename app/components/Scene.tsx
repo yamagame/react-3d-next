@@ -176,7 +176,7 @@ export const RenderScene = (
         </group>
       )
     }
-    if (props.camera['point-cameras']?.find((v) => v.name === scene.name)) {
+    if (scene.name.indexOf('point-camera') >= 0) {
       const name = scene.name
       if (name === props.pointCamera) {
         return null
