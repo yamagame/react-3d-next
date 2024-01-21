@@ -69,10 +69,10 @@ export default function Home() {
             sceneRef.current?.resetCamera()
           }}
         >
-          <div className="button">全体</div>
+          <div className="button">初期視点</div>
         </a>
       </div>
-      <Leva collapsed />
+      <Leva hidden collapsed />
       <Canvas shadows camera={{ fov: 65, near: 0.1, far: 5000 }} style={{ borderRadius: 10 }}>
         <SceneContainer
           ref={sceneRef}
