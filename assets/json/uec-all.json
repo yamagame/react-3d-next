@@ -262,9 +262,9 @@
       "label": "職員研修所"
     },
     {
-      "name": "hi_東職員休憩室",
-      "bbox": "buil_東職員休憩室",
-      "label": "職員休憩室"
+      "name": "hi_東職員休憩所",
+      "bbox": "buil_東職員休憩所",
+      "label": "職員休憩所"
     },
     {
       "name": "hi_東保健センター",
@@ -296,48 +296,10 @@
     "target": [-50, 1, -50],
     "position": [-50, 350, 100],
     "distance": { "max": 600 },
-    "point-cameras": [
-      { "name": "point-camera000" },
-      { "name": "point-camera001" },
-      { "name": "point-camera002" },
-      { "name": "point-camera003" },
-      { "name": "point-camera004" },
-      { "name": "point-camera005" },
-      { "name": "point-camera006" },
-      { "name": "point-camera007" },
-      { "name": "point-camera008" },
-      { "name": "point-camera009" },
-      { "name": "point-camera010" },
-      { "name": "point-camera011" },
-      { "name": "point-camera012" },
-      { "name": "point-camera013" },
-      { "name": "point-camera014" },
-      { "name": "point-camera015" },
-      { "name": "point-camera016" },
-      { "name": "point-camera017" },
-      { "name": "point-camera018" },
-      { "name": "point-camera019" },
-      { "name": "point-camera020" },
-      { "name": "point-camera021" },
-      { "name": "point-camera022" },
-      { "name": "point-camera023" },
-      { "name": "point-camera024" },
-      { "name": "point-camera025" },
-      { "name": "point-camera026" },
-      { "name": "point-camera027" },
-      { "name": "point-camera028" },
-      { "name": "point-camera029" },
-      { "name": "point-camera030" },
-      { "name": "point-camera031" },
-      { "name": "point-camera032" },
-      { "name": "point-camera033" },
-      { "name": "point-camera034" },
-      { "name": "point-camera035" },
-      { "name": "point-camera036" }
-    ]
+    "point-cameras": []
   },
   "collider": "model",
-  "hidden": ["hide-object", "position"],
+  "hidden": ["hide-object", "position", "point-camera"],
   "geolocation": {
     "pos1": { "name": "buil_西11号館", "latitude": 35.65812474191075, "longitude": 139.54082511503555 },
     "pos2": { "name": "buil_東講堂", "latitude": 35.65563229930534, "longitude": 139.54433508505537 }
