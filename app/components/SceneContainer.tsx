@@ -399,14 +399,14 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     }
     ;(recognizer as any).onend = (event: any) => {
       console.log('end', event)
-      focusBuilding(resultText.current, bbox)
+      focusBuilding(resultText.current, boxes)
       setTimeout(() => {
         props.setOnRecognizing(false)
         props.setRecognizedText('')
       }, 2000)
     }
     speechRef.current = recognizer
-  }, [nodes, initialcamera, geometories, focusBuilding])
+  }, [nodes, initialcamera, geometories, focusBuilding, props])
 
   // 視線方向のベクトルを計算
   const cameraDirection = () => {
@@ -421,9 +421,9 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   const directionalCtl = useControls('Directional Light', {
     visible: true,
     position: {
-      x: 100.0,
+      x: 30.0,
       y: 100.0,
-      z: -100.0,
+      z: 30.0,
     },
     bias: { value: 0, min: 0, max: 200 },
     normalBias: { value: 200, min: 0, max: 200 },
@@ -439,10 +439,10 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         // intensity={0.5}
         position={[directionalCtl.position.x, directionalCtl.position.y, directionalCtl.position.z]}
         castShadow={directionalCtl.castShadow}
-        shadow-camera-left={-200}
-        shadow-camera-right={200}
-        shadow-camera-top={200}
-        shadow-camera-bottom={-200}
+        shadow-camera-left={-400}
+        shadow-camera-right={340}
+        shadow-camera-top={300}
+        shadow-camera-bottom={-400}
         shadow-camera-near={0.5}
         shadow-camera-far={5000}
         shadow-bias={-directionalCtl.bias / 100000.0}
