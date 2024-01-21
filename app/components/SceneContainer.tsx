@@ -19,12 +19,6 @@ const auditoriumLong = 139.54433508505537
 const SHOW_BOUNDING_BOX = false
 const ENABLE_CAMERA_COLLIDER = true
 
-type PosAndLatLong = {
-  position: THREE.Vector3
-  latitude: number
-  longitude: number
-}
-
 type BBox = { [index: string]: THREE.Mesh }
 
 export type SceneContainerProps = {
@@ -122,6 +116,11 @@ const makeInitialCamera = (camera: Camera) => {
   }
 }
 
+const resetCameraCollider = (cameraControls: CameraControls | null) => {
+  cameraControls?.colliderMeshes.splice(0)
+  cameraControls?.colliderMeshes.push(groundPlane())
+}
+
 export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref) => {
   const { camera, collider, geometories } = props
   const [initialcamera, setInitialCamera] = useState(makeInitialCamera(camera))
@@ -131,6 +130,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   const [focusObject, setFocusObject] = useState('')
   const [bbox, setBbox] = useState<BBox>({})
   const [open, setOpen] = useState(false)
+  const cameraControlsRef = useRef<CameraControls>(null)
 
   useEffect(() => {
     setInitialCamera(makeInitialCamera(camera))
@@ -161,12 +161,9 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
           const values = center.toArray()
           let apply = false
 
-          cameraControlsRef.current?.colliderMeshes.splice(0)
-          cameraControlsRef.current?.colliderMeshes.push(groundPlane())
-
+          resetCameraCollider(cameraControlsRef.current)
           cameraControlsRef.current?.moveTo(...values, true).then(() => {
-            cameraControlsRef.current?.colliderMeshes.splice(0)
-            cameraControlsRef.current?.colliderMeshes.push(groundPlane())
+            resetCameraCollider(cameraControlsRef.current)
 
             if (ENABLE_CAMERA_COLLIDER) {
               const self_geo = geometories.find((v) => v.bbox == name)
@@ -245,9 +242,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     setPointCamera(name)
     setSelectObject('')
     setFocusObject('')
-
-    cameraControlsRef.current?.colliderMeshes.splice(0)
-    cameraControlsRef.current?.colliderMeshes.push(groundPlane())
+    resetCameraCollider(cameraControlsRef.current)
   }, [])
 
   function geo_success(position: GeolocationPosition) {
@@ -279,8 +274,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
           initialcamera.position.z,
           true
         )
-        cameraControlsRef.current?.colliderMeshes.splice(0)
-        cameraControlsRef.current?.colliderMeshes.push(groundPlane())
+        resetCameraCollider(cameraControlsRef.current)
       },
       selectBuilding(name: string) {
         setFocusObject(name)
@@ -311,7 +305,6 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     }
   })
 
-  const cameraControlsRef = useRef<CameraControls>(null)
   const speechRef = useRef()
   const resultText = useRef<string>('')
   //GeoLocation
@@ -347,8 +340,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       initialcamera.position.z,
       false
     )
-    cameraControlsRef.current?.colliderMeshes.splice(0)
-    cameraControlsRef.current?.colliderMeshes.push(groundPlane())
+    resetCameraCollider(cameraControlsRef.current)
 
     const boxes: { [index: string]: THREE.Mesh } = {}
     // console.log(Object.keys(nodes))
@@ -371,30 +363,15 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
           }
         }
       })
-    // boxes['Plane'] = groundPlane()
     setBbox(boxes)
 
     //音声認識
     const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition
-    const SpeechGrammarList = (window as any).webkitSpeechGrammarList || (window as any).SpeechGrammarList
     const recognizer = new SpeechRecognition() as any
     recognizer.lang = 'ja-JP'
     recognizer.interimResults = true // 認識途中で暫定の結果を返す
 
-    // recognizer.interimResults = true
-    // recognizer.continuous = true
-    //辞書登録
-    // let dict="#JSGF V1.0; grammar colors; public <color> = ";
-    // Object.keys(nodes).forEach((key) => {
-    //   dict+=key
-    //   dict+="|"
-    // })
-    // dict += ";"
-    // console.log(dict)
-    // const speechRecognitionList=new SpeechGrammarList()
-    // speechRecognitionList.addFromString(dict, 1);
-    // (speechRef.current as any).grammars = speechRecognitionList;
-    ;(recognizer as any).onresult = (event: any) => {
+    recognizer.onresult = (event: any) => {
       console.log('result', event.results)
       const resultText = event.results[0][0].transcript //音声認識結果
       let name = geometories.find((v) => v.label && v.label.indexOf(resultText) >= 0)?.name || resultText
@@ -402,7 +379,8 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       focusBuilding(name, boxes)
       props.setRecognizedText(resultText)
     }
-    ;(recognizer as any).onend = (event: any) => {
+
+    recognizer.onend = (event: any) => {
       console.log('end', event)
       focusBuilding(resultText.current, boxes)
       setTimeout(() => {
@@ -410,6 +388,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         props.setRecognizedText('')
       }, 2000)
     }
+
     speechRef.current = recognizer
     setOpen(true)
   }, [nodes, initialcamera, geometories, focusBuilding, props])
