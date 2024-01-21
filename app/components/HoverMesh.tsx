@@ -18,10 +18,6 @@ export function HoverMesh(
 ) {
   const ref = useRef<THREE.Mesh>(null!)
   const [hovered, hover] = useState(false)
-  const { roughness, metalness } = useControls({
-    roughness: { value: 0.5, min: 0, max: 1 },
-    metalness: { value: 0.5, min: 0, max: 1 },
-  })
   const uselocalmatarial = hovered || props.hover
   return (
     <mesh
@@ -40,8 +36,8 @@ export function HoverMesh(
       {!props.geometry && <boxGeometry args={props.size || [1, 1, 1]} />}
       {uselocalmatarial || !props.material ? (
         <meshStandardMaterial
-          metalness={metalness}
-          roughness={roughness}
+          metalness={0.5}
+          roughness={0.5}
           color={props.selected ? 'hotpink' : hovered || props.hover ? 'pink' : 'white'}
         />
       ) : null}

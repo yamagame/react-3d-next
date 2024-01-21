@@ -5,7 +5,6 @@ import * as THREE from 'three'
 import { HoverMesh } from './HoverMesh'
 import { PointCamera } from './PointCamera'
 import { Mesh } from './Mesh'
-import { HoverGroup } from './HoverGroup'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Text, useGLTF } from '@react-three/drei'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
@@ -71,6 +70,18 @@ const find = (scenes: SceneItem[], name: string): SceneItem | null => {
   return null
 }
 
+const fontProps = {
+  font: 'NotoSansJP-Bold.ttf',
+  fontSize: 2.5,
+  letterSpacing: -0.05,
+  lineHeight: 1,
+  outlineWidth: 0.1,
+  outlineColor: 'black',
+  color: '#00A1FF',
+  'material-toneMapped': true,
+  depthOffset: -3000,
+}
+
 export const RenderScene = (
   props: SceneProps & {
     scenes: SceneItem[]
@@ -81,17 +92,6 @@ export const RenderScene = (
   }
 ) => {
   const { scenes, gltfResult, textRef, geo, hover } = props
-  const fontProps = {
-    font: 'NotoSansJP-Bold.ttf',
-    fontSize: 2.5,
-    letterSpacing: -0.05,
-    lineHeight: 1,
-    outlineWidth: 0.1,
-    outlineColor: 'black',
-    color: '#00A1FF',
-    'material-toneMapped': true,
-    depthOffset: -3000,
-  }
   const [hoverObject, setHoverObject] = useState('')
   return scenes.map((scene) => {
     if (props.hidden && props.hidden.indexOf(scene.name) >= 0) return null
@@ -101,7 +101,6 @@ export const RenderScene = (
       const geometory = gltfResult.nodes[name].geometry
       const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
       const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
-      // const dist = textRef.current && camera.position.distanceTo(textRef.current.position)
       return (
         <group key={`${name}-container`}>
           {label ? (
@@ -132,7 +131,7 @@ export const RenderScene = (
       }
       if (local_geo) {
         return (
-          <HoverGroup
+          <group
             key={name}
             name={name}
             scale={scene.scale ? new THREE.Vector3(...scene.scale) : [1, 1, 1]}
@@ -167,7 +166,7 @@ export const RenderScene = (
               geo={local_geo}
               hover={hoverObject == local_geo?.name || hover}
             />
-          </HoverGroup>
+          </group>
         )
       }
       return (

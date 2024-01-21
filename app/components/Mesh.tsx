@@ -17,16 +17,12 @@ export function Mesh(
   const { hover } = props
   const ref = useRef<THREE.Mesh>(null!)
   const uselocalmatarial = hover
-  const { roughness, metalness } = useControls({
-    roughness: { value: 0.5, min: 0, max: 1 },
-    metalness: { value: 0.5, min: 0, max: 1 },
-  })
   return (
     <mesh {...props} ref={ref}>
       {!props.geometry && <boxGeometry args={props.size || [1, 1, 1]} />}
       {uselocalmatarial || !props.material ? (
         // <meshPhongMaterial color={hover ? 'pink' : 'white'} />
-        <meshStandardMaterial metalness={metalness} roughness={roughness} color={hover ? 'pink' : 'white'} />
+        <meshStandardMaterial metalness={0.5} roughness={0.5} color={hover ? 'pink' : 'white'} />
       ) : null}
     </mesh>
   )
