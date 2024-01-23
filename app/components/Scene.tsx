@@ -8,6 +8,7 @@ import { Mesh } from './Mesh'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Text, useGLTF } from '@react-three/drei'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
+import { useTimeout, TimerHook } from '../timer/timeout'
 
 export type GLTFResult = GLTF & {
   nodes: { [index: string]: THREE.Mesh }
@@ -35,6 +36,7 @@ export type Geometory = {
   bbox?: string
   bname?: string
   label?: string
+  names?: string[]
   collider?: {
     ignore?: string[]
   }
@@ -51,7 +53,6 @@ export type SceneProps = {
   hidden?: string[]
   pointCamera: string
   focusBuilding: (name: string) => void
-  setOnRecognizing: (state: boolean) => void
   setRecognizedText: (text: string) => void
   setOnUsingGeolocation: (state: boolean) => void
   focusPointCamera: (name: string, center: THREE.Vector3) => void
@@ -89,6 +90,7 @@ export const RenderScene = (
     textRef: MutableRefObject<TextRef>
     geo: Geometory | null
     hover: boolean
+    hoverTimerRef: TimerHook
   }
 ) => {
   const { scenes, gltfResult, textRef, geo, hover } = props
@@ -139,12 +141,17 @@ export const RenderScene = (
             rotation={new THREE.Euler(...rotation)}
             onPointerOver={(e) => {
               if (cgeo && local_geo && local_geo.name) {
-                setHoverObject(local_geo.name)
+                const name = local_geo.name
+                props.hoverTimerRef.set(() => {
+                  setHoverObject(name)
+                }, 1)
                 e.stopPropagation()
               }
             }}
             onPointerOut={(e) => {
-              setHoverObject('')
+              props.hoverTimerRef.set(() => {
+                setHoverObject('')
+              }, 3)
               e.stopPropagation()
             }}
             onClick={(e: ThreeEvent<MouseEvent>) => {
@@ -165,6 +172,7 @@ export const RenderScene = (
               textRef={textRef}
               geo={local_geo}
               hover={hoverObject == local_geo?.name || hover}
+              hoverTimerRef={props.hoverTimerRef}
             />
           </group>
         )
@@ -184,6 +192,7 @@ export const RenderScene = (
             textRef={textRef}
             geo={local_geo}
             hover={hover}
+            hoverTimerRef={props.hoverTimerRef}
           />
         </group>
       )
@@ -288,6 +297,7 @@ export const RenderScene = (
 export const Scene = React.forwardRef((props: SceneProps, ref) => {
   const textRef = useRef<TextRef>({})
   const color = useMemo(() => new THREE.Color(), [])
+  const hoverTimerRef = useTimeout()
 
   useMemo(() => {
     textRef.current = {}
@@ -295,6 +305,8 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     props.geometories.forEach((geo) => {
       if (geo.bbox) {
         buils[geo.bbox] = geo.name
+      } else {
+        buils[geo.name] = geo.name
       }
     })
     Object.keys(props.gltfResult?.nodes)
@@ -315,6 +327,15 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     })
   })
 
-  return <RenderScene {...props} scenes={props.scenes} textRef={textRef} geo={null} hover={false} />
+  return (
+    <RenderScene
+      {...props}
+      scenes={props.scenes}
+      textRef={textRef}
+      geo={null}
+      hover={false}
+      hoverTimerRef={hoverTimerRef}
+    />
+  )
 })
 Scene.displayName = 'Scene'

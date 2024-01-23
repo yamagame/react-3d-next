@@ -50,7 +50,7 @@
     {
       "name": "hi_東リサージュ",
       "bbox": "buil_東リサージュ",
-      "label": "リサージュ"
+      "label": "80周年記念会館 リサージュ"
     },
     {
       "name": "hi_西体育館",
@@ -207,12 +207,14 @@
     {
       "name": "hi_西10号館",
       "bbox": "buil_西10号館",
-      "label": "西10号館"
+      "label": "西10号館",
+      "names": ["西10"]
     },
     {
       "name": "hi_西11号館",
       "bbox": "buil_西11号館",
       "label": "西11号館",
+      "names": ["西11"],
       "collider": {
         "ignore": ["buil_西7号館"]
       }
@@ -221,6 +223,7 @@
       "name": "hi_西1号館",
       "bbox": "buil_西1号館",
       "label": "西1号館",
+      "names": ["西1"],
       "collider": {
         "ignore": ["buil_西3号館"]
       }
@@ -229,6 +232,7 @@
       "name": "hi_西2号館",
       "bbox": "buil_西2号館",
       "label": "西2号館",
+      "names": ["西2"],
       "collider": {
         "ignore": ["buil_西4号館"]
       }
@@ -236,12 +240,14 @@
     {
       "name": "hi_西31号館",
       "bbox": "buil_西31号館",
-      "label": "西31号館"
+      "label": "西31号館",
+      "names": ["西31"]
     },
     {
       "name": "hi_西3号館",
       "bbox": "buil_西3号館",
       "label": "西3号館",
+      "names": ["西3"],
       "collider": {
         "ignore": ["buil_西1号館"]
       }
@@ -250,6 +256,7 @@
       "name": "hi_西4号館",
       "bbox": "buil_西4号館",
       "label": "西4号館",
+      "names": ["西4"],
       "collider": {
         "ignore": ["buil_西2号館"]
       }
@@ -257,7 +264,8 @@
     {
       "name": "hi_西5号館",
       "bbox": "buil_西5号館",
-      "label": "西5号館"
+      "label": "西5号館",
+      "names": ["西5"]
     },
     {
       "name": "hi_西6号館",
@@ -326,7 +334,7 @@
     {
       "name": "hi_UECポートアライアンスセンター",
       "bbox": "buil_UECポートアライアンスセンター",
-      "label": "アライアンスセンター"
+      "label": "UECアライアンスセンター"
     },
     {
       "name": "hi_UECポートドーム友達",

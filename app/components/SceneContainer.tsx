@@ -10,6 +10,7 @@ import { Env } from '../environment'
 import { SceneItem, Scene, GLTFResult, Camera, Geometory } from './Scene'
 import { Ocean } from './Ocean'
 import { GeoLocation, GeoPosition } from '../classes/location'
+import { useTimeout } from '../timer/timeout'
 
 const w11Lat = 35.65812474191075
 const w11Long = 139.54082511503555
@@ -121,6 +122,29 @@ const resetCameraCollider = (cameraControls: CameraControls | null) => {
   cameraControls?.colliderMeshes.push(groundPlane())
 }
 
+const findBuilding = (geometories: Geometory[], resultText: string) => {
+  const names: { name: string; geo: Geometory }[] = []
+  const text = resultText.replace(/\s+/g, '')
+  geometories.forEach((v) => {
+    if (v.label) {
+      names.push({ name: v.label, geo: v })
+    }
+    if (v.names) {
+      v.names.forEach((name) => {
+        names.push({ name: name, geo: v })
+      })
+    }
+  })
+  names.sort((a, b) => b.name.length - a.name.length)
+  const result = names.find((v) => {
+    if (text.indexOf(v.name) >= 0) {
+      return true
+    }
+    return false
+  })
+  return result?.geo?.bbox || result?.geo?.name
+}
+
 export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref) => {
   const { camera, collider, geometories } = props
   const [initialcamera, setInitialCamera] = useState(makeInitialCamera(camera))
@@ -131,10 +155,9 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   const [bbox, setBbox] = useState<BBox>({})
   const [open, setOpen] = useState(false)
   const cameraControlsRef = useRef<CameraControls>(null)
-
-  useEffect(() => {
-    setInitialCamera(makeInitialCamera(camera))
-  }, [camera])
+  const speechRef = useRef()
+  const focusBuildingTimer = useTimeout()
+  const speechTextClearTimer = useTimeout()
 
   const currentPositionRef = useRef<GeoLocation>(new GeoLocation())
   const [currentPosition, setCurrentPosition] = useState<THREE.Vector3>(new THREE.Vector3()) //現在位置
@@ -143,6 +166,10 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     latitude: { value: 35.656, min: auditoriumLat, max: w11Lat },
     longitude: { value: 139.542, min: w11Long, max: auditoriumLong },
   })
+
+  useEffect(() => {
+    setInitialCamera(makeInitialCamera(camera))
+  }, [camera])
 
   // nameと一致する建物にフォーカスする
   const focusBuilding = useCallback(
@@ -154,7 +181,6 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         const geometory = nodes[name].geometry
         const position = TransformVector(name, props.scenes) || new THREE.Vector3(0, 0, 0)
         const center = geometory.boundingBox?.getCenter(new THREE.Vector3()).add(position)
-        const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
         if (center) {
           let cameraPosition = new THREE.Vector3()
           cameraControlsRef.current?.getPosition(cameraPosition)
@@ -191,21 +217,23 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
             }
           })
 
-          const minlength = 80
-          const minscaler = -80
-          const maxlength = 100
-          const maxscaler = -80
-          const minheight = 100
-          const defheight = 80
+          const minlength = 120
+          const minscaler = -120
 
-          const direction = cameraDirection()
-          if (direction.length() < minlength) {
+          const maxlength = 60
+          const maxscaler = -60
+
+          const minheight = 50
+          const defheight = 50
+
+          const cameraTarget = new THREE.Vector3()
+          const length = center.sub(cameraPosition).length()
+          cameraControlsRef.current?.getTarget(cameraTarget)
+          if (length < minlength) {
             const direction = cameraDirection().normalize().multiplyScalar(minscaler)
-            cameraPosition = cameraPosition.add(direction)
+            cameraPosition = cameraTarget.add(direction)
             apply = true
-          } else if (direction.length() > maxlength) {
-            const cameraTarget = new THREE.Vector3()
-            cameraControlsRef.current?.getTarget(cameraTarget)
+          } else if (length > maxlength) {
             const direction = cameraDirection().normalize().multiplyScalar(maxscaler)
             cameraPosition = cameraTarget.add(direction)
             apply = true
@@ -305,8 +333,6 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     }
   })
 
-  const speechRef = useRef()
-  const resultText = useRef<string>('')
   //GeoLocation
   useEffect(() => {
     let pos1: GeoPosition = { pos: new THREE.Vector3(), lonlat: { latitude: 0, longitude: 9 } }
@@ -341,9 +367,11 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       false
     )
     resetCameraCollider(cameraControlsRef.current)
+  }, [initialcamera])
 
+  useEffect(() => {
+    // コリジョンボックス作成
     const boxes: { [index: string]: THREE.Mesh } = {}
-    // console.log(Object.keys(nodes))
     Object.keys(nodes)
       .filter((key) => geometories.some((n) => n.name == key))
       .forEach((key) => {
@@ -364,7 +392,17 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         }
       })
     setBbox(boxes)
+    // 地図表示
+    setOpen(true)
+  }, [nodes, initialcamera, geometories, focusBuilding, props])
 
+  const clearSpeechText = useCallback(() => {
+    console.log('clear_text', Date.now())
+    props.setOnRecognizing(false)
+    props.setRecognizedText('')
+  }, [props])
+
+  useEffect(() => {
     //音声認識
     const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition
     const recognizer = new SpeechRecognition() as any
@@ -372,26 +410,23 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     recognizer.interimResults = true // 認識途中で暫定の結果を返す
 
     recognizer.onresult = (event: any) => {
-      console.log('result', event.results)
       const resultText = event.results[0][0].transcript //音声認識結果
-      let name = geometories.find((v) => v.label && v.label.indexOf(resultText) >= 0)?.name || resultText
-      name = Object.keys(nodes).find((key) => key.indexOf(name) >= 0) || name
-      focusBuilding(name, boxes)
+      const name = findBuilding(geometories, resultText)
+      if (name) {
+        focusBuildingTimer.set(() => {
+          focusBuilding(name, bbox)
+        }, 500)
+        speechTextClearTimer.set(() => clearSpeechText(), 2000)
+      }
       props.setRecognizedText(resultText)
     }
 
     recognizer.onend = (event: any) => {
-      console.log('end', event)
-      focusBuilding(resultText.current, boxes)
-      setTimeout(() => {
-        props.setOnRecognizing(false)
-        props.setRecognizedText('')
-      }, 2000)
+      speechTextClearTimer.set(() => clearSpeechText(), 2000)
     }
 
     speechRef.current = recognizer
-    setOpen(true)
-  }, [nodes, initialcamera, geometories, focusBuilding, props])
+  }, [bbox, geometories, props, focusBuilding, clearSpeechText, speechTextClearTimer, focusBuildingTimer])
 
   // 視線方向のベクトルを計算
   const cameraDirection = () => {
@@ -445,7 +480,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       />
       <CameraControls
         ref={cameraControlsRef}
-        maxPolarAngle={pointCamera != '' ? Math.PI : (Math.PI * 80) / 180}
+        maxPolarAngle={pointCamera != '' ? Math.PI : (Math.PI * 85) / 180}
         enabled={true}
         maxDistance={props.camera.distance.max}
       />

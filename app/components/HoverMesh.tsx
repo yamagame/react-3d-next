@@ -5,6 +5,7 @@ import THREE from 'three'
 import { useControls } from 'leva'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { ThreeElements } from '@react-three/fiber'
+import { useTimeout } from '../timer/timeout'
 
 export function HoverMesh(
   props: ThreeElements['mesh'] & {
@@ -17,18 +18,31 @@ export function HoverMesh(
   }
 ) {
   const ref = useRef<THREE.Mesh>(null!)
+  const hoverArrayRef = useRef<boolean[]>([])
   const [hovered, hover] = useState(false)
+  const hoverTimer = useTimeout()
   const uselocalmatarial = hovered || props.hover
+
   return (
     <mesh
       {...props}
       ref={ref}
       onPointerOver={(e) => {
-        hover(true)
+        hoverArrayRef.current.push(true)
+        hoverTimer.set(() => {
+          if (hoverArrayRef.current.length) {
+            hover(hoverArrayRef.current[hoverArrayRef.current.length - 1])
+          }
+        }, 10)
         e.stopPropagation()
       }}
       onPointerOut={(e) => {
-        hover(false)
+        hoverArrayRef.current.push(false)
+        hoverTimer.set(() => {
+          if (hoverArrayRef.current.length) {
+            hover(hoverArrayRef.current[hoverArrayRef.current.length - 1])
+          }
+        }, 10)
         e.stopPropagation()
       }}
       material={props.material}

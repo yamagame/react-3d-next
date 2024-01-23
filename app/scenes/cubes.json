@@ -1,5 +1,6 @@
 {
   "gltf": "/cubes.glb",
+  "title": "テスト 3Dマップ",
   "geometories": [
     {
       "name": "cube-blue",

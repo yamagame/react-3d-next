@@ -2,8 +2,8 @@
   "gltf": "/buildings.glb",
   "title": "サンプル 3Dマップ",
   "geometories": [
-    { "name": "building1", "label": "建物1" },
-    { "name": "building2", "label": "建物2" },
+    { "name": "building1", "label": "建物1", "names": ["建物一", "建物位置"] },
+    { "name": "building2", "label": "建物2", "names": ["建物に", "建物二"] },
     { "name": "building1001", "label": "建物3" },
     { "name": "building2001", "label": "建物4" },
     { "name": "building1002", "label": "建物5" },
