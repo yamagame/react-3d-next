@@ -156,7 +156,7 @@ export const RenderScene = (
             }}
             onClick={(e: ThreeEvent<MouseEvent>) => {
               if (local_geo && local_geo.bbox) {
-                if (e.delta > 1) {
+                if (e.delta > 3) {
                   e.stopPropagation()
                   return
                 }
@@ -254,7 +254,7 @@ export const RenderScene = (
               focused={props.focusObject === name}
               hover={hover}
               onClick={(e: ThreeEvent<MouseEvent>) => {
-                if (e.delta > 1) {
+                if (e.delta > 3) {
                   e.stopPropagation()
                   return
                 }
