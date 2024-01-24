@@ -5,7 +5,7 @@ import THREE from 'three'
 import { useControls } from 'leva'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { ThreeElements } from '@react-three/fiber'
-import { useTimeout } from '../timer/timeout'
+import { useTimeout } from '../hook/timeout'
 
 export function HoverMesh(
   props: ThreeElements['mesh'] & {

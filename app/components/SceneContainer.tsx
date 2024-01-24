@@ -10,7 +10,8 @@ import { Env } from '../environment'
 import { SceneItem, Scene, GLTFResult, Camera, Geometory } from './Scene'
 import { Ocean } from './Ocean'
 import { GeoLocation, GeoPosition } from '../classes/location'
-import { useTimeout } from '../timer/timeout'
+import { useTimeout } from '../hook/timeout'
+import { BuildingNames } from '../classes/building'
 
 const w11Lat = 35.65812474191075
 const w11Long = 139.54082511503555
@@ -123,26 +124,19 @@ const resetCameraCollider = (cameraControls: CameraControls | null) => {
 }
 
 const findBuilding = (geometories: Geometory[], resultText: string) => {
-  const names: { name: string; geo: Geometory }[] = []
-  const text = resultText.replace(/\s+/g, '')
+  const names = new BuildingNames()
   geometories.forEach((v) => {
     if (v.label) {
-      names.push({ name: v.label, geo: v })
-    }
-    if (v.names) {
-      v.names.forEach((name) => {
-        names.push({ name: name, geo: v })
-      })
+      const label = v.label
+      names.push(label, v.label, v.bbox || v.name)
+      if (v.names) {
+        v.names.forEach((name) => {
+          names.push(label, name, v.bbox || v.name)
+        })
+      }
     }
   })
-  names.sort((a, b) => b.name.length - a.name.length)
-  const result = names.find((v) => {
-    if (text.indexOf(v.name) >= 0) {
-      return true
-    }
-    return false
-  })
-  return result?.geo?.bbox || result?.geo?.name
+  return names.find(resultText)
 }
 
 export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref) => {
@@ -158,6 +152,8 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   const speechRef = useRef()
   const focusBuildingTimer = useTimeout()
   const speechTextClearTimer = useTimeout()
+  const buildingNameTimer = useTimeout()
+  const resultNameRef = useRef('')
 
   const currentPositionRef = useRef<GeoLocation>(new GeoLocation())
   const [currentPosition, setCurrentPosition] = useState<THREE.Vector3>(new THREE.Vector3()) //現在位置
@@ -397,7 +393,6 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   }, [nodes, initialcamera, geometories, focusBuilding, props])
 
   const clearSpeechText = useCallback(() => {
-    console.log('clear_text', Date.now())
     props.setOnRecognizing(false)
     props.setRecognizedText('')
   }, [props])
@@ -413,20 +408,40 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       const resultText = event.results[0][0].transcript //音声認識結果
       const name = findBuilding(geometories, resultText)
       if (name) {
+        if (name?.label) {
+          if (resultNameRef.current === name.label) return
+          resultNameRef.current = name.label
+        }
         focusBuildingTimer.set(() => {
-          focusBuilding(name, bbox)
+          focusBuilding(name.bbox, bbox)
+          buildingNameTimer.set(() => props.setRecognizedText(resultNameRef.current), 100)
         }, 500)
-        speechTextClearTimer.set(() => clearSpeechText(), 2000)
+        speechTextClearTimer.set(() => {
+          clearSpeechText()
+          resultNameRef.current = ''
+        }, 2000)
       }
-      props.setRecognizedText(resultText)
+      buildingNameTimer.set(() => props.setRecognizedText(resultNameRef.current || resultText), 100)
     }
 
     recognizer.onend = (event: any) => {
-      speechTextClearTimer.set(() => clearSpeechText(), 2000)
+      speechTextClearTimer.set(() => {
+        clearSpeechText()
+        resultNameRef.current = ''
+      }, 2000)
     }
 
     speechRef.current = recognizer
-  }, [bbox, geometories, props, focusBuilding, clearSpeechText, speechTextClearTimer, focusBuildingTimer])
+  }, [
+    bbox,
+    geometories,
+    props,
+    focusBuilding,
+    clearSpeechText,
+    speechTextClearTimer,
+    focusBuildingTimer,
+    buildingNameTimer,
+  ])
 
   // 視線方向のベクトルを計算
   const cameraDirection = () => {

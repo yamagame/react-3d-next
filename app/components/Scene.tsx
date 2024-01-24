@@ -8,7 +8,7 @@ import { Mesh } from './Mesh'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Text, useGLTF } from '@react-three/drei'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
-import { useTimeout, TimerHook } from '../timer/timeout'
+import { useTimeout, TimerHook } from '../hook/timeout'
 
 export type GLTFResult = GLTF & {
   nodes: { [index: string]: THREE.Mesh }
