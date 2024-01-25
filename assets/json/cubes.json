@@ -1,0 +1,28 @@
+{
+  "gltf": "/cubes.glb",
+  "title": "テスト 3Dマップ",
+  "url": "https://github.com/yamagame/react-3d-next",
+  "geometories": [
+    {
+      "name": "cube-blue",
+      "bbox": "BlueTall",
+      "label": "BlueTall"
+    },
+    {
+      "name": "cube-red",
+      "bbox": "Cube",
+      "label": "Cube"
+    },
+    {
+      "name": "cube-green",
+      "bbox": "GreenCube",
+      "label": "GreenCube"
+    }
+  ],
+  "camera": {
+    "target": [0, 1, 0],
+    "position": [90, 40, 90],
+    "distance": { "max": 300 }
+  },
+  "collider": "model"
+}

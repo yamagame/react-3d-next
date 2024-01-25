@@ -1,11 +1,17 @@
 'use client'
 
 import React, { useState } from 'react'
-import * as THREE from 'three'
 import { Canvas } from '@react-three/fiber'
-import { Scene, SceneHandler } from './scene'
-import scenedata from './building/uec-ground.json'
-//import scenedata from "./building/buildings.json"
+
+import { SceneContainer, SceneHandler } from './components/SceneContainer'
+// import scenedata from './scenes/cubes.json'
+import scenedata from './scenes/buildings.json'
+// import scenedata from './scenes/uec-all.json'
+
+// import { SceneContainer, SceneHandler } from './scene'
+// import scenedata from './scenes/uec-ground.json'
+// import scenedata from './scenes/buildings.json'
+
 import { Leva } from 'leva'
 
 type BoxT = { x: number; y: number; angle: number }
@@ -41,50 +47,42 @@ export default function Home() {
   return (
     <div className="main-canvas">
       <div className="nav">
-        <h1 className="label" />
+        <a className="back" href={scenedata.url}></a>
+        <h1 className="label">{scenedata.title}</h1>
         <div />
-        <div />
+        {/* <div /> */}
         <a
           onClick={() => {
             sceneRef.current?.startGeolocation() //位置情報
           }}
         >
-          <div className={onUsingGeolocation ? 'button red' : 'button'}>位置情報</div>
+          <div className={onUsingGeolocation ? 'button red' : 'button'}>現在位置</div>
         </a>
         <a
           onClick={() => {
             sceneRef.current?.startRecognition() //音声認識スタート
           }}
         >
-          <div className={onRecognizing ? 'button red' : 'button'}>マイク</div>
+          <div className={onRecognizing ? 'button red' : 'button'}>音声検索</div>
         </a>
         <a
           onClick={() => {
             sceneRef.current?.resetCamera()
           }}
         >
-          <div className="button">ALL</div>
+          <div className="button">初期視点</div>
         </a>
       </div>
-      <Leva collapsed />
-      <Canvas
-        shadows
-        camera={{ fov: 55, near: 0.1, far: 5000 }}
-        style={{ borderRadius: 10 }}
-        // onCreated={({ gl }) => {
-        //   // gl.shadowMap.enabled = true
-        //   gl.shadowMap.type = THREE.PCFSoftShadowMap
-        //   // gl.setPixelRatio(window.devicePixelRatio || 2)
-        // }}
-      >
-        <Scene
+      <Leva hidden collapsed />
+      <Canvas shadows camera={{ fov: 65, near: 0.1, far: 5000 }} style={{ borderRadius: 10 }}>
+        <SceneContainer
           ref={sceneRef}
           {...scenedata}
           setOnRecognizing={setOnRecognizing}
           setRecognizedText={setRecognizedText}
           setOnUsingGeolocation={setOnUsingGeolocation}
         />
-        <axesHelper args={[50]} />
+        {/* <axesHelper args={[50]} /> */}
       </Canvas>
       <div className={onRecognizing ? 'floatingbox' : 'floatingbox dontdisplay'}>{recognizedText}</div>
       {/* <Overlay /> */}

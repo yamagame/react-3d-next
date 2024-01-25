@@ -1,0 +1,1310 @@
+{
+  "gltf": "/buildings.glb",
+  "title": "サンプル 3Dマップ",
+  "url": "https://github.com/yamagame/react-3d-next",
+  "geometories": [
+    {
+      "name": "building1",
+      "label": "建物1",
+      "names": [
+        "建物一",
+        "建物位置"
+      ]
+    },
+    {
+      "name": "building2",
+      "label": "建物2",
+      "names": [
+        "建物に",
+        "建物二"
+      ]
+    },
+    {
+      "name": "building1001",
+      "label": "建物3"
+    },
+    {
+      "name": "building2001",
+      "label": "建物4"
+    },
+    {
+      "name": "building1002",
+      "label": "建物5"
+    },
+    {
+      "name": "building1003",
+      "label": "建物6"
+    },
+    {
+      "name": "building2002",
+      "label": "建物7"
+    },
+    {
+      "name": "building2003",
+      "label": "建物8"
+    },
+    {
+      "name": "building1004",
+      "label": "建物9"
+    },
+    {
+      "name": "building1005",
+      "label": "建物10"
+    },
+    {
+      "name": "building2004",
+      "label": "建物11"
+    },
+    {
+      "name": "building2005",
+      "label": "建物12"
+    },
+    {
+      "name": "building1006",
+      "label": "建物13"
+    },
+    {
+      "name": "building1007",
+      "label": "建物14"
+    },
+    {
+      "name": "building2006",
+      "label": "建物15"
+    },
+    {
+      "name": "building2007",
+      "label": "建物16"
+    },
+    {
+      "name": "building1008",
+      "label": "建物17"
+    },
+    {
+      "name": "building1009",
+      "label": "建物18"
+    },
+    {
+      "name": "building2008",
+      "label": "建物19"
+    },
+    {
+      "name": "building2009",
+      "label": "建物20"
+    },
+    {
+      "name": "building1010",
+      "label": "建物21"
+    },
+    {
+      "name": "building1011",
+      "label": "建物22"
+    },
+    {
+      "name": "building1012",
+      "label": "建物23"
+    },
+    {
+      "name": "building1013",
+      "label": "建物24"
+    },
+    {
+      "name": "building1014",
+      "label": "建物25"
+    },
+    {
+      "name": "building1015",
+      "label": "建物26"
+    },
+    {
+      "name": "building1016",
+      "label": "建物27"
+    },
+    {
+      "name": "building1017",
+      "label": "建物28"
+    },
+    {
+      "name": "building1018",
+      "label": "建物29"
+    },
+    {
+      "name": "building1019",
+      "label": "建物30"
+    },
+    {
+      "name": "building1020",
+      "label": "建物31"
+    },
+    {
+      "name": "building1021",
+      "label": "建物32"
+    },
+    {
+      "name": "building2010",
+      "label": "建物33"
+    },
+    {
+      "name": "building2011",
+      "label": "建物34"
+    },
+    {
+      "name": "building2012",
+      "label": "建物35"
+    },
+    {
+      "name": "building1026",
+      "label": "建物36"
+    },
+    {
+      "name": "building1027",
+      "label": "建物37"
+    },
+    {
+      "name": "building2016",
+      "label": "建物38"
+    },
+    {
+      "name": "building2017",
+      "label": "建物39"
+    }
+  ],
+  "camera": {
+    "target": [
+      0,
+      1,
+      0
+    ],
+    "position": [
+      90,
+      40,
+      90
+    ],
+    "distance": {
+      "max": 300
+    },
+    "point-cameras": [
+      {
+        "name": "point-camera000"
+      },
+      {
+        "name": "point-camera001"
+      },
+      {
+        "name": "point-camera002"
+      },
+      {
+        "name": "point-camera003"
+      },
+      {
+        "name": "point-camera004"
+      },
+      {
+        "name": "point-camera005"
+      },
+      {
+        "name": "point-camera006"
+      },
+      {
+        "name": "point-camera007"
+      },
+      {
+        "name": "point-camera008"
+      },
+      {
+        "name": "point-camera009"
+      },
+      {
+        "name": "point-camera010"
+      },
+      {
+        "name": "point-camera011"
+      }
+    ]
+  },
+  "collider": "bbox",
+  "hidden": [
+    "building1001"
+  ],
+  "scenes": [
+    {
+      "name": "Scene",
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "children": [
+        {
+          "name": "building1",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1001",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2001",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "point-camera000",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            2,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "building1002",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1003",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2002",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2003",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1004",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1005",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2004",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2005",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1006",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1007",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2006",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2007",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1008",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1009",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2008",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2009",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "point-camera001",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            24.000003814697266,
+            2,
+            -13.000011444091797
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "point-camera002",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            -24,
+            2,
+            52
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "point-camera003",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            18.9999942779541,
+            2,
+            76.99998474121094
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "point-camera004",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            -22.000009536743164,
+            2,
+            -51.00000762939453
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "point-camera005",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            46.00000762939453,
+            2,
+            17.999996185302734
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "point-camera006",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            -65,
+            2,
+            32.00000762939453
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "point-camera007",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            35.00000762939453,
+            2,
+            -73.00001525878906
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "point-camera008",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            -37.999996185302734,
+            2,
+            90.00000762939453
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "point-camera009",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            64,
+            2,
+            57.000003814697266
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "point-camera010",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            -75.99998474121094,
+            2,
+            -42.000003814697266
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "Plane",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.002",
+          "children": []
+        },
+        {
+          "name": "point-camera011",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            14.999990463256836,
+            2,
+            -42.000003814697266
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material.001",
+          "children": []
+        },
+        {
+          "name": "Cube",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Material",
+          "children": []
+        },
+        {
+          "name": "building1010",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1011",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1012",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1013",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1014",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1015",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1016",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1017",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1018",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1019",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1020",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1021",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2010",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2011",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2012",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1026",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building1027",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2016",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        },
+        {
+          "name": "building2017",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "Steel - Satin.003",
+          "children": []
+        }
+      ]
+    }
+  ]
+}
