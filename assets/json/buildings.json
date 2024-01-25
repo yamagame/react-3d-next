@@ -1,6 +1,7 @@
 {
   "gltf": "/buildings.glb",
   "title": "サンプル 3Dマップ",
+  "url": "https://github.com/yamagame/react-3d-next",
   "geometories": [
     { "name": "building1", "label": "建物1", "names": ["建物一", "建物位置"] },
     { "name": "building2", "label": "建物2", "names": ["建物に", "建物二"] },

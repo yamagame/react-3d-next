@@ -1,6 +1,7 @@
 {
   "gltf": "/cubes.glb",
   "title": "テスト 3Dマップ",
+  "url": "https://github.com/yamagame/react-3d-next",
   "geometories": [
     {
       "name": "cube-blue",

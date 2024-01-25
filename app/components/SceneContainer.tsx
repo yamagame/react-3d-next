@@ -26,6 +26,7 @@ type BBox = { [index: string]: THREE.Mesh }
 export type SceneContainerProps = {
   gltf: string
   title: string
+  url?: string
   geometories: Geometory[]
   camera: Camera
   collider: string // bbox or mesh

@@ -1,6 +1,7 @@
 {
   "gltf": "/uec-all.glb",
   "title": "電気通信大学 3Dマップ",
+  "url": "https://www.uec.ac.jp/",
   "geometories": [
     {
       "name": "hi_東A棟",

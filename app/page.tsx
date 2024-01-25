@@ -5,8 +5,8 @@ import { Canvas } from '@react-three/fiber'
 
 import { SceneContainer, SceneHandler } from './components/SceneContainer'
 // import scenedata from './scenes/cubes.json'
-// import scenedata from './scenes/buildings.json'
-import scenedata from './scenes/uec-all.json'
+import scenedata from './scenes/buildings.json'
+// import scenedata from './scenes/uec-all.json'
 
 // import { SceneContainer, SceneHandler } from './scene'
 // import scenedata from './scenes/uec-ground.json'
@@ -47,9 +47,10 @@ export default function Home() {
   return (
     <div className="main-canvas">
       <div className="nav">
+        <a className="back" href={scenedata.url}></a>
         <h1 className="label">{scenedata.title}</h1>
         <div />
-        <div />
+        {/* <div /> */}
         <a
           onClick={() => {
             sceneRef.current?.startGeolocation() //位置情報
