@@ -496,6 +496,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       />
       <CameraControls
         ref={cameraControlsRef}
+        minDistance={20}
         maxPolarAngle={pointCamera != '' ? Math.PI : (Math.PI * 85) / 180}
         enabled={true}
         maxDistance={props.camera.distance.max}
