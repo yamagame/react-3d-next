@@ -16,7 +16,7 @@ declare global {
 export function Ocean() {
   const ref = useRef<Water>(null)
   const gl = useThree((state) => state.gl)
-  const waterNormals = useLoader(THREE.TextureLoader, '/waternormals.jpeg')
+  const waterNormals = useLoader(THREE.TextureLoader, 'waternormals.jpeg')
   waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping
   const geom = useMemo(() => new THREE.PlaneGeometry(10000, 10000), [])
   const config = useMemo(
