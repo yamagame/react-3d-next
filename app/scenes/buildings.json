@@ -1,5 +1,5 @@
 {
-  "gltf": "/buildings.glb",
+  "gltf": "buildings.glb",
   "title": "サンプル 3Dマップ",
   "url": "https://github.com/yamagame/react-3d-next",
   "geometories": [
