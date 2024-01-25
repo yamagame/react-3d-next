@@ -143,7 +143,7 @@ const findBuilding = (geometories: Geometory[], resultText: string) => {
 export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref) => {
   const { camera, collider, geometories } = props
   const [initialcamera, setInitialCamera] = useState(makeInitialCamera(camera))
-  const { nodes, materials } = useGLTF(props.gltf) as GLTFResult
+  const { nodes, materials } = useGLTF(`${process.env.BRANCH_NAME}${props.gltf}`) as GLTFResult
   const [pointCamera, setPointCamera] = useState('')
   const [selectObject, setSelectObject] = useState('')
   const [focusObject, setFocusObject] = useState('')
