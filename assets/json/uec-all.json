@@ -5,7 +5,7 @@
   "geometories": [
     {
       "name": "hi_東A棟",
-      "names": ["東A棟", "東A", "えっと", "えーと", "冷凍"],
+      "names": ["東A棟", "東A", "えっと", "えーと", "冷凍", "江頭"],
       "label": "A棟",
       "bbox": "buil_東A棟",
       "camera": {
