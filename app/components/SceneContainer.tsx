@@ -279,18 +279,21 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     resetCameraCollider(cameraControlsRef.current)
   }, [])
 
-  const geo_success = useCallback((position: GeolocationPosition) => {
-    //位置情報が更新された際に呼び出される
-    if (
-      Number.isNaN(currentPositionRef.current.calcCurrentPosition().x) ||
-      Number.isNaN(currentPositionRef.current.calcCurrentPosition().z)
-    ) {
-      console.log('位置情報計算に失敗：おそらくこのマップは位置情報に対応していません')
-    } else {
-      currentPositionRef.current.setLocation(position.coords.latitude, position.coords.longitude)
-      setGeoLocation()
-    }
-  }, [])
+  const geo_success = useCallback(
+    (position: GeolocationPosition) => {
+      //位置情報が更新された際に呼び出される
+      if (
+        Number.isNaN(currentPositionRef.current.calcCurrentPosition().x) ||
+        Number.isNaN(currentPositionRef.current.calcCurrentPosition().z)
+      ) {
+        console.log('位置情報計算に失敗：おそらくこのマップは位置情報に対応していません')
+      } else {
+        currentPositionRef.current.setLocation(position.coords.latitude, position.coords.longitude)
+        setGeoLocation()
+      }
+    },
+    [setGeoLocation]
+  )
 
   const geo_error = useCallback((error: GeolocationPositionError) => {
     console.log('位置情報の取得に失敗しました ' + error.message)
@@ -328,6 +331,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
           currentPositionRef.current.id = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options)
           props.setOnUsingGeolocation(true)
           setGeoLocation()
+          setFocusObject('')
         } else {
           //停止
           navigator.geolocation.clearWatch(currentPositionRef.current.id)
@@ -400,6 +404,13 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     // 地図表示
     setOpen(true)
   }, [nodes, initialcamera, geometories, focusBuilding, props])
+
+  useEffect(() => {
+    if (focusObject != '') {
+      props.setOnUsingGeolocation(false)
+      currentPositionRef.current.id = 0
+    }
+  }, [focusObject, props])
 
   const clearSpeechText = useCallback(() => {
     props.setOnRecognizing(false)
