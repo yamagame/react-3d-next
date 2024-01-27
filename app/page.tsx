@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Canvas } from '@react-three/fiber'
 
 import { SceneContainer, SceneHandler } from './components/SceneContainer'
@@ -21,6 +21,15 @@ export default function Home() {
   const [recognizing, setRecognizing] = useState<boolean>(false)
   const [usingGeolocation, setUsingGeolocation] = useState<boolean>(false)
   const [recognizedText, setRecognizedText] = useState<string>('')
+
+  const setOnRecognizing = useCallback((f: boolean) => {
+    setRecognizing(f)
+  }, [])
+
+  const setOnGeolocation = useCallback((f: boolean) => {
+    setUsingGeolocation(f)
+  }, [])
+
   return (
     <div className="main-canvas">
       <div className="nav">
@@ -37,7 +46,11 @@ export default function Home() {
         </a>
         <a
           onClick={() => {
-            sceneRef.current?.startRecognition() //音声認識スタート
+            if (recognizing) {
+              sceneRef.current?.stopRecognition() //音声認識ストップ
+            } else {
+              sceneRef.current?.startRecognition() //音声認識スタート
+            }
           }}
         >
           <div className={recognizing ? 'button red' : 'button'}>音声検索</div>
@@ -56,9 +69,9 @@ export default function Home() {
         <SceneContainer
           ref={sceneRef}
           {...scenedata}
-          setOnRecognizing={setRecognizing}
+          setOnRecognizing={setOnRecognizing}
           setRecognizedText={setRecognizedText}
-          setOnUsingGeolocation={setUsingGeolocation}
+          setOnUsingGeolocation={setOnGeolocation}
         />
         {/* <axesHelper args={[50]} /> */}
       </Canvas>

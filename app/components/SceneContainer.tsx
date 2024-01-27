@@ -47,6 +47,7 @@ export type SceneHandler = {
   selectBuilding: (name: string) => void
   startDetection: () => void
   startRecognition: () => void
+  stopRecognition: () => void
   startGeolocation: () => void
 }
 
@@ -318,6 +319,10 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       startRecognition() {
         ;(speechRef.current as any).start()
         props.setOnRecognizing(true)
+      },
+      stopRecognition() {
+        ;(speechRef.current as any).stop()
+        props.setOnRecognizing(false)
       },
       startGeolocation() {
         //Geolocation, GPS, 位置情報
