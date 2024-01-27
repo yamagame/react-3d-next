@@ -5,8 +5,8 @@ import { Canvas } from '@react-three/fiber'
 
 import { SceneContainer, SceneHandler } from './components/SceneContainer'
 // import scenedata from './scenes/cubes.json'
-import scenedata from './scenes/buildings.json'
-// import scenedata from './scenes/uec-all.json'
+// import scenedata from './scenes/buildings.json'
+import scenedata from './scenes/uec-all.json'
 
 // import { SceneContainer, SceneHandler } from './scene'
 // import scenedata from './scenes/uec-ground.json'
@@ -18,8 +18,8 @@ type BoxT = { x: number; y: number; angle: number }
 
 export default function Home() {
   const sceneRef = React.useRef<SceneHandler>()
-  const [onRecognizing, setOnRecognizing] = useState<boolean>(false)
-  const [onUsingGeolocation, setOnUsingGeolocation] = useState<boolean>(false)
+  const [recognizing, setRecognizing] = useState<boolean>(false)
+  const [usingGeolocation, setUsingGeolocation] = useState<boolean>(false)
   const [recognizedText, setRecognizedText] = useState<string>('')
   return (
     <div className="main-canvas">
@@ -33,14 +33,14 @@ export default function Home() {
             sceneRef.current?.startGeolocation() //位置情報
           }}
         >
-          <div className={onUsingGeolocation ? 'button red' : 'button'}>現在位置</div>
+          <div className={usingGeolocation ? 'button red' : 'button'}>現在位置</div>
         </a>
         <a
           onClick={() => {
             sceneRef.current?.startRecognition() //音声認識スタート
           }}
         >
-          <div className={onRecognizing ? 'button red' : 'button'}>音声検索</div>
+          <div className={recognizing ? 'button red' : 'button'}>音声検索</div>
         </a>
         <a
           onClick={() => {
@@ -56,13 +56,13 @@ export default function Home() {
         <SceneContainer
           ref={sceneRef}
           {...scenedata}
-          setOnRecognizing={setOnRecognizing}
+          setOnRecognizing={setRecognizing}
           setRecognizedText={setRecognizedText}
-          setOnUsingGeolocation={setOnUsingGeolocation}
+          setOnUsingGeolocation={setUsingGeolocation}
         />
         {/* <axesHelper args={[50]} /> */}
       </Canvas>
-      <div className={onRecognizing ? 'floatingbox' : 'floatingbox dontdisplay'}>{recognizedText}</div>
+      <div className={recognizing ? 'floatingbox' : 'floatingbox dontdisplay'}>{recognizedText}</div>
     </div>
   )
 }
