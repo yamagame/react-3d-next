@@ -56,6 +56,10 @@ body {
   letter-spacing: 0;
 }
 
+.label2 {
+  display: none;
+}
+
 .button {
   display: flex;
   align-items: center;
@@ -124,8 +128,8 @@ body {
     gap: 0.5em;
   }
   .label {
-    padding-top: 4px;
-    font-size: 2em;
+    padding-top: 8px;
+    font-size: 1.5em;
   }
   .button {
     height: 48px;
@@ -155,8 +159,20 @@ body {
 }
 
 @media (max-width: 600px) {
+  .label {
+    display: none;
+  }
+  .label2 {
+    display: block;
+    margin: 0;
+    font-size: 1em;
+  }
   .main-canvas {
     padding: 0.5em;
+    grid-template-rows: auto auto 1fr;
+  }
+  .nav {
+    grid-template-columns: auto auto auto auto auto;
   }
   .back {
     width: 38px;
