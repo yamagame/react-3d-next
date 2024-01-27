@@ -397,7 +397,7 @@
   "collider": "model",
   "hidden": ["hide-object", "position", "point-camera"],
   "geolocation": {
-    "pos1": { "name": "buil_西11号館", "latitude": 35.65828, "longitude": 139.54077 },
-    "pos2": { "name": "buil_東講堂", "latitude": 35.65589, "longitude": 139.54416 }
+    "pos1": { "name": "buil_西11号館", "latitude": 35.6579738, "longitude": 139.5408357 },
+    "pos2": { "name": "buil_東講堂", "latitude": 35.6556147, "longitude": 139.5443306 }
   }
 }
