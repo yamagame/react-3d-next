@@ -416,10 +416,14 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         focusBuildingTimer.set(() => {
           focusBuilding(name.bbox, bbox)
           buildingNameTimer.set(() => props.setRecognizedText(resultNameRef.current), 100)
+          recognizer.stop()
+          props.setOnRecognizing(false)
         }, 500)
         speechTextClearTimer.set(() => {
           clearSpeechText()
           resultNameRef.current = ''
+          recognizer.stop()
+          props.setOnRecognizing(false)
         }, 2000)
       }
       buildingNameTimer.set(() => props.setRecognizedText(resultNameRef.current || resultText), 100)
@@ -429,6 +433,8 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       speechTextClearTimer.set(() => {
         clearSpeechText()
         resultNameRef.current = ''
+        recognizer.stop()
+        props.setOnRecognizing(false)
       }, 2000)
     }
 
