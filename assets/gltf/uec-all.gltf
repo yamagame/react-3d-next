@@ -53037,7 +53037,7 @@
 						"TEXCOORD_0":774
 					},
 					"indices":775,
-					"material":4
+					"material":5
 				}
 			]
 		},
@@ -56663,7 +56663,7 @@
 						"TEXCOORD_0":1730
 					},
 					"indices":1731,
-					"material":4
+					"material":5
 				}
 			]
 		},
