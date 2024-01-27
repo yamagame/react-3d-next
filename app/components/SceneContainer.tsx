@@ -256,6 +256,15 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     [collider, nodes, geometories, props.scenes, props.hidden]
   )
 
+  const setGeoLocation = useCallback(() => {
+    const pos = currentPositionRef.current.calcCurrentPosition()
+    if (Math.abs(pos.x) < 1000 && Math.abs(pos.y) < 1000) {
+      setCurrentPosition(pos)
+      cameraControlsRef.current?.moveTo(pos.x, pos.y, pos.z, true)
+      resetCameraCollider(cameraControlsRef.current)
+    }
+  }, [])
+
   const focusPointCamera = useCallback((name: string, center: THREE.Vector3) => {
     const direction = cameraDirection()
       .multiply(new THREE.Vector3(1, 0, 1))
@@ -270,10 +279,8 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     resetCameraCollider(cameraControlsRef.current)
   }, [])
 
-  function geo_success(position: GeolocationPosition) {
+  const geo_success = useCallback((position: GeolocationPosition) => {
     //位置情報が更新された際に呼び出される
-    console.log(position)
-    console.log(currentPositionRef.current.calcCurrentPosition())
     if (
       Number.isNaN(currentPositionRef.current.calcCurrentPosition().x) ||
       Number.isNaN(currentPositionRef.current.calcCurrentPosition().z)
@@ -281,12 +288,13 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       console.log('位置情報計算に失敗：おそらくこのマップは位置情報に対応していません')
     } else {
       currentPositionRef.current.setLocation(position.coords.latitude, position.coords.longitude)
-      setCurrentPosition(currentPositionRef.current.calcCurrentPosition())
+      setGeoLocation()
     }
-  }
-  function geo_error(error: GeolocationPositionError) {
+  }, [])
+
+  const geo_error = useCallback((error: GeolocationPositionError) => {
     console.log('位置情報の取得に失敗しました ' + error.message)
-  }
+  }, [])
 
   React.useImperativeHandle(ref, () => {
     return {
@@ -309,7 +317,6 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         props.setOnRecognizing(true)
       },
       startGeolocation() {
-        console.log('ここでGeolocationをスタートorストップする!')
         //Geolocation, GPS, 位置情報
         if (currentPositionRef.current.id == null || currentPositionRef.current.id == 0) {
           //位置情報未起動
@@ -320,6 +327,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
           }
           currentPositionRef.current.id = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options)
           props.setOnUsingGeolocation(true)
+          setGeoLocation()
         } else {
           //停止
           navigator.geolocation.clearWatch(currentPositionRef.current.id)
@@ -352,8 +360,8 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         currentPositionRef.current.pos2 = pos2
       }
     })
-    setCurrentPosition(currentPositionRef.current.calcCurrentPosition())
-  }, [nodes, props.geolocation, currentPositionRef])
+    setGeoLocation()
+  }, [nodes, props.geolocation, currentPositionRef, setGeoLocation])
 
   useEffect(() => {
     cameraControlsRef.current?.moveTo(initialcamera.target.x, initialcamera.target.y, initialcamera.target.z, false)
@@ -515,7 +523,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
         receiveShadow
         position={currentPosition}
         rotation={[0, 0, 0]}
-        material={new THREE.MeshBasicMaterial({ color: 0xff0000 })}
+        material={new THREE.MeshBasicMaterial({ color: 0xff0000, depthTest: false })}
         onClick={(e: ThreeEvent<MouseEvent>) => {
           console.log(currentPosition)
           console.log(e.object.position)

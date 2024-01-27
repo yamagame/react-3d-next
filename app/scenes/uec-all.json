@@ -565,13 +565,13 @@
   "geolocation": {
     "pos1": {
       "name": "buil_西11号館",
-      "latitude": 35.65812474191075,
-      "longitude": 139.54082511503555
+      "latitude": 35.65828,
+      "longitude": 139.54077
     },
     "pos2": {
       "name": "buil_東講堂",
-      "latitude": 35.65563229930534,
-      "longitude": 139.54433508505537
+      "latitude": 35.65589,
+      "longitude": 139.54416
     }
   },
   "scenes": [
