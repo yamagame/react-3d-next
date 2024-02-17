@@ -118,6 +118,11 @@ body {
   text-align: center;
   font-size: 4em;
 }
+.loading {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 2em;
+}
 .dontdisplay {
   display: none;
 }
