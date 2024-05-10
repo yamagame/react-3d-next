@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 
 import { SceneContainer, SceneHandler } from './components/SceneContainer'
@@ -65,16 +65,18 @@ export default function Home() {
       </div>
       <h1 className="label2">{scenedata.title}</h1>
       <Leva hidden collapsed />
-      <Canvas shadows camera={{ fov: 65, near: 0.1, far: 5000 }} style={{ borderRadius: 10 }}>
-        <SceneContainer
-          ref={sceneRef}
-          {...scenedata}
-          setOnRecognizing={setOnRecognizing}
-          setRecognizedText={setRecognizedText}
-          setOnUsingGeolocation={setOnGeolocation}
-        />
-        {/* <axesHelper args={[50]} /> */}
-      </Canvas>
+      <Suspense fallback={<div className="loading">Now Loading...</div>}>
+        <Canvas shadows camera={{ fov: 65, near: 0.1, far: 5000 }} style={{ borderRadius: 10 }}>
+          <SceneContainer
+            ref={sceneRef}
+            {...scenedata}
+            setOnRecognizing={setOnRecognizing}
+            setRecognizedText={setRecognizedText}
+            setOnUsingGeolocation={setOnGeolocation}
+          />
+          {/* <axesHelper args={[50]} /> */}
+        </Canvas>
+      </Suspense>
       <div className={recognizing ? 'floatingbox' : 'floatingbox dontdisplay'}>{recognizedText}</div>
     </div>
   )
