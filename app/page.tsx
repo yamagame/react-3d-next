@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <div className="main-canvas">
       <div className="nav">
-        <a className="back" href={scenedata.url}></a>
+        {/* <a className="back" href={scenedata.url}></a> */}
         <h1 className="label">{scenedata.title}</h1>
         <div />
         {/* <div /> */}

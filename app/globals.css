@@ -44,7 +44,7 @@ body {
 
 .nav {
   display: grid;
-  grid-template-columns: auto auto 1fr auto auto auto;
+  grid-template-columns: auto 1fr auto auto auto;
   gap: 1em;
 }
 
@@ -177,7 +177,7 @@ body {
     grid-template-rows: auto auto 1fr;
   }
   .nav {
-    grid-template-columns: auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto;
   }
   .back {
     width: 38px;
