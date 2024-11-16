@@ -16,6 +16,36 @@ import { Leva } from 'leva'
 
 type BoxT = { x: number; y: number; angle: number }
 
+function Overlay() {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        pointerEvents: 'none',
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 10,
+          right: 10,
+          fontSize: '10px',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          padding: '4px',
+          borderRadius: '10px',
+        }}
+      >
+        {/* ver.yyMMdd */}
+        {'ver.' + new Date().getFullYear().toString().slice(-2) + (new Date().getMonth() + 1) + new Date().getDate()}
+      </div>
+    </div>
+  )
+}
+
 export default function Home() {
   const sceneRef = React.useRef<SceneHandler>()
   const [recognizing, setRecognizing] = useState<boolean>(false)
@@ -78,6 +108,7 @@ export default function Home() {
         </Canvas>
       </Suspense>
       <div className={recognizing ? 'floatingbox' : 'floatingbox dontdisplay'}>{recognizedText}</div>
+      <Overlay />
     </div>
   )
 }
