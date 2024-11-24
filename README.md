@@ -1,6 +1,37 @@
 # 電通大3Dマップ 開発リポジトリ
 
-## 電通大ホームページのステージング
+## ビルド方法
+
+```sh
+# node_modulesのインストール(node_modulesがないまたはモジュールの更新があった場合に実施)
+yarn install
+
+# 開発モードで起動
+yarn dev
+
+# ブラウザで開く
+open http://localhost:3000
+```
+
+```sh
+# デプロイ用のファイルを生成、outディレクトリに作成される
+yarn build
+
+# outディレクトリを再作成する場合は以下のコマンドで削除してビルドする
+yarn rebuild
+```
+
+outディレクトリの動作確認は下記
+
+```sh
+# 開発用サーバーを起動
+yarn start
+
+# ブラウザで開く
+open http://localhost:3000/about/profile/access/map/
+```
+
+## 電通大ホームページへデプロイ
 
 電通大ホームページのステージングは AWS S3 を使用している。
 
