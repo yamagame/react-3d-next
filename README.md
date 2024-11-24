@@ -50,7 +50,7 @@ $ ./scripts/update-model-version.sh
 
 ## 電通大ホームページへデプロイ
 
-電通大ホームページのステージングは AWS S3 を使用している。
+電通大ホームページは AWS S3 を使用している。下記パスにファイルをコピーすると電通大ホームページに公開される。
 
 - URL: https://d3ctc1v6gkh7de.cloudfront.net/about/profile/access/map/
 - 有効パス: s3://pri2024-prd-bucket-www-uec-ac-jp-public/about/profile/access/map/*
