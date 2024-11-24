@@ -40,3 +40,4 @@ __pycache__
 !/work/.gitkeep
 
 .env
+private/
