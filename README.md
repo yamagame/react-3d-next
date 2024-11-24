@@ -105,18 +105,24 @@ aws_secret_access_key = ****************????
 # 3Sのバケットを環境変数に設定
 export UEC3DDIR=s3://pri2024-prd-bucket-www-uec-ac-jp-public
 
-# フォルダのコピー
-aws s3 cp --profile uec-s3-production out $UEC3DDIR --recursive --dryrun
+# フォルダの同期の確認
+aws s3 sync --profile uec-s3-production --delete --dryrunn --exclude '.DS_Store' out/about/profile/access/map/ $UEC3DDIR/about/profile/access/map/
+
+# フォルダの同期
+aws s3 sync --profile uec-s3-production --delete --exclude '.DS_Store' out/about/profile/access/map/ $UEC3DDIR/about/profile/access/map/
 ```
 
 ### その他のS3コマンド例
 
 ```shell
-# フォルダの同期
-aws s3 sync --profile uec-s3-production out $UEC3DDIR
+# フォルダのコピー
+aws s3 cp --profile --recursive --dryrun --exclude '.DS_Store' uec-s3-production out/about/profile/access/map/ $UEC3DDIR/about/profile/access/map/
 
 # ファイルの一覧
-aws s3 ls --profile uec-s3-production $UEC3DDIR/about/profile/access/map/
+aws s3 ls --profile uec-s3-production --recursive $UEC3DDIR/about/profile/access/map/
+
+# ファイルのダウンロード
+aws s3 cp --profile uec-s3-production --recursive $UEC3DDIR/about/profile/access/map/ ./private/
 
 # ファイルの削除
 aws s3 rm --profile uec-s3-production $UEC3DDIR/about/profile/access/map/cubes.glb
