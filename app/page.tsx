@@ -7,6 +7,7 @@ import { SceneContainer, SceneHandler } from './components/SceneContainer'
 // import scenedata from './scenes/cubes.json'
 // import scenedata from './scenes/buildings.json'
 import scenedata from './scenes/uec-all.json'
+import modelInfo from './model-info.json'
 
 // import { SceneContainer, SceneHandler } from './scene'
 // import scenedata from './scenes/uec-ground.json'
@@ -40,7 +41,12 @@ function Overlay() {
         }}
       >
         {/* ver.yyMMdd */}
-        {'ver.' + new Date().getFullYear().toString().slice(-2) + (new Date().getMonth() + 1) + new Date().getDate()}
+        {'ver.' +
+          modelInfo.version +
+          '/' +
+          new Date().getFullYear().toString().slice(-2) +
+          (new Date().getMonth() + 1) +
+          new Date().getDate()}
       </div>
     </div>
   )

@@ -31,6 +31,23 @@ yarn serve
 open http://localhost:3000/about/profile/access/map/
 ```
 
+## モデルバージョンの更新
+
+./scripts/update-model-version.sh を使用して更新する。
+
+```sh
+$ ./scripts/update-model-version.sh 
+現在のバージョン
+{
+  "version": "0.1.0"
+}
+新しいバージョンを入力してください> 0.1.1
+バージョンを変更しました。
+{
+  "version": "0.1.1"
+}
+```
+
 ## 電通大ホームページへデプロイ
 
 電通大ホームページのステージングは AWS S3 を使用している。
