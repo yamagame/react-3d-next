@@ -25,7 +25,7 @@ outディレクトリの動作確認は下記
 
 ```sh
 # 開発用サーバーを起動
-yarn start
+yarn serve
 
 # ブラウザで開く
 open http://localhost:3000/about/profile/access/map/
