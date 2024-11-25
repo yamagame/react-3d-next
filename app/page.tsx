@@ -55,6 +55,7 @@ function Overlay() {
 export default function Home() {
   const sceneRef = React.useRef<SceneHandler>()
   const [recognizing, setRecognizing] = useState<boolean>(false)
+  const [useRecognition, setUseRecognition] = useState<boolean>(false)
   const [usingGeolocation, setUsingGeolocation] = useState<boolean>(false)
   const [recognizedText, setRecognizedText] = useState<string>('')
 
@@ -64,6 +65,12 @@ export default function Home() {
 
   const setOnGeolocation = useCallback((f: boolean) => {
     setUsingGeolocation(f)
+  }, [])
+
+  React.useEffect(() => {
+    if ((window as any).webkitSpeechRecognition || (window as any).SpeechRecognition) {
+      setUseRecognition(true)
+    }
   }, [])
 
   return (
@@ -80,17 +87,19 @@ export default function Home() {
         >
           <div className={usingGeolocation ? 'button red' : 'button'}>現在位置</div>
         </a>
-        <a
-          onClick={() => {
-            if (recognizing) {
-              sceneRef.current?.stopRecognition() //音声認識ストップ
-            } else {
-              sceneRef.current?.startRecognition() //音声認識スタート
-            }
-          }}
-        >
-          <div className={recognizing ? 'button red' : 'button'}>音声検索</div>
-        </a>
+        {useRecognition ? (
+          <a
+            onClick={() => {
+              if (recognizing) {
+                sceneRef.current?.stopRecognition() //音声認識ストップ
+              } else {
+                sceneRef.current?.startRecognition() //音声認識スタート
+              }
+            }}
+          >
+            <div className={recognizing ? 'button red' : 'button'}>音声検索</div>
+          </a>
+        ) : null}
         <a
           onClick={() => {
             sceneRef.current?.resetCamera()

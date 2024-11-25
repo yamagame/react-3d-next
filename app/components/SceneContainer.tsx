@@ -425,6 +425,9 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   useEffect(() => {
     //音声認識
     const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition
+    if (!SpeechRecognition) {
+      return
+    }
     const recognizer = new SpeechRecognition() as any
     recognizer.lang = 'ja-JP'
     recognizer.interimResults = true // 認識途中で暫定の結果を返す

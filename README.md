@@ -33,7 +33,13 @@ open http://localhost:3000/about/profile/access/map/
 
 ## モデルバージョンの更新
 
-./scripts/update-model-version.sh を使用して更新する。
+バージョンは次のような表記、
+スラッシュの前のバージョンがモデルバージョン、スラッシュの後の数字がビルドバージョンとする。
+マップデータを更新した場合はモデルバージョンを上げること。
+
+- Ver.0.1.1/241126
+
+モデルバージョンは下記スクリプトを使用して変更する。
 
 ```sh
 $ ./scripts/update-model-version.sh 
@@ -106,7 +112,7 @@ aws_secret_access_key = ****************????
 export UEC3DDIR=s3://pri2024-prd-bucket-www-uec-ac-jp-public
 
 # フォルダの同期の確認
-aws s3 sync --profile uec-s3-production --delete --dryrunn --exclude '.DS_Store' out/about/profile/access/map/ $UEC3DDIR/about/profile/access/map/
+aws s3 sync --profile uec-s3-production --delete --dryrun --exclude '.DS_Store' out/about/profile/access/map/ $UEC3DDIR/about/profile/access/map/
 
 # フォルダの同期
 aws s3 sync --profile uec-s3-production --delete --exclude '.DS_Store' out/about/profile/access/map/ $UEC3DDIR/about/profile/access/map/
