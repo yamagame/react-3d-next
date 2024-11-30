@@ -46,6 +46,7 @@ body {
   display: grid;
   grid-template-columns: auto 1fr auto auto auto;
   gap: 1em;
+  overflow-x: auto;
 }
 
 .label {
