@@ -6,7 +6,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: calc(100vh - 100px);
+  height: calc(50vh);
 }
 
 .uec-3d-map-container iframe {
