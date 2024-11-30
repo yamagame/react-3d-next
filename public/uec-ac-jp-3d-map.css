@@ -1,0 +1,17 @@
+/* https://www.uec.ac.jp/about/profile/access/ から参照される */
+
+.uec-3d-map-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: calc(100vh - 100px);
+}
+
+.uec-3d-map-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
