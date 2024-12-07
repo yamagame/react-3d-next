@@ -34,21 +34,33 @@ function Overlay() {
         style={{
           position: 'absolute',
           bottom: 10,
+          left: 10,
+          fontSize: '8px',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          padding: '4px',
+          borderRadius: '4px',
+        }}
+      >
+        ※この3Dマップは学生有志によって作成されました。
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 10,
           right: 10,
           fontSize: '10px',
           backgroundColor: 'rgba(0,0,0,0.5)',
           padding: '4px',
-          borderRadius: '10px',
+          borderRadius: '4px',
         }}
       >
-        {/* ver.yyMMdd */}
-        {'ver.' + modelInfo.version + '/' + process.env.NEXT_PUBLIC_BUILD_VERSION}
+        {'ver.' + modelInfo.version + '/' + process.env.NEXT_PUBLIC_BUILD_VERSION || '00000000'}
       </div>
     </div>
   )
 }
 
-const urlPrefix = process.env.BRANCH_NAME ? '/' + process.env.BRANCH_NAME : ''
+const urlPrefix = process.env.NEXT_PUBLIC_BRANCH_NAME ? '/' + process.env.NEXT_PUBLIC_BRANCH_NAME : ''
 
 export default function Home() {
   const sceneRef = React.useRef<SceneHandler>()
@@ -56,6 +68,7 @@ export default function Home() {
   const [useRecognition, setUseRecognition] = useState<boolean>(false)
   const [usingGeolocation, setUsingGeolocation] = useState<boolean>(false)
   const [recognizedText, setRecognizedText] = useState<string>('')
+  const [isIframe, setIsIframe] = useState<boolean>(false)
 
   const setOnRecognizing = useCallback((f: boolean) => {
     setRecognizing(f)
@@ -69,20 +82,40 @@ export default function Home() {
     if ((window as any).webkitSpeechRecognition || (window as any).SpeechRecognition) {
       setUseRecognition(true)
     }
+    if (window != window.parent) {
+      setIsIframe(true)
+    }
   }, [])
 
   return (
     <div className="main-canvas">
       <div className="nav">
-        <a href={urlPrefix + '/'} target="_blank" rel="noopener noreferrer" className="button">
-          <Image
-            src={urlPrefix + '/external-link.svg'}
-            alt="新しいタブで開く"
-            width={24}
-            height={24}
-            className="external-link"
-          />
-        </a>
+        {isIframe ? (
+          <a href={urlPrefix + '/'} target="uec-3d-map-window" rel="noopener noreferrer" className="button">
+            <Image
+              src={urlPrefix + '/external-link.svg'}
+              alt="新しいタブで開く"
+              width={24}
+              height={24}
+              className="external-link"
+            />
+          </a>
+        ) : (
+          <a
+            href={'https://www.uec.ac.jp/about/profile/access/'}
+            target="_self"
+            rel="noopener noreferrer"
+            className="button"
+          >
+            <Image
+              src={urlPrefix + '/arrow-back.svg'}
+              alt="電通新大学 交通・学内マップへ戻る"
+              width={24}
+              height={24}
+              className="external-link"
+            />
+          </a>
+        )}
         {/* <a className="back" href={scenedata.url}></a> */}
         <h1 className="label">{scenedata.title}</h1>
         {/* <div /> */}
@@ -94,7 +127,7 @@ export default function Home() {
         >
           <div className={usingGeolocation ? 'button red' : 'button'}>現在位置</div>
         </a>
-        {useRecognition ? (
+        {useRecognition && !isIframe ? (
           <a
             onClick={() => {
               if (recognizing) {
