@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "BRANCH_NAME=about/profile/access/map next build && next export",
-    "rebuild": "./scripts/remove-out.sh && BRANCH_NAME=about/profile/access/map next build && next export",
+    "dev": "NEXT_PUBLIC_BUILD_VERSION=`./scripts/get-build-version.sh` next dev",
+    "build": "NEXT_PUBLIC_BUILD_VERSION=`./scripts/get-build-version.sh` BRANCH_NAME=about/profile/access/map next build && next export",
+    "rebuild": "./scripts/remove-out.sh && NEXT_PUBLIC_BUILD_VERSION=`./scripts/get-build-version.sh` BRANCH_NAME=about/profile/access/map next build && next export",
     "serve": "serve out",
     "lint": "next lint"
   },

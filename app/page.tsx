@@ -41,12 +41,7 @@ function Overlay() {
         }}
       >
         {/* ver.yyMMdd */}
-        {'ver.' +
-          modelInfo.version +
-          '/' +
-          new Date().getFullYear().toString().slice(-2) +
-          (new Date().getMonth() + 1) +
-          new Date().getDate()}
+        {'ver.' + modelInfo.version + '/' + process.env.NEXT_PUBLIC_BUILD_VERSION}
       </div>
     </div>
   )
