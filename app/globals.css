@@ -49,6 +49,12 @@ body {
   overflow-x: auto;
 }
 
+.external-link {
+  height: 1.3em;
+  width: auto;
+  color: white;
+}
+
 .label {
   margin: 0;
   font-size: 2.5em;
@@ -141,6 +147,9 @@ body {
     height: 48px;
     border-radius: 30px;
     padding: 0em 2em;
+  }
+  .external-link {
+    height: 1.2em;
   }
 }
 
