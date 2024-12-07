@@ -14,6 +14,7 @@ import modelInfo from './model-info.json'
 // import scenedata from './scenes/buildings.json'
 
 import { Leva } from 'leva'
+import Image from 'next/image'
 
 type BoxT = { x: number; y: number; angle: number }
 
@@ -47,6 +48,8 @@ function Overlay() {
   )
 }
 
+const urlPrefix = process.env.BRANCH_NAME ? '/' + process.env.BRANCH_NAME : ''
+
 export default function Home() {
   const sceneRef = React.useRef<SceneHandler>()
   const [recognizing, setRecognizing] = useState<boolean>(false)
@@ -71,9 +74,18 @@ export default function Home() {
   return (
     <div className="main-canvas">
       <div className="nav">
+        <a href={urlPrefix + '/'} target="_blank" rel="noopener noreferrer" className="button">
+          <Image
+            src={urlPrefix + '/external-link.svg'}
+            alt="新しいタブで開く"
+            width={24}
+            height={24}
+            className="external-link"
+          />
+        </a>
         {/* <a className="back" href={scenedata.url}></a> */}
         <h1 className="label">{scenedata.title}</h1>
-        <div />
+        {/* <div /> */}
         {/* <div /> */}
         <a
           onClick={() => {
