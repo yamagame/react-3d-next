@@ -50,7 +50,7 @@ body {
 }
 
 .external-link {
-  height: 24px;
+  height: 1.3em;
   width: auto;
   color: white;
 }
@@ -147,6 +147,9 @@ body {
     height: 48px;
     border-radius: 30px;
     padding: 0em 2em;
+  }
+  .external-link {
+    height: 1.2em;
   }
 }
 
