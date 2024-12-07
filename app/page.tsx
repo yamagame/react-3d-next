@@ -54,7 +54,7 @@ function Overlay() {
           borderRadius: '4px',
         }}
       >
-        {'ver.' + modelInfo.version + '/' + process.env.NEXT_PUBLIC_BUILD_VERSION || '00000000'}
+        {'ver.' + modelInfo.version + '/' + (process.env.NEXT_PUBLIC_BUILD_VERSION || '00000000')}
       </div>
     </div>
   )
