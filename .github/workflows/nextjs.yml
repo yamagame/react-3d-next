@@ -78,8 +78,8 @@ jobs:
           env
           ${{ steps.detect-package-manager.outputs.runner }} next build
         env:
-          NEXT_PUBLIC_BRANCH_NAME: ${{ env.NEXT_PUBLIC_BRANCH_NAME }}
-          NEXT_PUBLIC_BUILD_VERSION: ${{ env.NEXT_PUBLIC_BUILD_VERSION }}
+          NEXT_PUBLIC_BRANCH_NAME: ${{ vars.NEXT_PUBLIC_BRANCH_NAME }}
+          NEXT_PUBLIC_BUILD_VERSION: ${{ vars.NEXT_PUBLIC_BUILD_VERSION }}
       - name: Static HTML export with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next export
       - name: Upload artifact

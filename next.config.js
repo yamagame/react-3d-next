@@ -1,5 +1,5 @@
 const githubAction = process.env.GITHUB_ACTION
-const urlPrefix = process.env.NEXT_PUBLIC_BRANCH_NAME ? '/' + process.env.NEXT_PUBLIC_BRANCH_NAME : ''
+const urlPrefix = process.env.NEXT_PUBLIC_BRANCH_NAME ? '/' + process.env.NEXT_PUBLIC_BRANCH_NAME : (process.env.BRANCH_NAME ? '/' + process.env.BRANCH_NAME : '')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
