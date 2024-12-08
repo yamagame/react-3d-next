@@ -75,11 +75,15 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: |
-          env
+          echo "envctx NEXT_PUBLIC_BRANCH_NAME=${{ env.NEXT_PUBLIC_BRANCH_NAME }}"
+          echo "envctx NEXT_PUBLIC_BUILD_VERSION=${{ env.NEXT_PUBLIC_BUILD_VERSION }}"
+          echo "varsctx NEXT_PUBLIC_BRANCH_NAME=${{ vars.NEXT_PUBLIC_BRANCH_NAME }}"
+          echo "varsctx NEXT_PUBLIC_BUILD_VERSION=${{ vars.NEXT_PUBLIC_BUILD_VERSION }}"
+          export NEXT_PUBLIC_BRANCH_NAME=react-3d-next
+          export NEXT_PUBLIC_BUILD_VERSION=`date +%y%m%d`
+          echo "env NEXT_PUBLIC_BRANCH_NAME=${NEXT_PUBLIC_BRANCH_NAME}"
+          echo "env NEXT_PUBLIC_BUILD_VERSION=${NEXT_PUBLIC_BUILD_VERSION}"
           ${{ steps.detect-package-manager.outputs.runner }} next build
-        env:
-          NEXT_PUBLIC_BRANCH_NAME: ${{ vars.NEXT_PUBLIC_BRANCH_NAME }}
-          NEXT_PUBLIC_BUILD_VERSION: ${{ vars.NEXT_PUBLIC_BUILD_VERSION }}
       - name: Static HTML export with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next export
       - name: Upload artifact
