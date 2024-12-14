@@ -1,10 +1,16 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const urlPrefix = process.env.NEXT_PUBLIC_BRANCH_NAME ? '/' + process.env.NEXT_PUBLIC_BRANCH_NAME : ''
 
 export function Contributor() {
   const [open, setOpen] = useState(false)
+
+  // iframe内で表示されているかどうか
+  const [isIframe, setIsIframe] = useState(false)
+  useEffect(() => void setIsIframe(window != window.parent), [])
+
+  if (isIframe) return null
 
   return (
     <>

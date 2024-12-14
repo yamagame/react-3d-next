@@ -156,8 +156,6 @@ body {
   height: 100%;
   max-width: 480px;
   max-height: fit-content;
-  overflow-y: auto;
-  pointer-events: auto;
   margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 16px;
