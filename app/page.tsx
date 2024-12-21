@@ -15,6 +15,7 @@ import modelInfo from './model-info.json'
 
 import { Leva } from 'leva'
 import Image from 'next/image'
+import { Contributor } from './components/Contributor'
 
 type BoxT = { x: number; y: number; angle: number }
 
@@ -39,9 +40,13 @@ function Overlay() {
           backgroundColor: 'rgba(0,0,0,0.5)',
           padding: '4px',
           borderRadius: '4px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px',
         }}
       >
-        ※この3Dマップは学生有志によって作成されました。
+        <Contributor />
+        この3Dマップは学生有志によって作成されました
       </div>
       <div
         style={{
