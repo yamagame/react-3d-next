@@ -100,27 +100,32 @@ export const RenderScene = (
     if (props.geometories.some((v) => v.bbox === scene.name)) {
       const name = scene.name
       const label = props.geometories.find((v) => v.bbox === name)?.label
-      const geometory = gltfResult.nodes[name].geometry
-      const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
-      const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
-      return (
-        <group key={`${name}-container`}>
-          {label ? (
-            <Text
-              key={`${name}-text`}
-              ref={textRef.current[name]}
-              position={center
-                ?.clone()
-                .add(size.multiply(new THREE.Vector3(0, 0.5, 0)))
-                .add(new THREE.Vector3(0, 5, 0))}
-              scale={2}
-              {...fontProps}
-            >
-              {label}
-            </Text>
-          ) : null}
-        </group>
-      )
+      if (gltfResult.nodes[name]) {
+        const geometory = gltfResult.nodes[name].geometry
+        const center = geometory.boundingBox?.getCenter(new THREE.Vector3())
+        const size = geometory.boundingBox?.getSize(new THREE.Vector3()) || new THREE.Vector3()
+        return (
+          <group key={`${name}-container`}>
+            {label ? (
+              <Text
+                key={`${name}-text`}
+                ref={textRef.current[name]}
+                position={center
+                  ?.clone()
+                  .add(size.multiply(new THREE.Vector3(0, 0.5, 0)))
+                  .add(new THREE.Vector3(0, 5, 0))}
+                scale={2}
+                {...fontProps}
+              >
+                {label}
+              </Text>
+            ) : null}
+          </group>
+        )
+      } else {
+        console.log(`not found ${name}`)
+        return null
+      }
     }
     if (scene.children.length > 0) {
       const name = scene.name
