@@ -150,6 +150,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   const [focusObject, setFocusObject] = useState('')
   const [bbox, setBbox] = useState<BBox>({})
   const [open, setOpen] = useState(false)
+  const [colliderMeshes, setColliderMeshes] = useState<THREE.Mesh[]>([])
   const cameraControlsRef = useRef<CameraControls>(null)
   const speechRef = useRef()
   const focusBuildingTimer = useTimeout()
@@ -168,6 +169,12 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   useEffect(() => {
     setInitialCamera(makeInitialCamera(camera))
   }, [camera])
+
+  useEffect(() => {
+    if (ENABLE_CAMERA_COLLIDER) {
+      cameraControlsRef.current?.colliderMeshes.push(...colliderMeshes)
+    }
+  }, [colliderMeshes])
 
   // nameと一致する建物にフォーカスする
   const focusBuilding = useCallback(
@@ -191,12 +198,12 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
 
             if (ENABLE_CAMERA_COLLIDER) {
               const self_geo = geometories.find((v) => v.bbox == name)
-              Object.keys(bbox)
+              const mesh = Object.keys(bbox)
                 .filter((key) => key != name && !(props.hidden && props.hidden.indexOf(key) >= 0))
-                .forEach((key) => {
+                .reduce((mesh, key) => {
                   if (nodes[key]) {
                     if (collider == 'bbox') {
-                      cameraControlsRef.current?.colliderMeshes.push(bbox[key])
+                      mesh.push(bbox[key])
                     } else {
                       const geo = geometories.find((v) => v.name == key)
                       let nodename = key
@@ -207,11 +214,13 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
                         nodename != name &&
                         !(self_geo?.collider?.ignore && self_geo.collider.ignore.indexOf(nodename) >= 0)
                       ) {
-                        cameraControlsRef.current?.colliderMeshes.push(nodes[nodename])
+                        mesh.push(nodes[nodename])
                       }
                     }
                   }
-                })
+                  return mesh
+                }, [] as THREE.Mesh[])
+              setColliderMeshes(mesh)
             }
           })
 

@@ -31,7 +31,25 @@ yarn serve
 open http://localhost:3000/about/profile/access/map/
 ```
 
-## モデルバージョンの更新
+## 3Dモデルの更新
+
+以下のファイルを更新する
+
+- assets/glb/uec-all.glb
+- assets/gltf/uec-all.bin
+- assets/gltf/uec-all.gltf
+
+必要あれば下記ファイルも更新する
+
+- assets/json/uec-all.json
+
+下記のスクリプトでデータの生成とコピーを行う
+
+```sh
+./scripts/gltf-to-json.sh ./assets/gltf/uec-all.gltf
+```
+
+## 3Dモデルバージョンの更新
 
 バージョンは次のような表記、
 スラッシュの前のバージョンがモデルバージョン、スラッシュの後の数字がビルドバージョンとする。

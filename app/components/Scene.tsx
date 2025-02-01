@@ -78,7 +78,6 @@ const fontProps = {
   lineHeight: 1,
   outlineWidth: 0.1,
   outlineColor: 'black',
-  color: '#00A1FF',
   'material-toneMapped': true,
   depthOffset: -3000,
 }
@@ -115,6 +114,7 @@ export const RenderScene = (
                   .add(size.multiply(new THREE.Vector3(0, 0.5, 0)))
                   .add(new THREE.Vector3(0, 5, 0))}
                 scale={2}
+                color={props.focusObject === name ? '#FF4080' : '#00A1FF'}
                 {...fontProps}
               >
                 {label}
@@ -325,6 +325,11 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
   useFrame(({ camera }) => {
     Object.keys(textRef.current).forEach((key) => {
       const text = textRef.current[key]
+      const distance = camera.position.distanceTo(text.current?.position || new THREE.Vector3())
+      let scale = (1 * distance * 1.2) / 100
+      if (scale > 2.5) scale = 2.5
+      if (scale < 0.25) scale = 0.25
+      text.current?.scale.setScalar(scale)
       text.current?.quaternion.copy(camera.quaternion)
       if (text.current?.material instanceof THREE.MeshBasicMaterial) {
         text.current.material.color.lerp(color.set('white'), 1.0)
