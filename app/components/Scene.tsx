@@ -326,9 +326,9 @@ export const Scene = React.forwardRef((props: SceneProps, ref) => {
     Object.keys(textRef.current).forEach((key) => {
       const text = textRef.current[key]
       const distance = camera.position.distanceTo(text.current?.position || new THREE.Vector3())
-      let scale = (1 * distance * 1.2) / 100
-      if (scale > 2.5) scale = 2.5
-      if (scale < 0.25) scale = 0.25
+      let scale = 2.0
+      let distance_sqrt = Math.sqrt(distance)
+      if (distance_sqrt < 12) scale = (2.0 * distance_sqrt) / 12 // 定数 12 は適当に決定
       text.current?.scale.setScalar(scale)
       text.current?.quaternion.copy(camera.quaternion)
       if (text.current?.material instanceof THREE.MeshBasicMaterial) {
