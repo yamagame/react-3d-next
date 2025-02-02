@@ -179,7 +179,10 @@
     {
       "name": "hi_東3号館",
       "bbox": "buil_東3号館",
-      "label": "図書館"
+      "label": "図書館",
+      "collider": {
+        "ignore": ["buil_東図書館A", "buil_東図書館B"]
+      }
     },
     {
       "name": "hi_東4号館",

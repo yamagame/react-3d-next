@@ -148,6 +148,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   const [pointCamera, setPointCamera] = useState('')
   const [selectObject, setSelectObject] = useState('')
   const [focusObject, setFocusObject] = useState('')
+  const [minDistance, setMinDistance] = useState(100)
   const [bbox, setBbox] = useState<BBox>({})
   const [open, setOpen] = useState(false)
   const [colliderMeshes, setColliderMeshes] = useState<THREE.Mesh[]>([])
@@ -258,6 +259,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
           setPointCamera('')
           setSelectObject('')
           setFocusObject(name)
+          setMinDistance(30)
         }
       } else {
         console.log('focusBuilding:cannot find ' + name)
@@ -287,6 +289,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
     setSelectObject('')
     setFocusObject('')
     resetCameraCollider(cameraControlsRef.current)
+    setMinDistance(1)
   }, [])
 
   const geo_success = useCallback(
@@ -321,6 +324,8 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
           true
         )
         resetCameraCollider(cameraControlsRef.current)
+        setMinDistance(100)
+        setFocusObject('')
       },
       selectBuilding(name: string) {
         setFocusObject(name)
@@ -538,7 +543,7 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
       />
       <CameraControls
         ref={cameraControlsRef}
-        minDistance={20}
+        minDistance={minDistance}
         maxPolarAngle={pointCamera != '' ? Math.PI : (Math.PI * 85) / 180}
         enabled={true}
         maxDistance={props.camera.distance.max}
