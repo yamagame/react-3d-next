@@ -516,16 +516,18 @@ export const SceneContainer = React.forwardRef((props: SceneContainerProps, ref)
   return (
     <>
       <Env />
-      <Sky
+      <fog attach="fog" color={'#a5dbff'} near={1} far={3000} />
+      <color attach="background" args={['#a5daff']} />
+      {/* <Sky
         distance={450000}
         sunPosition={[0, 1, 0]}
         inclination={0}
-        azimuth={-32.4}
+        azimuth={34}
         mieCoefficient={0}
         mieDirectionalG={0.14}
-        rayleigh={0.263}
-        turbidity={0}
-      />
+        rayleigh={0.706}
+        turbidity={15.6}
+      /> */}
       {open ? (
         <group position={[0, -10, 0]}>
           <Ocean />

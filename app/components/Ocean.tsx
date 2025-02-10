@@ -26,13 +26,13 @@ export function Ocean() {
       waterNormals,
       sunDirection: new THREE.Vector3(),
       sunColor: 0xffffff,
-      waterColor: 0x104e9f,
+      waterColor: 0x044ecf,
       distortionScale: 3.7,
-      fog: false,
+      fog: true,
       // format: gl.encoding,
     }),
     [waterNormals]
   )
-  useFrame((state, delta) => (ref.current?.material ? (ref.current.material.uniforms.time.value += delta) : null))
+  useFrame((state, delta) => (ref.current?.material ? (ref.current.material.uniforms.time.value += delta / 2) : null))
   return <water ref={ref} args={[geom, config]} rotation-x={-Math.PI / 2} />
 }
