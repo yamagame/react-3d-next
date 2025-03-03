@@ -61100,6 +61100,1626 @@
           ]
         },
         {
+          "name": "low-building",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "name": "Body719",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body721",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body722",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body723",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body724",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body725",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body752",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body753",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body754",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body755",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body789",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body791",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body792",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body793",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "Body794",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_UECポートアライアンスセンター",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_UECポートドーム友達",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_UECポートドーム絆",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_UECポート職員宿舎",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東10号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東1号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東2号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東31号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東32号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東33号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東34号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東35号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東36号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東37号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東3号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東4号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東5号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東6号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東7号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東8号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東9号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東A棟",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東B棟",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東C棟",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東D棟",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                1.9405677318572998,
+                0,
+                0.48393943905830383
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東どんぐり",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東リサージュ",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東保健センター",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東図書館A",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東図書館B",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東国際交流会館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東学生会館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東新C棟",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東本館A",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東本館B",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東正門守衛所",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東職員休憩所",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東職員研修所",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東課外活動施設",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_東講堂",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西10号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西11号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西1号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西2号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西31号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西3号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西4号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西5号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西6号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西7号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西8号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西9号館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西体育館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西地区食堂",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西学生寮",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西弓道場",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西第2体育館",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "buil_西門守衛所",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "東倉庫A",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "東倉庫B",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "東本部倉庫",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "東物品庫",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "東電話交換室",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "西プール壁",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            },
+            {
+              "name": "西受電室",
+              "scale": [
+                1,
+                1,
+                1
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.001",
+              "children": []
+            }
+          ]
+        },
+        {
           "name": "hi-building",
           "scale": [
             0.009999999776482582,
@@ -75142,44 +76762,6 @@
               "children": []
             },
             {
-              "name": "hi_西6号館",
-              "scale": [
-                100,
-                100,
-                100
-              ],
-              "position": [
-                0,
-                0,
-                0
-              ],
-              "rotation": [
-                -1.570796629741176,
-                0,
-                0
-              ],
-              "children": []
-            },
-            {
-              "name": "hi_西7号館",
-              "scale": [
-                100,
-                100,
-                100
-              ],
-              "position": [
-                0,
-                0,
-                0
-              ],
-              "rotation": [
-                -1.570796629741176,
-                0,
-                0
-              ],
-              "children": []
-            },
-            {
               "name": "hi_西8号館",
               "scale": [
                 100,
@@ -75372,7 +76954,748 @@
             0,
             0
           ],
-          "children": []
+          "children": [
+            {
+              "name": "B棟ボディ116001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "D棟ボディ126001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "アライアンスセンターボディ176001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "図書館Aボディ157001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "図書館Bボディ155001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "学生宿舎Aボディ177001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "学生宿舎Bボディ178001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "実験工場ボディ152001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東10号館ボディ134001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東1ボディ123001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東2号館ボディ156001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東33号館ボディ144001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東34号館ボディ143001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東35Aボディ145001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東35Bボディ146001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東36号館ボディ153001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東3号館ボディ149001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東4号館Aボディ128001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東4号館Bボディ127001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東4号館Cボディ129001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東6号館ボディ130001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東7号館ボディ131001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東8号館ボディ132001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "東９号館ボディ139001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "職員宿舎ボディ179001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "職員研修所ボディ137001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "西10号館ボディ158001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "西11号館ボディ173001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "西1号館ボディ168001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "西2号館ボディ166001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "西3号館ボディ169001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "西4号館ボディ167001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "西5号館ボディ161001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "西6号館ボディ164001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "西7号館ボディ165001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "西8号館ボディ170001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            },
+            {
+              "name": "西9号館ボディ171001",
+              "scale": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                1.570796629741176,
+                0,
+                0
+              ],
+              "material": "Steel - Satin.003",
+              "children": []
+            }
+          ]
         },
         {
           "name": "ground",
@@ -85795,6 +88118,26 @@
           ]
         },
         {
+          "name": "point-camera",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            2.450000047683716,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "material": "PointCameraYellow",
+          "children": []
+        },
+        {
           "name": "point-camera001",
           "scale": [
             1,
@@ -88807,7 +91150,7 @@
           "children": []
         },
         {
-          "name": "buil_UECポートアライアンスセンター",
+          "name": "hi_西6号館",
           "scale": [
             1,
             1,
@@ -88823,11 +91166,10 @@
             0,
             0
           ],
-          "material": "Steel - Satin.001",
           "children": []
         },
         {
-          "name": "buil_UECポートドーム友達",
+          "name": "hi_西7号館",
           "scale": [
             1,
             1,
@@ -88843,1127 +91185,6 @@
             0,
             0
           ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_UECポートドーム絆",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_UECポート職員宿舎",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東10号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東1号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東2号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東31号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東32号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東33号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東34号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東35号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東36号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東37号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東3号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東4号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東5号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東6号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東7号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東8号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東9号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東A棟",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東B棟",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東C棟",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東D棟",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            1.9405677318572998,
-            0,
-            0.48393943905830383
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東どんぐり",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東リサージュ",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東保健センター",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東図書館A",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東図書館B",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東国際交流会館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東学生会館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東新C棟",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東本館A",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東本館B",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東正門守衛所",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東職員休憩所",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東職員研修所",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東課外活動施設",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_東講堂",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西10号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西11号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西1号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西2号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西31号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西3号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西4号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西5号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西6号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西7号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西8号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西9号館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西体育館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西地区食堂",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西学生寮",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西弓道場",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西第2体育館",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
-          "children": []
-        },
-        {
-          "name": "buil_西門守衛所",
-          "scale": [
-            1,
-            1,
-            1
-          ],
-          "position": [
-            0,
-            0,
-            0
-          ],
-          "rotation": [
-            0,
-            0,
-            0
-          ],
-          "material": "Steel - Satin.001",
           "children": []
         }
       ]
