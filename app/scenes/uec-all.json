@@ -65,8 +65,7 @@
       "label": "新C棟",
       "collider": {
         "ignore": [
-          "buil_東C棟",
-          "buil_東D棟"
+          "buil_東C棟"
         ]
       }
     },

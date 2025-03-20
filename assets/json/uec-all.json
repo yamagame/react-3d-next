@@ -36,7 +36,7 @@
       "bbox": "buil_東新C棟",
       "label": "新C棟",
       "collider": {
-        "ignore": ["buil_東C棟", "buil_東D棟"]
+        "ignore": ["buil_東C棟"]
       }
     },
     {
