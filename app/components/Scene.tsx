@@ -73,7 +73,7 @@ const find = (scenes: SceneItem[], name: string): SceneItem | null => {
 
 const fontProps = {
   font: "Mplus2-Black.ttf",
-  fontSize: 2.5,
+  fontSize: 2.7,
   letterSpacing: 0.05,
   lineHeight: 1,
   outlineWidth: 0.2,
@@ -114,7 +114,7 @@ export const RenderScene = (
                   .add(size.multiply(new THREE.Vector3(0, 0.5, 0)))
                   .add(new THREE.Vector3(0, 5, 0))}
                 scale={2}
-                color={props.focusObject === name ? '#ff0055' : '#085db1'}
+                color={props.focusObject === name ? '#ff0055' : '#0e63b8'}
                 {...fontProps}
               >
                 {label}
